@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportaje Especial: Trasplantes y Vida | TDI Noticias</title>
     
+    <!-- Fuentes: DM Sans para títulos y Montserrat para texto normal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700;800&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* --- CONFIGURACIÓN DE COLORES --- */
         :root {
             --primary: #003366;
             --accent: #e63946;
@@ -116,9 +116,8 @@
             width: 100%;
         }
 
-        .content-wrapper { max-width: 1100px; width: 100%; z-index: 2; }
+        .content-wrapper { max-width: 1000px; width: 100%; z-index: 2; }
 
-        /* Imagen de Portada Adaptable */
         .hero-box {
             width: 100%;
             max-width: 100%;
@@ -141,8 +140,7 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        /* Reproductor de Audio Centrado */
-        .audio-center { display: flex; justify-content: center; margin-top: 40px; width: 100%; }
+        .audio-center { display: flex; justify: content; justify-content: center; margin-top: 40px; width: 100%; }
         .audio-card {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(10px);
@@ -156,41 +154,20 @@
         }
         .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
 
-        /* --- NUEVO CONTENEDOR INTEGRADO PARA STORYLINE (TEXTO IZQ / FOTO DER) --- */
-        .storyline-panel-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr; /* Storyline Izquierda | Foto fija Derecha */
-            gap: 30px;
-            background: var(--color-white);
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-            align-items: center;
+        /* --- CONTENEDOR ANCHO COMPLETO PARA IFRAME --- */
+        .storyline-full-wrapper {
             width: 100%;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            background: #fff;
             margin-top: 30px;
         }
 
-        .storyline-iframe-wrapper {
-            width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            background: #fff;
-        }
-
-        .storyline-side-img {
-            width: 100%;
-            height: 650px; /* Hace juego exacto con la altura de tu iframe */
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .storyline-side-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .storyline-full-wrapper iframe {
             display: block;
+            width: 100%;
+            height: 650px;
         }
 
         /* --- SECCIÓN GRÁFICO --- */
@@ -223,27 +200,14 @@
         }
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
-        /* --- RESPONSIVIDAD MÓVIL --- */
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             header { flex-direction: column; gap: 15px; text-align: center; }
             header nav ul { gap: 15px; padding: 0; }
-            
             .slide-container { padding: 50px 4%; }
             h1 { font-size: 2.2rem !important; }
             h2 { font-size: 1.7rem !important; }
-            
             .hero-box { height: auto; max-height: 280px; }
-            
-            /* Colapso de la estructura de Storyline a 1 columna en celulares */
-            .storyline-panel-grid {
-                grid-template-columns: 1fr;
-                padding: 15px;
-                gap: 20px;
-            }
-            .storyline-side-img {
-                height: 300px; /* Reduce la foto en móviles para dar prioridad al gráfico */
-            }
-            
+            .storyline-full-wrapper iframe { height: 500px; }
             .chart-container { padding: 15px; }
             .bg-medical-icon { font-size: 70px; }
         }
@@ -251,16 +215,19 @@
 </head>
 <body>
 
+    <!-- AUDIO DE FONDO -->
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
 
+    <!-- CONTROL FLOTANTE MÚSICA -->
     <button class="music-control" onclick="toggleMusic()">
         <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
     </button>
 
-    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 15%; left: 4%;" data-speed="0.12"></i>
-    <i class="fa-solid fa-dna bg-medical-icon" style="top: 42%; right: 4%;" data-speed="-0.09"></i>
-    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 72%; left: 6%;" data-speed="0.15"></i>
-    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 115%; right: 5%;" data-speed="-0.06"></i>
+    <!-- ICONOS PARALLAX -->
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 12%; left: 4%;" data-speed="0.10"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 38%; right: 4%;" data-speed="-0.08"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 65%; left: 6%;" data-speed="0.12"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 110%; right: 5%;" data-speed="-0.05"></i>
 
     <header>
         <a href="index.html" class="logo-link"><div class="logo">TDI<span>NOTICIAS</span></div></a>
@@ -273,6 +240,7 @@
         </nav>
     </header>
 
+    <!-- FONDO 1: #014B43 (Verde Oscuro) - INTRODUCCIÓN -->
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
             <h1 style="font-size: 3.5rem; text-align: center; margin-bottom: 25px;">Trasplantes en Chile: Segundos que Salvan Vidas</h1>
@@ -284,17 +252,25 @@
             <div class="hero-box">
                 <img src="https://i.imgur.com/bJ3ZqJ9.jpeg" alt="Imagen Médica de Portada">
             </div>
-            
+        </div>
+    </section>
+
+    <!-- FONDO 2: #099078 (Verde Claro) - VIDEO MULTIMEDIA -->
+    <section class="slide-container" data-bg="#099078">
+        <div class="content-wrapper">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Registro Audiovisual</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto;">Un recorrido por la infraestructura asistencial crítica y el despliegue de los equipos de urgencia.</p>
             <div class="video-box">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
-    <section class="slide-container" id="audio-section" data-bg="#099078">
+    <!-- FONDO 3: #014B43 (Verde Oscuro) - AUDIO ENTRADA AUTÓMATA -->
+    <section class="slide-container" id="audio-section" data-bg="#014B43">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Testimonios de Esperanza</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto;">Al llegar aquí, el audio se activa automáticamente y la música cinemática de fondo se pausa.</p>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto;">Al llegar aquí, el testimonio del paciente se activa automáticamente deteniendo la banda sonora.</p>
             
             <div class="audio-center">
                 <div class="audio-card">
@@ -305,23 +281,28 @@
         </div>
     </section>
 
-    <section class="slide-container" data-bg="#014B43">
+    <!-- FONDO 4: #099078 (Verde Claro) - LÍNEA DE TIEMPO STORYLINE -->
+    <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Trayectoria de Vida: La Historia de Carlos</h2>
-            <p style="text-align: center; opacity: 0.85;">Explora los hitos clínicos cronológicos cruzados con la evolución del volumen de la lista de espera asistencial.</p>
+            <p style="text-align: center; opacity: 0.85;">Haz clic en los puntos del gráfico o navega con el deslizador para desplegar cada fase interactiva.</p>
             
-            <div class="storyline-panel-grid">
-                <div class="storyline-iframe-wrapper">
-                    <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" style="width:100%;height:650px;" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0"></iframe>
-                </div>
-                
-                <div class="storyline-side-img">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Pabellón Quirúrgico">
-                </div>
+            <!-- Contenedor Único y Limpio de Storyline -->
+            <div class="storyline-full-wrapper">
+                <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0"></iframe>
             </div>
         </div>
     </section>
 
+    <!-- FONDO 5: #C01113 (Rojo) - ALERTA CRÍTICA -->
+    <section class="slide-container" data-bg="#C01113">
+        <div class="content-wrapper" style="text-align: center;">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Una Alerta Crítica</h2>
+            <p style="max-width: 700px; margin: 0 auto;">Las cifras evidencian una brecha histórica. Mientras la necesidad de órganos se acelera exponencialmente año tras año, las tasas efectivas de donación se mantienen estables, estancando las posibilidades de supervivencia.</p>
+        </div>
+    </section>
+
+    <!-- FONDO 6: #FDFFFF (Blanco) - GRÁFICO DE DATOS (LETRAS OSCURAS) -->
     <section class="slide-container" data-bg="#FDFFFF">
         <div class="content-wrapper">
             <h2 style="color: #2b2b2b !important; text-align: center; font-size: 2.5rem; margin-bottom: 10px;">El Latido de las Cifras</h2>
@@ -340,16 +321,17 @@
         </div>
     </section>
 
+    <!-- FONDO 7: #666569 (Gris) - CONCLUSIÓN -->
     <section class="slide-container" data-bg="#666569">
         <div class="content-wrapper" style="text-align: center;">
-            <h2>Compromiso con la Vida</h2>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Compromiso con la Vida</h2>
             <p style="max-width: 750px; margin: 20px auto 40px;">El fortalecimiento de la educación asistencial y la conversación familiar oportuna representan las principales herramientas propuestas por los especialistas para acortar las brechas de donación actuales.</p>
             <div style="font-size: 0.9rem; opacity: 0.7; color: white;">Reportaje Especial TDI Noticias | © 2026</div>
         </div>
     </section>
 
     <script>
-        /* --- LÓGICA DE AUDIOS (FONDO VS TESTIMONIO POR SCROLL) --- */
+        /* --- MANEJO DE AUDIOS --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -373,7 +355,7 @@
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(e => console.log("Interacción inicial requerida"));
+                }).catch(e => console.log("Audio en espera"));
             }
         }, { once: true });
 
@@ -382,7 +364,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     bgMusic.pause(); 
-                    mainAudio.play().catch(() => console.log("Esperando clic inicial"));
+                    mainAudio.play().catch(() => console.log("Clic previo requerido"));
                 } else {
                     mainAudio.pause(); 
                     if (!musicMuted) bgMusic.play(); 
@@ -409,7 +391,7 @@
             });
         });
 
-        /* --- CONFIGURACIÓN GRÁFICO CHART.JS --- */
+        /* --- CHART.JS GRÁFICO HISTÓRICO --- */
         const stats = [
             { "Año": 2018, "espera": 2211, "trasplantes": 459, "resolucion": 20.8 },
             { "Año": 2019, "espera": 2301, "trasplantes": 651, "resolucion": 28.3 },
