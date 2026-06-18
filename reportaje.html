@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportaje Especial: Trasplantes y Vida | TDI Noticias</title>
     
-    <!-- Fuentes: DM Sans para títulos y Montserrat para texto normal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700;800&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -22,7 +21,7 @@
             --color-white: #FDFFFF;
             --color-green-dark: #014B43;
             --color-green-light: #099078;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; }
@@ -36,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* --- TIPOGRAFÍA GENERAL --- */
         h1, h2, h3, h4 { 
             font-family: 'DM Sans', sans-serif;
             color: var(--color-white) !important; 
@@ -51,7 +49,7 @@
             font-weight: 400;
         }
 
-        /* --- HEADER FIJO --- */
+        /* --- HEADER --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -73,7 +71,7 @@
         nav a { color: white; text-decoration: none; font-weight: 500; transition: var(--transition); }
         nav a:hover { color: var(--accent); }
 
-        /* --- BOTÓN FLOTANTE MÚSICA --- */
+        /* --- CONTROL FLOTANTE MÚSICA --- */
         .music-control {
             position: fixed;
             bottom: 30px;
@@ -93,9 +91,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             transition: var(--transition);
         }
-        .music-control:hover { transform: scale(1.1); background: var(--color-teal); }
 
-        /* --- ELEMENTOS DE FONDO (PARALLAX) --- */
+        /* --- ICONOS DE FONDO --- */
         .bg-medical-icon {
             position: absolute;
             color: rgba(255, 255, 255, 0.07);
@@ -104,7 +101,7 @@
             pointer-events: none;
         }
 
-        /* --- CONTENEDORES DE SECCIÓN --- */
+        /* --- SECCIONES SLIDES --- */
         .slide-container {
             min-height: 100vh;
             display: flex;
@@ -116,11 +113,10 @@
             width: 100%;
         }
 
-        .content-wrapper { max-width: 1000px; width: 100%; z-index: 2; }
+        .content-wrapper { max-width: 1100px; width: 100%; z-index: 2; }
 
         .hero-box {
             width: 100%;
-            max-width: 100%;
             height: auto;
             max-height: 550px;
             border-radius: 20px;
@@ -140,7 +136,7 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        .audio-center { display: flex; justify: content; justify-content: center; margin-top: 40px; width: 100%; }
+        .audio-center { display: flex; justify-content: center; margin-top: 40px; width: 100%; }
         .audio-card {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(10px);
@@ -150,80 +146,111 @@
             width: 100%;
             max-width: 600px;
             text-align: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-        .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
+        .audio-card audio { width: 100%; margin-top: 20px; }
 
-        /* --- CONTENEDOR ANCHO COMPLETO PARA IFRAME --- */
-        .storyline-full-wrapper {
+        /* --- STORYLINE ANCHO COMPLETO LINEAL --- */
+        .storyline-linear-container {
             width: 100%;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             background: #fff;
-            margin-top: 30px;
         }
-
-        .storyline-full-wrapper iframe {
+        .storyline-linear-container iframe {
             display: block;
             width: 100%;
-            height: 650px;
+            height: 480px;
         }
 
-        /* --- SECCIÓN GRÁFICO --- */
+        /* --- NUEVO PANEL DESPLEGABLE INTERACTIVO (ESTILO VISOR DRIVE) --- */
+        .drive-display-panel {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; /* Texto Izquierda | Imagen Derecha */
+            gap: 40px;
+            background: var(--color-white);
+            padding: 45px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            margin-top: 40px;
+            width: 100%;
+            
+            /* Estado Inicial: Oculto para la animación de despliegue */
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Clase activa que genera la animación de despliegue tipo visor */
+        .drive-display-panel.desplegado {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .drive-text h3 { color: var(--color-green-dark) !important; font-size: 2rem; margin-bottom: 15px; }
+        .drive-text p { color: #333 !important; }
+
+        .drive-img-box {
+            width: 100%;
+            height: 350px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .drive-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Controles de navegación del visor manual */
+        .drive-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .drive-btn {
+            background: #edf2f7;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            color: var(--color-green-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .drive-btn:hover { background: var(--color-teal); color: white; }
+
+        /* --- GRÁFICO --- */
         .chart-container {
             background: white;
             padding: 30px;
             border-radius: 25px;
             margin-top: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 100%;
         }
-        .chart-btns {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+        .chart-btns { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
         .btn-data {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 50px;
-            background: var(--color-grey);
-            color: white;
-            font-weight: 700;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
+            padding: 10px 22px; border: none; border-radius: 50px; background: var(--color-grey);
+            color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: var(--transition);
         }
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; text-align: center; }
-            header nav ul { gap: 15px; padding: 0; }
+        @media (max-width: 900px) {
+            header { flex-direction: column; gap: 15px; }
             .slide-container { padding: 50px 4%; }
             h1 { font-size: 2.2rem !important; }
-            h2 { font-size: 1.7rem !important; }
-            .hero-box { height: auto; max-height: 280px; }
-            .storyline-full-wrapper iframe { height: 500px; }
-            .chart-container { padding: 15px; }
+            .drive-display-panel { grid-template-columns: 1fr; padding: 25px; gap: 25px; }
+            .drive-img-box { height: 230px; }
             .bg-medical-icon { font-size: 70px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO DE FONDO -->
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
 
-    <!-- CONTROL FLOTANTE MÚSICA -->
     <button class="music-control" onclick="toggleMusic()">
         <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
     </button>
 
-    <!-- ICONOS PARALLAX -->
     <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 12%; left: 4%;" data-speed="0.10"></i>
     <i class="fa-solid fa-dna bg-medical-icon" style="top: 38%; right: 4%;" data-speed="-0.08"></i>
     <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 65%; left: 6%;" data-speed="0.12"></i>
@@ -240,22 +267,16 @@
         </nav>
     </header>
 
-    <!-- FONDO 1: #014B43 (Verde Oscuro) - INTRODUCCIÓN -->
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
             <h1 style="font-size: 3.5rem; text-align: center; margin-bottom: 25px;">Trasplantes en Chile: Segundos que Salvan Vidas</h1>
-            
             <p style="text-align: center; font-style: italic; opacity: 0.9; max-width: 800px; margin: 0 auto;">
                 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
             </p>
-
-            <div class="hero-box">
-                <img src="https://i.imgur.com/bJ3ZqJ9.jpeg" alt="Imagen Médica de Portada">
-            </div>
+            <div class="hero-box"><img src="https://i.imgur.com/bJ3ZqJ9.jpeg" alt="Portada"></div>
         </div>
     </section>
 
-    <!-- FONDO 2: #099078 (Verde Claro) - VIDEO MULTIMEDIA -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Registro Audiovisual</h2>
@@ -266,12 +287,10 @@
         </div>
     </section>
 
-    <!-- FONDO 3: #014B43 (Verde Oscuro) - AUDIO ENTRADA AUTÓMATA -->
     <section class="slide-container" id="audio-section" data-bg="#014B43">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Testimonios de Esperanza</h2>
             <p style="text-align: center; max-width: 700px; margin: 0 auto;">Al llegar aquí, el testimonio del paciente se activa automáticamente deteniendo la banda sonora.</p>
-            
             <div class="audio-center">
                 <div class="audio-card">
                     <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">Testimonio de un paciente trasplantado</h3>
@@ -281,20 +300,30 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 (Verde Claro) - LÍNEA DE TIEMPO STORYLINE -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Trayectoria de Vida: La Historia de Carlos</h2>
-            <p style="text-align: center; opacity: 0.85;">Haz clic en los puntos del gráfico o navega con el deslizador para desplegar cada fase interactiva.</p>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
             
-            <!-- Contenedor Único y Limpio de Storyline -->
-            <div class="storyline-full-wrapper">
-                <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0"></iframe>
+            <div class="storyline-linear-container">
+                <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
+            </div>
+
+            <div class="drive-display-panel" id="drive-panel">
+                <div class="drive-text">
+                    <h3 id="panel-title">1. La Espera Angustiosa</h3>
+                    <p id="panel-desc">Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.</p>
+                    <div class="drive-controls">
+                        <button class="drive-btn" onclick="navigateVisor(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                        <button class="drive-btn" onclick="navigateVisor(1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="drive-img-box">
+                    <img id="panel-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Vista Visor">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FONDO 5: #C01113 (Rojo) - ALERTA CRÍTICA -->
     <section class="slide-container" data-bg="#C01113">
         <div class="content-wrapper" style="text-align: center;">
             <h2 style="font-size: 3rem; margin-bottom: 20px;">Una Alerta Crítica</h2>
@@ -302,36 +331,31 @@
         </div>
     </section>
 
-    <!-- FONDO 6: #FDFFFF (Blanco) - GRÁFICO DE DATOS (LETRAS OSCURAS) -->
     <section class="slide-container" data-bg="#FDFFFF">
         <div class="content-wrapper">
             <h2 style="color: #2b2b2b !important; text-align: center; font-size: 2.5rem; margin-bottom: 10px;">El Latido de las Cifras</h2>
             <p style="color: #666569 !important; text-align: center; margin-bottom: 30px;">Interactúa con los botones para cambiar los conjuntos de datos validados (2018 - 2025).</p>
-            
             <div class="chart-container">
                 <div class="chart-btns">
                     <button class="btn-data active" onclick="updateChart('espera')">Lista de espera</button>
                     <button class="btn-data" onclick="updateChart('cantidad')">Cantidad de trasplantes realizados</button>
                     <button class="btn-data" onclick="updateChart('resolucion')">Porcentaje de solución</button>
                 </div>
-                <div style="height: 400px; position: relative;">
-                    <canvas id="dataChart"></canvas>
-                </div>
+                <div style="height: 400px; position: relative;"><canvas id="dataChart"></canvas></div>
             </div>
         </div>
     </section>
 
-    <!-- FONDO 7: #666569 (Gris) - CONCLUSIÓN -->
     <section class="slide-container" data-bg="#666569">
         <div class="content-wrapper" style="text-align: center;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Compromiso con la Vida</h2>
+            <h2>Compromiso con la Vida</h2>
             <p style="max-width: 750px; margin: 20px auto 40px;">El fortalecimiento de la educación asistencial y la conversación familiar oportuna representan las principales herramientas propuestas por los especialistas para acortar las brechas de donación actuales.</p>
             <div style="font-size: 0.9rem; opacity: 0.7; color: white;">Reportaje Especial TDI Noticias | © 2026</div>
         </div>
     </section>
 
     <script>
-        /* --- MANEJO DE AUDIOS --- */
+        /* --- MÚSICA AMBIENTAL Y CONTROLES --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -340,58 +364,77 @@
 
         function toggleMusic() {
             if (bgMusic.paused) {
-                bgMusic.play();
-                musicIcon.className = "fa-solid fa-volume-high";
-                musicMuted = false;
+                bgMusic.play(); musicIcon.className = "fa-solid fa-volume-high"; musicMuted = false;
             } else {
-                bgMusic.pause();
-                musicIcon.className = "fa-solid fa-volume-xmark";
-                musicMuted = true;
+                bgMusic.pause(); musicIcon.className = "fa-solid fa-volume-xmark"; musicMuted = true;
             }
         }
 
-        document.addEventListener('click', () => {
+        // Activación automática de audio ambiental al scroll sutil
+        window.addEventListener('scroll', () => {
             if (musicMuted) {
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(e => console.log("Audio en espera"));
+                }).catch(() => {});
             }
         }, { once: true });
 
-        const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    bgMusic.pause(); 
-                    mainAudio.play().catch(() => console.log("Clic previo requerido"));
+                    bgMusic.pause(); mainAudio.play().catch(() => {});
                 } else {
-                    mainAudio.pause(); 
-                    if (!musicMuted) bgMusic.play(); 
+                    mainAudio.pause(); if (!musicMuted) bgMusic.play();
                 }
             });
         }, { threshold: 0.4 });
-        audioObserver.observe(audioSection);
+        audioObserver.observe(document.getElementById('audio-section'));
 
-        /* --- MOTOR SCROLLYTELLING Y PARALLAX --- */
+        /* --- MANEJO DE FONDOS Y PARALLAX --- */
         const sections = document.querySelectorAll('section');
         window.addEventListener('scroll', () => {
             const top = window.scrollY;
-            
             sections.forEach(sec => {
-                const offset = sec.offsetTop - 350;
-                if (top >= offset) {
-                    document.body.style.backgroundColor = sec.dataset.bg;
-                }
+                if (top >= (sec.offsetTop - 350)) document.body.style.backgroundColor = sec.dataset.bg;
             });
-
             document.querySelectorAll('.bg-medical-icon').forEach(icon => {
-                const speed = parseFloat(icon.dataset.speed);
-                icon.style.transform = `translateY(${top * speed}px) rotate(${top * 0.04}deg)`;
+                icon.style.transform = `translateY(${top * parseFloat(icon.dataset.speed)}px) rotate(${top * 0.04}deg)`;
             });
         });
 
-        /* --- CHART.JS GRÁFICO HISTÓRICO --- */
+        /* --- LÓGICA DEL VISOR DESPLEGABLE ESTILO DRIVE --- */
+        let activeVisorStep = 0;
+        const visorData = [
+            { title: "1. La Espera Angustiosa", desc: "Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.", img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", color: "#29869C" },
+            { title: "2. El Llamado de Emergencia", desc: "3:14 AM. Suena la alerta de procuramiento nacional. Una compatibilidad exacta ha aparecido y el traslado de urgencia aérea debe despegar de inmediato.", img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", color: "#C01113" },
+            { title: "3. La Operación Crítica", desc: "8 horas de intervención precisa en pabellón. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj de viabilidad.", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", color: "#014B43" },
+            { title: "4. Un Nuevo Horizonte", desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", color: "#099078" }
+        ];
+
+        function deployVisorStep(idx) {
+            activeVisorStep = idx;
+            const data = visorData[idx];
+            const panel = document.getElementById('drive-panel');
+            
+            panel.classList.remove('desplegado'); // Resetea la animación
+            
+            setTimeout(() => {
+                document.getElementById('panel-title').innerText = data.title;
+                document.getElementById('panel-title').style.color = data.color;
+                document.getElementById('panel-desc').innerText = data.desc;
+                document.getElementById('panel-img').src = data.img;
+                panel.classList.add('desplegado'); // Despliega con zoom in suave (estilo visor Drive)
+            }, 250);
+        }
+
+        function navigateVisor(dir) {
+            let next = activeVisorStep + dir;
+            if (next >= 0 && next < visorData.length) deployVisorStep(next);
+        }
+        document.addEventListener("DOMContentLoaded", () => deployVisorStep(0));
+
+        /* --- CHART.JS --- */
         const stats = [
             { "Año": 2018, "espera": 2211, "trasplantes": 459, "resolucion": 20.8 },
             { "Año": 2019, "espera": 2301, "trasplantes": 651, "resolucion": 28.3 },
@@ -402,39 +445,23 @@
             { "Año": 2024, "espera": 2361, "trasplantes": 771, "resolucion": 32.7 },
             { "Año": 2025, "espera": 2687, "trasplantes": 741, "resolucion": 27.6 }
         ];
-
         const ctx = document.getElementById('dataChart').getContext('2d');
         let myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: stats.map(s => s.Año),
-                datasets: [{ 
-                    label: 'Pacientes en lista de espera', 
-                    data: stats.map(s => s.espera), 
-                    backgroundColor: '#29869C',
-                    borderRadius: 6
-                }]
+                datasets: [{ label: 'Pacientes en lista de espera', data: stats.map(s => s.espera), backgroundColor: '#29869C', borderRadius: 6 }]
             },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } }
-            }
+            options: { responsive: true, maintainAspectRatio: false }
         });
 
         function updateChart(type) {
-            document.querySelectorAll('.btn-data').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            
+            document.querySelectorAll('.btn-data').forEach(b => b.classList.remove('active')); event.target.classList.add('active');
             let data, label, color;
             if(type === 'espera') { data = stats.map(s => s.espera); label = 'Pacientes en lista de espera'; color = '#29869C'; }
             if(type === 'cantidad') { data = stats.map(s => s.trasplantes); label = 'Cantidad de trasplantes realizados'; color = '#C01113'; }
             if(type === 'resolucion') { data = stats.map(s => s.resolucion); label = 'Porcentaje de solución (%)'; color = '#099078'; }
-            
-            myChart.data.datasets[0].data = data;
-            myChart.data.datasets[0].label = label;
-            myChart.data.datasets[0].backgroundColor = color;
-            myChart.update();
+            myChart.data.datasets[0].data = data; myChart.data.datasets[0].label = label; myChart.data.datasets[0].backgroundColor = color; myChart.update();
         }
     </script>
 </body>
