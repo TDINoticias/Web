@@ -3,27 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportaje Especial | TDI Noticias</title>
+    <title>Reportaje Especial: Trasplantes y Vida | TDI Noticias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #003366;
             --accent: #e63946;
-            --light: #f8f9fa;
-            --dark: #1d3557;
-            --text-dark: #2b2b2b;
             --transition: all 0.3s ease;
+            
+            /* Paleta Médica solicitada */
+            --color-teal: #29869C;
+            --color-red: #C01113;
+            --color-grey: #666569;
+            --color-white: #FDFFFF;
+            --color-green-dark: #014B43;
+            --color-green-light: #099078;
+            --transition-bg: background-color 0.8s ease;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            background-color: #ffffff;
-            color: var(--text-dark);
-            line-height: 1.8;
-            font-size: 1.15rem;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--color-green-dark); /* Color inicial */
+            transition: var(--transition-bg);
+            overflow-x: hidden;
         }
 
-        /* --- Header --- */
+        /* --- Header Fijo (Mismo de la portada) --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -63,205 +78,116 @@
 
         nav a:hover { color: var(--accent); }
 
-        /* --- Portada Multimedia Cover --- */
-        .story-cover {
-            position: relative;
-            width: 100%;
-            height: 100vh;
+        /* --- Estructura Scrollytelling --- */
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-white);
+            margin: 0;
+        }
+
+        p {
+            color: var(--color-white);
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+
+        .slide-container {
+            min-height: 100vh;
+            width: 100vw;
             display: flex;
-            align-items: flex-end;
-            justify-content: flex-start;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .cover-media {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.65;
-        }
-
-        .cover-content {
-            position: relative;
-            z-index: 10;
-            padding: 50px 5%;
-            max-width: 850px;
-            color: #ffffff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .story-kicker {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 0.9rem;
-            padding: 5px 12px;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .story-title {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin: 0 0 15px 0;
-            font-weight: 800;
-        }
-
-        .story-lead {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
-
-        .story-meta {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            padding-top: 15px;
-        }
-
-        /* --- Contenedores del Reportaje --- */
-        .story-container {
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .story-container p {
-            margin-bottom: 25px;
-        }
-
-        .story-pullquote {
-            font-size: 1.6rem;
-            font-style: italic;
-            color: var(--primary);
-            border-left: 5px solid var(--accent);
-            padding-left: 20px;
-            margin: 40px 0;
-            font-weight: 600;
-        }
-
-        .story-subtitle {
-            font-size: 2rem;
-            color: var(--dark);
-            margin: 45px 0 20px 0;
-            font-weight: 700;
-        }
-
-        /* --- Elementos Inmersivos Full Width --- */
-        .full-width-media {
-            width: 100%;
-            margin: 50px 0;
-            background: #f0f0f0;
-        }
-
-        .full-width-media img, .full-width-media video {
-            width: 100%;
-            display: block;
-            height: auto;
-            max-height: 80vh;
-            object-fit: cover;
-        }
-
-        .media-caption {
-            max-width: 750px;
-            margin: 12px auto 0 auto;
-            font-size: 0.9rem;
-            color: #666;
-            padding: 0 20px;
-            line-height: 1.4;
-        }
-
-        /* --- Efecto Scrollytelling (Parallax Bloque) --- */
-        .scrolly-section {
-            position: relative;
-            width: 100%;
-            height: 70vh;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            margin: 60px 0;
+            align-items: center;
+            padding: 80px 5%;
+            position: relative;
         }
 
-        .scrolly-text-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            max-width: 550px;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-top: 4px solid var(--primary);
-        }
-
-        /* --- Grilla de Apoyo --- */
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .data-card {
-            background: var(--light);
-            padding: 25px;
-            border-left: 4px solid var(--primary);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 5% 20px;
-            text-align: center;
-            margin-top: 80px;
-        }
-
-        .footer-app-container {
-            margin: 40px auto;
-            width: 100%;
-            height: 650px;
+        .content-wrapper {
             max-width: 900px;
-            border-radius: 15px;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            z-index: 2;
         }
 
-        .footer-app-container iframe {
+        /* Textos adaptativos según fondo claro o oscuro */
+        .light-bg h1, .light-bg h2, .light-bg h3, .light-bg p {
+            color: #2b2b2b !important;
+        }
+
+        /* Elementos flotantes médicos decorativos */
+        .floating-icon {
+            position: absolute;
+            color: rgba(253, 255, 255, 0.12);
+            font-size: 180px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .light-bg .floating-icon {
+            color: rgba(0, 0, 0, 0.05);
+        }
+        .icon-1 { top: 15%; right: 8%; transform: rotate(15deg); }
+        .icon-2 { bottom: 15%; left: 8%; transform: rotate(-15deg); }
+
+        /* --- Gráfico Interactivo --- */
+        .chart-section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .chart-btn {
+            background: var(--color-grey);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .chart-btn.active, .chart-btn:hover {
+            background: var(--color-teal);
+            transform: translateY(-2px);
+        }
+
+        /* --- Maqueta de Secciones --- */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .img-box {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            height: 350px;
+        }
+        .img-box img {
             width: 100%;
             height: 100%;
-            border: none;
-        }
-
-        .footer-info {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            opacity: 0.7;
-        }
-
-        /* --- Adaptabilidad --- */
-        @media (max-width: 1024px) {
-            .scrolly-section { background-attachment: scroll; }
+            object-fit: cover;
         }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 15px; text-align: center; }
-            body { font-size: 1.05rem; }
-            .story-title { font-size: 2.3rem; }
-            .story-lead { font-size: 1.2rem; }
-            .story-cover { height: 85vh; }
-            .story-subtitle { font-size: 1.6rem; }
-            .scrolly-section { height: auto; padding: 60px 20px; }
+            .two-column { grid-template-columns: 1fr; }
+            .slide-container { padding: 60px 20px; }
+            .floating-icon { font-size: 100px; }
         }
     </style>
 </head>
@@ -282,85 +208,174 @@
         </nav>
     </header>
 
-    <!-- PORTADA DE IMPACTO -->
-    <section class="story-cover">
-        <img class="cover-media" src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1920&q=80" alt="Fondo de Reportaje">
-        <div class="cover-content">
-            <div class="story-kicker">ESPECIAL MULTIMEDIA</div>
-            <h1 class="story-title">Título del Reportaje de Gran Impacto Visual</h1>
-            <p class="story-lead">Esta es la bajada del reportaje. Un texto sugerente que atrapa al lector y resume la tesis central del trabajo interactivo.</p>
-            <div class="story-meta">
-                Por: <strong>Redacción TDI Noticias</strong> | Publicado en Junio, 2026
+    <section class="slide-container dark-bg" data-bg="#014B43">
+        <i class="fa-solid fa-heart-pulse floating-icon icon-1"></i>
+        <div class="content-wrapper">
+            <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px;">Trasplantes en Chile: Entre la Esperanza y el Tiempo</h1>
+            <p>Maqueta introductoria. El proceso de donación y trasplante de órganos en el país enfrenta realidades críticas que involucran logística de alta complejidad, decisiones familiares urgentes y una carrera constante contra el reloj biológico.</p>
+        </div>
+    </section>
+
+    <section class="slide-container light-bg" data-bg="#099078">
+        <div class="content-wrapper">
+            <div class="two-column">
+                <div>
+                    <h2>Infraestructura Quirúrgica</h2>
+                    <p>Espacio de maqueta para detallar cómo los centros asistenciales de alta complejidad coordinan los pabellones de urgencia y la disponibilidad de los equipos médicos las 24 horas del día.</p>
+                </div>
+                <div class="img-box">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Pabellón Quirúrgico">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- CUERPO DEL REPORTAJE (BLOQUE 1) -->
-    <article class="story-container">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-        <h2 class="story-subtitle">Primer eje de la investigación</h2>
-        
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </article>
-
-    <!-- ELEMENTO MULTIMEDIA A ANCHO COMPLETO -->
-    <div class="full-width-media">
-        <img src="https://raw.githubusercontent.com/pabloalarcona5-lgtm/TCD/refs/heads/main/A_UNO_1727383-e1773420807588%20(1).jpg" alt="Elemento Multimedia Opcional">
-        <div class="media-caption">
-            ▲ Descripción detallada de la fotografía, infografía o recurso visual que complementa la investigación. (Foto: TDI Noticias).
-        </div>
-    </div>
-
-    <!-- CUERPO DEL REPORTAJE (BLOQUE 2) -->
-    <article class="story-container">
-        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-
-        <div class="story-pullquote">
-            "Esta es una frase destacada para romper el ritmo de lectura e impactar visualmente con una declaración o dato clave."
-        </div>
-
-        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-    </article>
-
-    <!-- BLOQUE SCROLLYTELLING (FONDO FIJO) -->
-    <section class="scrolly-section" style="background-image: url('https://raw.githubusercontent.com/pabloalarcona5-lgtm/TCD/refs/heads/main/1858a-a2-e5f-658c-135cdea27_Blog_Pictures-31.jpg');">
-        <div class="scrolly-text-box">
-            <h3>El contexto en cifras</h3>
-            <p>Este recuadro emerge en pantalla mientras el lector desliza la página, ideal para contextualizar testimonios crudos o datos geográficos sobre la imagen fija de fondo.</p>
+    <section class="slide-container dark-bg" data-bg="#014B43">
+        <i class="fa-solid fa-hospital floating-icon icon-2"></i>
+        <div class="content-wrapper">
+            <h2>Logística de Procuramiento</h2>
+            <p>Maqueta de contenido sobre los protocolos de traslado aéreo y terrestre de órganos vitales. Cuando un donante es compatible, se activa un operativo nacional donde cada minuto es crucial para asegurar la viabilidad del injerto.</p>
         </div>
     </section>
 
-    <!-- CUERPO DEL REPORTAJE (BLOQUE 3 + DATOS) -->
-    <article class="story-container">
-        <h2 class="story-subtitle">Factores determinantes y conclusiones</h2>
-        <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+    <section class="slide-container light-bg" data-bg="#099078">
+        <div class="content-wrapper">
+            <h2>Concientización Familiar</h2>
+            <p>Espacio para desarrollar la tesis sobre la negativa familiar y la importancia de conversar sobre la voluntad de ser donante en vida. A pesar de los avances legales, el consentimiento sigue siendo el eslabón decisivo en el sistema de salud pública.</p>
+        </div>
+    </section>
 
-        <div class="data-grid">
-            <div class="data-card">
-                <h4>Dato Clave 1</h4>
-                <p>Análisis breve o estadística relevante que apoya este punto específico del reportaje multimedia.</p>
+    <section class="slide-container dark-bg" data-bg="#C01113">
+        <div class="content-wrapper" style="text-align: center;">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Una Alerta Crítica</h2>
+            <p style="max-width: 700px; margin: 0 auto;">Las cifras evidencian una brecha histórica. Mientras la necesidad de órganos se acelera exponencialmente año tras año, las tasas efectivas de donación se mantienen estables, estancando las posibilidades de supervivencia.</p>
+        </div>
+    </section>
+
+    <section class="slide-container light-bg" data-bg="#FDFFFF">
+        <div class="content-wrapper">
+            <h2 style="text-align: center; margin-bottom: 10px;">Análisis de Datos: Evolución Histórica</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Interactúa con los botones para evaluar la evolución del sistema entre 2018 y 2025.</p>
+            
+            <div class="chart-section">
+                <div class="chart-controls">
+                    <button class="chart-btn active" onclick="updateChart('espera')">Lista de espera</button>
+                    <button class="chart-btn" onclick="updateChart('cantidad')">Cantidad de trasplantes realizados</button>
+                    <button class="chart-btn" onclick="updateChart('resolucion')">Porcentaje de solución</button>
+                </div>
+                <div style="height: 400px; position: relative;">
+                    <canvas id="interactiveChart"></canvas>
+                </div>
             </div>
-            <div class="data-card">
-                <h4>Dato Clave 2</h4>
-                <p>Análisis breve o estadística relevante que apoya este punto específico del reportaje multimedia.</p>
+        </div>
+    </section>
+
+    <section class="slide-container light-bg" data-bg="#666569">
+        <div class="content-wrapper" style="text-align: center;">
+            <h2 style="color: var(--color-white) !important;">Conclusión de la Investigación</h2>
+            <p style="color: var(--color-white) !important; max-width: 700px; margin: 20px auto 40px;">El fortalecimiento de las unidades de procuramiento y la educación ciudadana son los pilares fundamentales sugeridos por los expertos para mitigar las listas de espera en el futuro chileno.</p>
+            <div style="font-size: 0.85rem; color: var(--color-white); opacity: 0.7;">
+                Reportaje Especial TDI Noticias | © 2026
             </div>
         </div>
+    </section>
 
-        <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p>
-    </article>
+    <script>
+        /* --- MOTOR DE SCROLLYTELLING (CAMBIO DE COLOR DE FONDO) --- */
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            threshold: 0.4
+        };
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-app-container">
-            <iframe src="https://script.google.com/macros/s/AKfycbxCwkm2VXCOEV6u5b_f94j3nKxHo-cbwH98YhydzWzWdWs90k952WwVa24-K1UtzLMb/exec"></iframe>
-        </div>
-        <div class="footer-info">
-            <p>&copy; 2026 - TDI NOTICIAS. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const nextColor = entry.target.getAttribute('data-bg');
+                    document.body.style.backgroundColor = nextColor;
+                }
+            });
+        }, observerOptions);
 
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        /* --- DATA SOURCED DIRECTAMENTE DE TU DOCUMENTO --- */
+        const rawData = [
+            { "Año": 2018, "Lista_espera": 2211, "Trasplantes": 459, "Resolucion": 20.8 },
+            { "Año": 2019, "Lista_espera": 2301, "Trasplantes": 651, "Resolucion": 28.3 },
+            { "Año": 2020, "Lista_espera": 2238, "Trasplantes": 392, "Resolucion": 17.5 },
+            { "Año": 2021, "Lista_espera": 2236, "Trasplantes": 450, "Resolucion": 20.1 },
+            { "Año": 2022, "Lista_espera": 2033, "Trasplantes": 580, "Resolucion": 28.5 },
+            { "Año": 2023, "Lista_espera": 2176, "Trasplantes": 627, "Resolucion": 28.8 },
+            { "Año": 2024, "Lista_espera": 2361, "Trasplantes": 771, "Resolucion": 32.7 },
+            { "Año": 2025, "Lista_espera": 2687, "Trasplantes": 741, "Resolucion": 27.6 }
+        ];
+
+        const labels = rawData.map(d => d.Año);
+        const ctx = document.getElementById('interactiveChart').getContext('2d');
+
+        // Inicializar gráfico en "Lista de espera" con color #29869C
+        let chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pacientes en lista de espera',
+                    data: rawData.map(d => d.Lista_espera),
+                    backgroundColor: '#29869C',
+                    borderColor: '#014B43',
+                    borderWidth: 1.5,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#eaeaea' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        /* --- INTERACTIVIDAD DE LOS 3 BOTONES --- */
+        function updateChart(type) {
+            // Cambiar estado activo de los botones
+            document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let dataSet = [];
+            let labelText = '';
+            let barColor = '';
+
+            if (type === 'espera') {
+                dataSet = rawData.map(d => d.Lista_espera);
+                labelText = 'Pacientes en lista de espera';
+                barColor = '#29869C'; // Color base principal solicitado
+            } else if (type === 'cantidad') {
+                dataSet = rawData.map(d => d.Trasplantes);
+                labelText = 'Cantidad de trasplantes realizados';
+                barColor = '#C01113'; // Color Rojo de la paleta
+            } else if (type === 'resolucion') {
+                dataSet = rawData.map(d => d.Resolucion);
+                labelText = 'Porcentaje de solución (%)';
+                barColor = '#099078'; // Color Verde Claro de la paleta
+            }
+
+            chart.data.datasets[0].data = dataSet;
+            chart.data.datasets[0].label = labelText;
+            chart.data.datasets[0].backgroundColor = barColor;
+            chart.update();
+        }
+    </script>
 </body>
 </html>
