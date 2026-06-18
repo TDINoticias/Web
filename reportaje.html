@@ -15,7 +15,7 @@
             --accent: #e63946;
             --transition: all 0.3s ease;
             
-            /* Paleta Médica solicitada */
+            /* Paleta Médica */
             --color-teal: #29869C;
             --color-red: #C01113;
             --color-grey: #666569;
@@ -25,20 +25,18 @@
             --transition-bg: background-color 0.8s ease;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Lato', sans-serif;
-            background-color: var(--color-green-dark); /* Color inicial */
+            background-color: var(--color-green-dark);
             transition: var(--transition-bg);
             overflow-x: hidden;
         }
 
-        /* --- Header Fijo (Mismo de la portada) --- */
+        /* --- Header Fijo --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -52,44 +50,16 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .logo-link {
-            text-decoration: none;
-            color: white;
-        }
-
+        .logo-link { text-decoration: none; color: white; }
         .logo { font-size: 1.8rem; font-weight: bold; letter-spacing: -1px; }
         .logo span { color: var(--accent); }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-            margin: 0;
-            padding: 0;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
+        nav ul { display: flex; list-style: none; gap: 20px; margin: 0; padding: 0; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: 500; transition: var(--transition); }
         nav a:hover { color: var(--accent); }
 
-        /* --- Estructura Scrollytelling --- */
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--color-white);
-            margin: 0;
-        }
-
-        p {
-            color: var(--color-white);
-            font-size: 1.15rem;
-            line-height: 1.7;
-        }
+        /* --- Estructura Inmersiva --- */
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--color-white); margin: 0; }
+        p { color: var(--color-white); font-size: 1.15rem; line-height: 1.7; }
 
         .slide-container {
             min-height: 100vh;
@@ -102,92 +72,162 @@
             position: relative;
         }
 
-        .content-wrapper {
-            max-width: 900px;
+        .content-wrapper { max-width: 900px; width: 100%; z-index: 2; }
+        .light-bg h1, .light-bg h2, .light-bg h3, .light-bg p { color: #2b2b2b !important; }
+
+        /* --- 1. CASILLA DE VIDEO --- */
+        .video-container {
             width: 100%;
-            z-index: 2;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: #000;
+            position: relative;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            margin-top: 25px;
         }
 
-        /* Textos adaptativos según fondo claro o oscuro */
-        .light-bg h1, .light-bg h2, .light-bg h3, .light-bg p {
-            color: #2b2b2b !important;
-        }
-
-        /* Elementos flotantes médicos decorativos */
-        .floating-icon {
+        .video-container iframe, .video-container video {
             position: absolute;
-            color: rgba(253, 255, 255, 0.12);
-            font-size: 180px;
-            z-index: 1;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
-        .light-bg .floating-icon {
-            color: rgba(0, 0, 0, 0.05);
-        }
-        .icon-1 { top: 15%; right: 8%; transform: rotate(15deg); }
-        .icon-2 { bottom: 15%; left: 8%; transform: rotate(-15deg); }
 
-        /* --- Gráfico Interactivo --- */
-        .chart-section {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 16px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        /* --- 2. REPRODUCTOR DE AUDIO INTERACTIVO --- */
+        .audio-player-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+        }
+
+        .audio-btn {
+            background: var(--color-white);
+            color: var(--color-green-dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .audio-btn:hover { transform: scale(1.05); background: var(--color-teal); color: white; }
+
+        /* --- 3. CARRUSEL INTERACTIVO ANIMADO --- */
+        .carousel-wrapper {
+            position: relative;
             width: 100%;
+            height: 450px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
             margin-top: 30px;
         }
 
-        .chart-controls {
+        .carousel-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
             display: flex;
-            gap: 12px;
-            margin-bottom: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: flex-end;
         }
 
+        .carousel-slide.active { opacity: 1; z-index: 2; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 1; }
+        
+        .carousel-caption {
+            position: relative; z-index: 3; background: rgba(0, 0, 0, 0.65);
+            width: 100%; padding: 20px 40px; color: white; backdrop-filter: blur(5px);
+        }
+
+        .carousel-nav {
+            position: absolute; top: 50%; width: 100%; display: flex;
+            justify-content: space-between; transform: translateY(-50%); z-index: 10; padding: 0 20px; pointer-events: none;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.8); border: none; width: 45px; height: 45px;
+            border-radius: 50%; cursor: pointer; pointer-events: auto; transition: var(--transition); font-size: 1.1rem;
+        }
+        .nav-btn:hover { background: var(--color-teal); color: white; }
+
+        /* --- 4. LÍNEA DE TIEMPO INTERACTIVA HISTÓRICA --- */
+        .timeline-interactive {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .timeline-steps {
+            display: flex; justify-content: space-between; position: relative; margin-bottom: 40px;
+        }
+
+        .timeline-steps::before {
+            content: ''; position: absolute; top: 25px; left: 0; width: 100%; height: 4px;
+            background: #e2e8f0; z-index: 1;
+        }
+
+        .step-node {
+            width: 54px; height: 54px; border-radius: 50%; background: #e2e8f0;
+            display: flex; align-items: center; justify-content: center; z-index: 2;
+            cursor: pointer; font-weight: bold; font-family: 'Poppins', sans-serif;
+            color: #718096; transition: var(--transition); border: 4px solid white;
+        }
+
+        .step-node.active {
+            background: var(--color-teal); color: white; transform: scale(1.15); box-shadow: 0 0 15px rgba(41, 134, 156, 0.6);
+        }
+
+        .timeline-display {
+            display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center; min-height: 250px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .timeline-text-box {
+            padding: 10px; transition: var(--transition);
+        }
+
+        .timeline-text-box h3 { color: var(--color-green-dark) !important; margin-bottom: 10px; font-size: 1.5rem;}
+        .timeline-text-box p { color: #4a5568 !important; font-size: 1.1rem;}
+
+        .timeline-img {
+            width: 100%; height: 250px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .timeline-img img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 5. GRÁFICO --- */
+        .chart-section {
+            background: rgba(255, 255, 255, 0.98); border-radius: 16px; padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); width: 100%; margin-top: 30px;
+        }
+        .chart-controls { display: flex; gap: 12px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; }
         .chart-btn {
-            background: var(--color-grey);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            transition: var(--transition);
-            font-size: 0.9rem;
+            background: var(--color-grey); color: white; border: none; padding: 10px 20px;
+            border-radius: 30px; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 700; transition: var(--transition); font-size: 0.9rem;
         }
-
-        .chart-btn.active, .chart-btn:hover {
-            background: var(--color-teal);
-            transform: translateY(-2px);
-        }
-
-        /* --- Maqueta de Secciones --- */
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .img-box {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            height: 350px;
-        }
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .chart-btn.active, .chart-btn:hover { background: var(--color-teal); transform: translateY(-2px); }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 15px; text-align: center; }
-            .two-column { grid-template-columns: 1fr; }
+            .timeline-display { grid-template-columns: 1fr; }
+            .carousel-wrapper { height: 300px; }
             .slide-container { padding: 60px 20px; }
-            .floating-icon { font-size: 100px; }
         }
     </style>
 </head>
@@ -209,39 +249,86 @@
     </header>
 
     <section class="slide-container dark-bg" data-bg="#014B43">
-        <i class="fa-solid fa-heart-pulse floating-icon icon-1"></i>
         <div class="content-wrapper">
-            <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px;">Trasplantes en Chile: Entre la Esperanza y el Tiempo</h1>
-            <p>Maqueta introductoria. El proceso de donación y trasplante de órganos en el país enfrenta realidades críticas que involucran logística de alta complejidad, decisiones familiares urgentes y una carrera constante contra el reloj biológico.</p>
+            <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 15px; text-align: center;">Trasplantes en Chile: Segundos que Salvan Vidas</h1>
+            <p style="text-align: center; max-width: 750px; margin: 0 auto 30px;">Un registro audiovisual inmersivo que relata los esfuerzos humanos y logísticos detrás de cada proceso de donación nacional.</p>
+            
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video de Reportaje" allowfullscreen></iframe>
+            </div>
         </div>
     </section>
 
     <section class="slide-container light-bg" data-bg="#099078">
         <div class="content-wrapper">
-            <div class="two-column">
+            <h2>Testimonios en Primera Persona</h2>
+            <p>Escucha las crónicas radiales exclusivas grabadas directamente desde las salas de coordinación de urgencia médica.</p>
+            
+            <div class="audio-player-box">
+                <button class="audio-btn" id="audioPlayBtn" onclick="toggleAudio()">
+                    <i class="fa-solid fa-play" id="audioIcon"></i>
+                </button>
                 <div>
-                    <h2>Infraestructura Quirúrgica</h2>
-                    <p>Espacio de maqueta para detallar cómo los centros asistenciales de alta complejidad coordinan los pabellones de urgencia y la disponibilidad de los equipos médicos las 24 horas del día.</p>
+                    <h4 style="color: white; margin: 0 0 4px 0;">Podcast: Crónicas de un Quirófano</h4>
+                    <p style="color: #e2e8f0; font-size: 0.9rem; margin: 0;">Duración: 3:45 min | Voz: Equipo TDI</p>
                 </div>
-                <div class="img-box">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Pabellón Quirúrgico">
-                </div>
+                <audio id="reportajeAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
             </div>
         </div>
     </section>
 
     <section class="slide-container dark-bg" data-bg="#014B43">
-        <i class="fa-solid fa-hospital floating-icon icon-2"></i>
         <div class="content-wrapper">
-            <h2>Logística de Procuramiento</h2>
-            <p>Maqueta de contenido sobre los protocolos de traslado aéreo y terrestre de órganos vitales. Cuando un donante es compatible, se activa un operativo nacional donde cada minuto es crucial para asegurar la viabilidad del injerto.</p>
+            <h2>Galería Interactiva: La Infraestructura del Milagro</h2>
+            <p>Desliza para examinar el equipamiento tecnológico y los aviones de emergencia que integran la red nacional de salud.</p>
+            
+            <div class="carousel-wrapper">
+                <div class="carousel-slide active">
+                    <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=900&q=80" alt="Laboratorio">
+                    <div class="carousel-caption">
+                        <h4>Fase 1: Pruebas de Inmunología</h4>
+                        <p>Los laboratorios de compatibilidad analizan muestras las 24 horas para evitar rechazos biológicos.</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=900&q=80" alt="Logística">
+                    <div class="carousel-caption">
+                        <h4>Fase 2: Preservación Orgánica</h4>
+                        <p>Contenedores médicos especiales mantienen las condiciones óptimas de los órganos durante los vuelos rápidos.</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80" alt="Médicos">
+                    <div class="carousel-caption">
+                        <h4>Fase 3: El Equipo de Trasplante</h4>
+                        <p>Cirujanos, anestesistas y enfermeros trabajan bajo estrés extremo en cirugías de alta duración.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-nav">
+                    <button class="nav-btn" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="nav-btn" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="slide-container light-bg" data-bg="#099078">
         <div class="content-wrapper">
-            <h2>Concientización Familiar</h2>
-            <p>Espacio para desarrollar la tesis sobre la negativa familiar y la importancia de conversar sobre la voluntad de ser donante en vida. A pesar de los avances legales, el consentimiento sigue siendo el eslabón decisivo en el sistema de salud pública.</p>
+            <h2 style="text-align: center; margin-bottom: 10px;">Trayectoria de Vida: La Historia de Carlos</h2>
+            <p style="text-align: center; margin-bottom: 30px; max-width: 700px; margin: 0 auto 30px;">Haz clic en cada nodo numérico para seguir de cerca las etapas críticas superadas por un paciente en espera de órganos.</p>
+            
+            <div class="timeline-interactive">
+                <div class="timeline-steps">
+                    <div class="step-node active" onclick="goTimelineStep(0)">1</div>
+                    <div class="step-node" onclick="goTimelineStep(1)">2</div>
+                    <div class="step-node" onclick="goTimelineStep(2)">3</div>
+                    <div class="step-node" onclick="goTimelineStep(3)">4</div>
+                </div>
+                
+                <div class="timeline-display" id="timelineDisplay">
+                    </div>
+            </div>
         </div>
     </section>
 
@@ -281,26 +368,88 @@
     </section>
 
     <script>
-        /* --- MOTOR DE SCROLLYTELLING (CAMBIO DE COLOR DE FONDO) --- */
+        /* --- MOTOR DE SCROLLYTELLING (FONDO DINÁMICO) --- */
         const sections = document.querySelectorAll('section');
-        const observerOptions = {
-            threshold: 0.4
-        };
-
+        const observerOptions = { threshold: 0.4 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const nextColor = entry.target.getAttribute('data-bg');
-                    document.body.style.backgroundColor = nextColor;
+                    document.body.style.backgroundColor = entry.target.getAttribute('data-bg');
                 }
             });
         }, observerOptions);
+        sections.forEach(sec => observer.observe(sec));
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
+        /* --- INTERACTIVIDAD 1: REPRODUCTOR AUDIO SIMULADO --- */
+        const audio = document.getElementById('reportajeAudio');
+        const audioIcon = document.getElementById('audioIcon');
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                audioIcon.className = "fa-solid fa-pause";
+            } else {
+                audio.pause();
+                audioIcon.className = "fa-solid fa-play";
+            }
+        }
 
-        /* --- DATA SOURCED DIRECTAMENTE DE TU DOCUMENTO --- */
+        /* --- INTERACTIVIDAD 2: CARRUSEL DE IMÁGENES --- */
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        /* --- INTERACTIVIDAD 3: LÍNEA DE TIEMPO EVOLUTIVA --- */
+        const timelineData = [
+            {
+                title: "1. La Espera Angustiosa",
+                desc: "Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera en el puesto número 420.",
+                img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=400&q=80",
+                color: "#29869C"
+            },
+            {
+                title: "2. El Llamado de la Madrugada",
+                desc: "A las 3:14 AM, suena el teléfono. La red de procuramiento detecta una compatibilidad exacta tras un accidente automovilístico. Carlos tiene solo 2 horas para llegar al centro clínico.",
+                img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
+                color: "#C01113"
+            },
+            {
+                title: "3. La Carrera en Pabellón",
+                desc: "Mientras un jet traslada el órgano desde el sur, un equipo cirujano de 8 especialistas interviene a Carlos en un pabellón estéril de alta complejidad. La anastomosis toma 45 minutos críticos.",
+                img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&q=80",
+                color: "#014B43"
+            },
+            {
+                title: "4. Un Nuevo Latido",
+                desc: "Seis meses después, los exámenes confirman que el cuerpo no rechaza el injerto. Carlos recupera su autonomía, camina sin asistencia y reanuda su vida profesional.",
+                img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80",
+                color: "#099078"
+            }
+        ];
+
+        function goTimelineStep(index) {
+            document.querySelectorAll('.step-node').forEach((node, idx) => {
+                idx <= index ? node.classList.add('active') : node.classList.remove('active');
+            });
+            const data = timelineData[index];
+            const display = document.getElementById('timelineDisplay');
+            
+            display.innerHTML = `
+                <div class="timeline-text-box" style="border-left: 5px solid ${data.color}">
+                    <h3>${data.title}</h3>
+                    <p>${data.desc}</p>
+                </div>
+                <div class="timeline-img">
+                    <img src="${data.img}" alt="${data.title}">
+                </div>
+            `;
+        }
+        goTimelineStep(0); // Render inicial
+
+        /* --- INTERACTIVIDAD 4: GRÁFICO HISTÓRICO CHART.JS --- */
         const rawData = [
             { "Año": 2018, "Lista_espera": 2211, "Trasplantes": 459, "Resolucion": 20.8 },
             { "Año": 2019, "Lista_espera": 2301, "Trasplantes": 651, "Resolucion": 28.3 },
@@ -315,7 +464,6 @@
         const labels = rawData.map(d => d.Año);
         const ctx = document.getElementById('interactiveChart').getContext('2d');
 
-        // Inicializar gráfico en "Lista de espera" con color #29869C
         let chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -330,45 +478,23 @@
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true, position: 'top' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#eaeaea' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
-                }
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: true, position: 'top' } },
+                scales: { y: { beginAtZero: true, grid: { color: '#eaeaea' } }, x: { grid: { display: false } } }
             }
         });
 
-        /* --- INTERACTIVIDAD DE LOS 3 BOTONES --- */
         function updateChart(type) {
-            // Cambiar estado activo de los botones
             document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-
-            let dataSet = [];
-            let labelText = '';
-            let barColor = '';
+            let dataSet = [], labelText = '', barColor = '';
 
             if (type === 'espera') {
-                dataSet = rawData.map(d => d.Lista_espera);
-                labelText = 'Pacientes en lista de espera';
-                barColor = '#29869C'; // Color base principal solicitado
+                dataSet = rawData.map(d => d.Lista_espera); labelText = 'Pacientes en lista de espera'; barColor = '#29869C';
             } else if (type === 'cantidad') {
-                dataSet = rawData.map(d => d.Trasplantes);
-                labelText = 'Cantidad de trasplantes realizados';
-                barColor = '#C01113'; // Color Rojo de la paleta
+                dataSet = rawData.map(d => d.Trasplantes); labelText = 'Cantidad de trasplantes realizados'; barColor = '#C01113';
             } else if (type === 'resolucion') {
-                dataSet = rawData.map(d => d.Resolucion);
-                labelText = 'Porcentaje de solución (%)';
-                barColor = '#099078'; // Color Verde Claro de la paleta
+                dataSet = rawData.map(d => d.Resolucion); labelText = 'Porcentaje de solución (%)'; barColor = '#099078';
             }
 
             chart.data.datasets[0].data = dataSet;
