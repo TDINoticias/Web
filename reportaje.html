@@ -30,7 +30,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif; /* Texto Normal */
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--color-green-dark);
             transition: background-color 0.8s ease;
             overflow-x: hidden;
@@ -38,7 +38,7 @@
 
         /* --- TIPOGRAFÍA GENERAL --- */
         h1, h2, h3, h4 { 
-            font-family: 'DM Sans', sans-serif; /* Fuente para Títulos */
+            font-family: 'DM Sans', sans-serif;
             color: var(--color-white) !important; 
             margin: 0; 
             font-weight: 700;
@@ -95,7 +95,7 @@
         }
         .music-control:hover { transform: scale(1.1); background: var(--color-teal); }
 
-        /* --- ELEMENTOS DE FONDO INTERACTIVOS (PARALLAX) --- */
+        /* --- ELEMENTOS DE FONDO (PARALLAX) --- */
         .bg-medical-icon {
             position: absolute;
             color: rgba(255, 255, 255, 0.07);
@@ -104,29 +104,32 @@
             pointer-events: none;
         }
 
-        /* --- CONTENEDORES --- */
+        /* --- CONTENEDORES DE SECCIÓN --- */
         .slide-container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 100px 5%;
+            padding: 60px 5%;
             position: relative;
+            width: 100%;
         }
 
         .content-wrapper { max-width: 1000px; width: 100%; z-index: 2; }
 
-        /* Imagen de Portada Solicitada */
+        /* Imagen de Portada Responsiva Completa */
         .hero-box {
             width: 100%;
-            height: 500px;
+            max-width: 100%;
+            height: auto;
+            max-height: 550px;
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 40px;
+            margin: 20px 0 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        .hero-box img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .video-box {
             width: 100%;
@@ -139,7 +142,7 @@
         }
 
         /* Reproductor de Audio Centrado */
-        .audio-center { display: flex; justify-content: center; margin-top: 50px; width: 100%; }
+        .audio-center { display: flex; justify-content: center; margin-top: 40px; width: 100%; }
         .audio-card {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(10px);
@@ -153,7 +156,7 @@
         }
         .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
 
-        /* --- NUEVA LÍNEA DE TIEMPO INTERACTIVA (PANEL DESPLEGABLE SIN PALITO) --- */
+        /* --- LÍNEA DE TIEMPO / PANEL DESPLEGABLE RESPONSIVO --- */
         .timeline-section {
             width: 100%;
             margin-top: 40px;
@@ -162,9 +165,10 @@
         .timeline-nav {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 50px;
+            gap: 20px;
+            margin-bottom: 40px;
             position: relative;
+            flex-wrap: wrap;
         }
 
         .timeline-nav::after {
@@ -178,8 +182,8 @@
         }
 
         .node {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             background: var(--color-white);
             border-radius: 50%;
             display: flex;
@@ -197,44 +201,48 @@
         .node.active {
             background: var(--color-teal);
             color: white !important;
-            transform: scale(1.2);
+            transform: scale(1.15);
             border-color: white;
             box-shadow: 0 0 25px rgba(255,255,255,0.4);
         }
 
+        .timeline-panel-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
         .timeline-panel {
             background: var(--color-white);
-            border-radius: 30px;
-            padding: 50px;
+            border-radius: 25px;
+            padding: 40px;
             display: grid;
             grid-template-columns: 1fr 1.2fr;
             gap: 40px;
             align-items: center;
-            min-height: 450px;
+            min-height: 420px;
             transition: background-color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
-            position: relative;
             box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            width: 100%;
         }
 
         .panel-img {
             width: 100%;
-            height: 350px;
+            height: 320px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         .panel-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Forzar colores oscuros solo dentro del panel blanco de la historia */
-        .panel-content h3 { color: var(--color-green-dark) !important; font-size: 2rem; margin-bottom: 20px; }
+        .panel-content h3 { color: var(--color-green-dark) !important; font-size: 1.8rem; margin-bottom: 15px; }
         .panel-content p { color: #333 !important; }
 
-        /* Flechas Grandes de Desplazamiento Lateral */
+        /* Flechas de Navegación */
         .nav-arrow {
             position: absolute;
             top: 50%;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             background: rgba(255,255,255,0.95);
             border: none;
             border-radius: 50%;
@@ -242,33 +250,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--color-green-dark);
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             transition: var(--transition);
             z-index: 10;
         }
         .nav-arrow:hover { background: var(--color-teal); color: white; transform: translateY(-50%) scale(1.1); }
-        .arrow-prev { left: -30px; transform: translateY(-50%); }
-        .arrow-next { right: -30px; transform: translateY(-50%); }
+        .arrow-prev { left: -25px; transform: translateY(-50%); }
+        .arrow-next { right: -25px; transform: translateY(-50%); }
 
         /* --- SECCIÓN GRÁFICO --- */
         .chart-container {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 25px;
             margin-top: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
         }
         .chart-btns {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
         .btn-data {
-            padding: 12px 25px;
+            padding: 10px 22px;
             border: none;
             border-radius: 50px;
             background: var(--color-grey);
@@ -277,23 +286,46 @@
             font-family: 'DM Sans', sans-serif;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 0.9rem;
         }
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
-        @media (max-width: 850px) {
-            .timeline-panel { grid-template-columns: 1fr; padding: 30px; min-height: auto; }
-            .node { width: 48px; height: 48px; }
-            .panel-img { height: 250px; }
-            .nav-arrow { width: 45px; height: 45px; font-size: 1.1rem; }
-            .arrow-prev { left: -15px; }
-            .arrow-next { right: -15px; }
+        /* --- CONTROL DE RESPONSIVIDAD PARA CELULARES --- */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            header nav ul { gap: 15px; padding: 0; }
+            
+            .slide-container { padding: 50px 4%; }
+            h1 { font-size: 2.2rem !important; }
+            h2 { font-size: 1.7rem !important; }
+            
+            .hero-box { height: auto; max-height: 280px; }
+            
+            /* Colapso de la Línea de Tiempo a 1 columna */
+            .timeline-panel { 
+                grid-template-columns: 1fr; 
+                padding: 25px; 
+                gap: 25px;
+                min-height: auto;
+            }
+            .panel-img { height: 220px; }
+            .timeline-nav::after { display: none; }
+            .timeline-nav { gap: 10px; }
+            .node { width: 45px; height: 45px; font-size: 0.9rem; }
+            
+            /* Reubicación de las flechas en pantallas móviles */
+            .timeline-panel-wrapper { padding: 0; text-align: center; }
+            .nav-arrow { position: static; transform: none; display: inline-flex; margin: 15px 10px 0; }
+            .nav-arrow:hover { transform: scale(1.1); }
+            
+            .chart-container { padding: 15px; }
+            .bg-medical-icon { font-size: 70px; }
         }
     </style>
 </head>
 <body>
 
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
-    <audio id="testimonial-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls></audio>
 
     <button class="music-control" onclick="toggleMusic()">
         <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
@@ -320,7 +352,7 @@
             <h1 style="font-size: 3.5rem; text-align: center; margin-bottom: 40px;">Trasplantes en Chile: Segundos que Salvan Vidas</h1>
             
             <div class="hero-box">
-                <img src="https://drive.google.com/uc?id=1gIKQUaQoIt8ErAwzTah-Xf5UWdwPwpcI" alt="Imagen Médica de Portada">
+                <img src="https://i.imgur.com/bJ3ZqJ9.jpeg" alt="Imagen Médica de Portada">
             </div>
             
             <p style="text-align: center; font-style: italic; opacity: 0.85;">
@@ -341,7 +373,7 @@
             <div class="audio-center">
                 <div class="audio-card">
                     <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">Testimonio de un paciente trasplantado</h3>
-                    <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls></audio>
+                    <audio id="testimonial-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls></audio>
                 </div>
             </div>
         </div>
@@ -359,7 +391,7 @@
                     <div class="node" onclick="setStep(3)">4</div>
                 </div>
                 
-                <div style="position: relative; width: 100%;">
+                <div class="timeline-panel-wrapper">
                     <button class="nav-arrow arrow-prev" onclick="moveStep(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                     
                     <div class="timeline-panel" id="timeline-panel">
@@ -409,7 +441,7 @@
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('testimonial-audio');
         const musicIcon = document.getElementById('music-icon');
-        bgMusic.volume = 0.15; // Banda sonora baja por defecto
+        bgMusic.volume = 0.15; 
         let musicMuted = true;
 
         function toggleMusic() {
@@ -424,37 +456,34 @@
             }
         }
 
-        // Activar música al primer toque en la pantalla
         document.addEventListener('click', () => {
             if (musicMuted) {
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(e => console.log("Permiso de reproducción en espera"));
+                }).catch(e => console.log("Permiso de audio retenido"));
             }
         }, { once: true });
 
-        // Detector automático de Scroll para el testimonio
         const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    bgMusic.pause(); // Detiene música cinemática
-                    mainAudio.play().catch(() => console.log("Interacción requerida"));
+                    bgMusic.pause(); 
+                    mainAudio.play().catch(() => console.log("Interacción manual previa necesaria"));
                 } else {
-                    mainAudio.pause(); // Congela testimonio al salir de la sección
-                    if (!musicMuted) bgMusic.play(); // Retoma música ambiente
+                    mainAudio.pause(); 
+                    if (!musicMuted) bgMusic.play(); 
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.4 });
         audioObserver.observe(audioSection);
 
-        /* --- MOTOR SCROLLYTELLING Y EFECTO PARALLAX DE ICONOS --- */
+        /* --- MOTOR SCROLLYTELLING Y PARALLAX --- */
         const sections = document.querySelectorAll('section');
         window.addEventListener('scroll', () => {
             const top = window.scrollY;
             
-            // Transición suave de fondos
             sections.forEach(sec => {
                 const offset = sec.offsetTop - 350;
                 if (top >= offset) {
@@ -462,14 +491,13 @@
                 }
             });
 
-            // Desplazamiento Parallax Sutil de los Iconos Médicos
             document.querySelectorAll('.bg-medical-icon').forEach(icon => {
                 const speed = parseFloat(icon.dataset.speed);
                 icon.style.transform = `translateY(${top * speed}px) rotate(${top * 0.04}deg)`;
             });
         });
 
-        /* --- LÓGICA DE LA HISTORIA DESPLEGABLE (LÍNEA DE TIEMPO) --- */
+        /* --- LÓGICA DE LA HISTORIA (LÍNEA DE TIEMPO) --- */
         let currentStep = 0;
         const stepsData = [
             { title: "1. La Espera Angustiosa", desc: "Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla.", img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", color: "#29869C" },
@@ -482,10 +510,8 @@
             currentStep = idx;
             const data = stepsData[idx];
             
-            // Cambiar nodo de número activo
             document.querySelectorAll('.node').forEach((n, i) => i === idx ? n.classList.add('active') : n.classList.remove('active'));
             
-            // Efecto óptico de transición de despliegue
             const panel = document.getElementById('timeline-panel');
             panel.style.transform = "scale(0.97)";
             panel.style.opacity = "0.4";
@@ -506,11 +532,9 @@
                 setStep(next);
             }
         }
-
-        // Render Inicial
         setStep(0);
 
-        /* --- CONFIGURACIÓN GRÁFICO INTERACTIVO CHART.JS --- */
+        /* --- CONFIGURACIÓN GRÁFICO CHART.JS --- */
         const stats = [
             { "Año": 2018, "espera": 2211, "trasplantes": 459, "resolucion": 20.8 },
             { "Año": 2019, "espera": 2301, "trasplantes": 651, "resolucion": 28.3 },
@@ -522,8 +546,10 @@
             { "Año": 2025, "espera": 2687, "trasplantes": 741, "resolucion": 27.6 }
         ];
 
+        const labels = rawData.map(d => d.Año);
         const ctx = document.getElementById('dataChart').getContext('2d');
-        let myChart = new Chart(ctx, {
+
+        let chart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: stats.map(s => s.Año),
@@ -550,10 +576,10 @@
             if(type === 'cantidad') { data = stats.map(s => s.trasplantes); label = 'Cantidad de trasplantes realizados'; color = '#C01113'; }
             if(type === 'resolucion') { data = stats.map(s => s.resolucion); label = 'Porcentaje de solución (%)'; color = '#099078'; }
             
-            myChart.data.datasets[0].data = data;
-            myChart.data.datasets[0].label = label;
-            myChart.data.datasets[0].backgroundColor = color;
-            myChart.update();
+            chart.data.datasets[0].data = data;
+            chart.data.datasets[0].label = label;
+            chart.data.datasets[0].backgroundColor = color;
+            chart.update();
         }
     </script>
 </body>
