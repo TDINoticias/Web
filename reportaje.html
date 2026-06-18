@@ -91,6 +91,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             transition: var(--transition);
         }
+        .music-control:hover { transform: scale(1.1); background: var(--color-teal); }
 
         /* --- ICONOS DE FONDO --- */
         .bg-medical-icon {
@@ -147,7 +148,7 @@
             max-width: 600px;
             text-align: center;
         }
-        .audio-card audio { width: 100%; margin-top: 20px; }
+        .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
 
         /* --- STORYLINE ANCHO COMPLETO LINEAL --- */
         .storyline-linear-container {
@@ -266,7 +267,7 @@
             </ul>
         </nav>
     </header>
-
+    
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
             <h1 style="font-size: 3.5rem; text-align: center; margin-bottom: 25px;">Trasplantes en Chile: Segundos que Salvan Vidas</h1>
@@ -355,7 +356,7 @@
     </section>
 
     <script>
-        /* --- MÚSICA AMBIENTAL Y CONTROLES --- */
+        /* --- MANEJO DE AUDIOS ULTRA AGRESIVO --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -364,32 +365,59 @@
 
         function toggleMusic() {
             if (bgMusic.paused) {
-                bgMusic.play(); musicIcon.className = "fa-solid fa-volume-high"; musicMuted = false;
+                bgMusic.play();
+                musicIcon.className = "fa-solid fa-volume-high";
+                musicMuted = false;
             } else {
-                bgMusic.pause(); musicIcon.className = "fa-solid fa-volume-xmark"; musicMuted = true;
+                bgMusic.pause();
+                musicIcon.className = "fa-solid fa-volume-xmark";
+                musicMuted = true;
             }
         }
 
-        // Activación automática de audio ambiental al scroll sutil
-        window.addEventListener('scroll', () => {
+        // 1. Intentar reproducir INMEDIATAMENTE al cargar la web
+        window.addEventListener('load', () => {
+            bgMusic.play().then(() => {
+                musicMuted = false;
+                musicIcon.className = "fa-solid fa-volume-high";
+            }).catch(() => {
+                console.log("El navegador bloqueó el autoplay inicial. Esperando acción del usuario...");
+            });
+        });
+
+        // 2. Capturar CUALQUIER mínima acción para forzar el play si falló lo anterior
+        const forcePlay = () => {
             if (musicMuted) {
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
+                    document.removeEventListener('click', forcePlay);
+                    document.removeEventListener('scroll', forcePlay);
+                    document.removeEventListener('mousemove', forcePlay);
+                    document.removeEventListener('keydown', forcePlay);
                 }).catch(() => {});
             }
-        }, { once: true });
+        };
 
+        document.addEventListener('click', forcePlay);
+        document.addEventListener('scroll', forcePlay);
+        document.addEventListener('mousemove', forcePlay);
+        document.addEventListener('keydown', forcePlay);
+
+        // Lógica para pausar fondo al llegar al testimonio
+        const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    bgMusic.pause(); mainAudio.play().catch(() => {});
+                    bgMusic.pause(); 
+                    mainAudio.play().catch(() => console.log("Clic previo requerido para testimonio"));
                 } else {
-                    mainAudio.pause(); if (!musicMuted) bgMusic.play();
+                    mainAudio.pause(); 
+                    if (!musicMuted) bgMusic.play(); 
                 }
             });
         }, { threshold: 0.4 });
-        audioObserver.observe(document.getElementById('audio-section'));
+        audioObserver.observe(audioSection);
 
         /* --- MANEJO DE FONDOS Y PARALLAX --- */
         const sections = document.querySelectorAll('section');
@@ -417,14 +445,14 @@
             const data = visorData[idx];
             const panel = document.getElementById('drive-panel');
             
-            panel.classList.remove('desplegado'); // Resetea la animación
+            panel.classList.remove('desplegado'); 
             
             setTimeout(() => {
                 document.getElementById('panel-title').innerText = data.title;
                 document.getElementById('panel-title').style.color = data.color;
                 document.getElementById('panel-desc').innerText = data.desc;
                 document.getElementById('panel-img').src = data.img;
-                panel.classList.add('desplegado'); // Despliega con zoom in suave (estilo visor Drive)
+                panel.classList.add('desplegado'); 
             }, 250);
         }
 
