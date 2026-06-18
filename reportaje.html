@@ -116,7 +116,7 @@
             width: 100%;
         }
 
-        .content-wrapper { max-width: 1000px; width: 100%; z-index: 2; }
+        .content-wrapper { max-width: 1100px; width: 100%; z-index: 2; }
 
         /* Imagen de Portada Adaptable */
         .hero-box {
@@ -156,104 +156,40 @@
         }
         .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
 
-        /* --- NUEVA LÍNEA DE TIEMPO DESPLEGABLE (ESTILO FOTO/TABS) --- */
-        .timeline-section {
+        /* --- NUEVO CONTENEDOR INTEGRADO PARA STORYLINE (TEXTO IZQ / FOTO DER) --- */
+        .storyline-panel-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr; /* Storyline Izquierda | Foto fija Derecha */
+            gap: 30px;
+            background: var(--color-white);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            align-items: center;
             width: 100%;
             margin-top: 30px;
         }
 
-        /* Barra horizontal limpia con nombres de etapas */
-        .timeline-tabs-bar {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 40px;
-            padding-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            padding: 10px 15px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .tab-btn:hover {
-            color: var(--color-white);
-        }
-
-        .tab-btn.active {
-            color: var(--color-white);
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 0;
+        .storyline-iframe-wrapper {
             width: 100%;
-            height: 4px;
-            background: var(--color-teal);
-            border-radius: 2px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            background: #fff;
         }
 
-        /* Contenedor del desplegable estilo galería */
-        .timeline-panel {
-            background: var(--color-white);
-            border-radius: 25px;
-            padding: 45px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr; /* Texto Izquierda | Foto Derecha */
-            gap: 40px;
-            align-items: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        .storyline-side-img {
             width: 100%;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .timeline-panel.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .panel-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .panel-content h3 { 
-            color: var(--color-green-dark) !important; 
-            font-size: 2rem; 
-            margin-bottom: 15px; 
-        }
-
-        .panel-content p { 
-            color: #333 !important; 
-        }
-
-        .panel-img {
-            width: 100%;
-            height: 340px;
+            height: 650px; /* Hace juego exacto con la altura de tu iframe */
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .panel-img img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+        .storyline-side-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
@@ -287,8 +223,8 @@
         }
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
-        /* --- CONTROL DE RESPONSIVIDAD PARA CELULARES --- */
-        @media (max-width: 768px) {
+        /* --- RESPONSIVIDAD MÓVIL --- */
+        @media (max-width: 900px) {
             header { flex-direction: column; gap: 15px; text-align: center; }
             header nav ul { gap: 15px; padding: 0; }
             
@@ -298,16 +234,15 @@
             
             .hero-box { height: auto; max-height: 280px; }
             
-            /* Colapso de la Línea de Tiempo en móviles (La foto pasa abajo del texto) */
-            .timeline-panel { 
-                grid-template-columns: 1fr; 
-                padding: 30px 20px; 
-                gap: 30px;
+            /* Colapso de la estructura de Storyline a 1 columna en celulares */
+            .storyline-panel-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 20px;
             }
-            .panel-img { height: 230px; }
-            .timeline-tabs-bar { justify-content: center; gap: 10px; }
-            .tab-btn { font-size: 0.95rem; padding: 8px 12px; }
-            .tab-btn.active::after { bottom: -5px; }
+            .storyline-side-img {
+                height: 300px; /* Reduce la foto en móviles para dar prioridad al gráfico */
+            }
             
             .chart-container { padding: 15px; }
             .bg-medical-icon { font-size: 70px; }
@@ -372,24 +307,16 @@
 
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
-            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">Trayectoria de Vida: La Historia de Carlos</h2>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Trayectoria de Vida: La Historia de Carlos</h2>
+            <p style="text-align: center; opacity: 0.85;">Explora los hitos clínicos cronológicos cruzados con la evolución del volumen de la lista de espera asistencial.</p>
             
-            <div class="timeline-section">
-                <div class="timeline-tabs-bar">
-                    <button class="tab-btn active" onclick="switchTimelineTab(0)">Etapa 1: Espera</button>
-                    <button class="tab-btn" onclick="switchTimelineTab(1)">Etapa 2: Llamado</button>
-                    <button class="tab-btn" onclick="switchTimelineTab(2)">Etapa 3: Quirófano</button>
-                    <button class="tab-btn" onclick="switchTimelineTab(3)">Etapa 4: Futuro</button>
+            <div class="storyline-panel-grid">
+                <div class="storyline-iframe-wrapper">
+                    <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" style="width:100%;height:650px;" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0"></iframe>
                 </div>
                 
-                <div class="timeline-panel" id="timeline-panel">
-                    <div class="panel-content">
-                        <h3 id="panel-title">1. La Espera Angustiosa</h3>
-                        <p id="panel-desc">Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.</p>
-                    </div>
-                    <div class="panel-img">
-                        <img id="panel-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Etapa Actual">
-                    </div>
+                <div class="storyline-side-img">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Pabellón Quirúrgico">
                 </div>
             </div>
         </div>
@@ -415,8 +342,8 @@
 
     <section class="slide-container" data-bg="#666569">
         <div class="content-wrapper" style="text-align: center;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Compromiso con la Vida</h2>
-            <p style="max-width: 750px; margin: 0 auto 40px;">El fortalecimiento de la educación asistencial y la conversación familiar oportuna representan las principales herramientas propuestas por los especialistas para acortar las brechas de donación actuales.</p>
+            <h2>Compromiso con la Vida</h2>
+            <p style="max-width: 750px; margin: 20px auto 40px;">El fortalecimiento de la educación asistencial y la conversación familiar oportuna representan las principales herramientas propuestas por los especialistas para acortar las brechas de donación actuales.</p>
             <div style="font-size: 0.9rem; opacity: 0.7; color: white;">Reportaje Especial TDI Noticias | © 2026</div>
         </div>
     </section>
@@ -446,7 +373,7 @@
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(e => console.log("Permiso de reproducción diferido"));
+                }).catch(e => console.log("Interacción inicial requerida"));
             }
         }, { once: true });
 
@@ -455,7 +382,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     bgMusic.pause(); 
-                    mainAudio.play().catch(() => console.log("Interacción de usuario requerida"));
+                    mainAudio.play().catch(() => console.log("Esperando clic inicial"));
                 } else {
                     mainAudio.pause(); 
                     if (!musicMuted) bgMusic.play(); 
@@ -480,40 +407,6 @@
                 const speed = parseFloat(icon.dataset.speed);
                 icon.style.transform = `translateY(${top * speed}px) rotate(${top * 0.04}deg)`;
             });
-        });
-
-        /* --- NUEVA LOGICA DE PESTAÑAS PARA LA LINEA DE TIEMPO DESPLEGABLE --- */
-        const stepsData = [
-            { title: "1. La Espera Angustiosa", desc: "Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.", img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", color: "#29869C" },
-            { title: "2. El Llamado de Emergencia", desc: "3:14 AM. Suena la alerta de procuramiento nacional. Una compatibilidad exacta ha aparecido y el traslado de urgencia aérea debe despegar de inmediato.", img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", color: "#C01113" },
-            { title: "3. La Operación Crítica", desc: "8 horas de intervención precisa en pabellón. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj de viabilidad.", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", color: "#014B43" },
-            { title: "4. Un Nuevo Horizonte", desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", color: "#099078" }
-        ];
-
-        function switchTimelineTab(idx) {
-            // Cambiar botón de la pestaña activo
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach((btn, i) => i === idx ? btn.classList.add('active') : btn.classList.remove('active'));
-            
-            const data = stepsData[idx];
-            const panel = document.getElementById('timeline-panel');
-            
-            // Efecto de cierre e inicio de despliegue (Como abrir una foto)
-            panel.classList.remove('show');
-            
-            setTimeout(() => {
-                document.getElementById('panel-title').innerText = data.title;
-                document.getElementById('panel-title').style.color = data.color;
-                document.getElementById('panel-desc').innerText = data.desc;
-                document.getElementById('panel-img').src = data.img;
-                
-                panel.classList.add('show');
-            }, 250);
-        }
-        
-        // Ejecución inicial para desplegar la primera etapa
-        document.addEventListener("DOMContentLoaded", () => {
-            switchTimelineTab(0);
         });
 
         /* --- CONFIGURACIÓN GRÁFICO CHART.JS --- */
