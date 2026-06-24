@@ -34,7 +34,6 @@
             background-color: var(--color-green-dark);
             transition: background-color 0.8s ease;
             overflow-x: hidden;
-            /* Evitar que el texto se seleccione accidentalmente al deslizar */
             user-select: none; 
         }
 
@@ -193,64 +192,84 @@
         .drive-text h3 { color: var(--color-green-dark) !important; font-size: 2rem; margin-bottom: 15px; }
         .drive-text p { color: #333 !important; flex-grow: 1; }
 
+        /* CAJA DE LA IMAGEN CON EL ESCÁNER CANVAS SUPERPUESTO */
         .drive-img-box {
+            position: relative;
             width: 100%;
             height: 350px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background: #000;
         }
-        .drive-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* --- NUEVO INTERRUPTOR DESLIZABLE (SLIDE TO ACTION) --- */
-        .drive-controls {
-            margin-top: 25px;
-            width: 100%;
+        .drive-img-box img { 
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1; 
         }
         
-        .swipe-container {
-            position: relative;
-            width: 100%;
-            height: 65px;
-            background: #e2e8f0;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-        }
-
-        .swipe-text {
+        /* El Canvas que oculta la imagen y reacciona al mouse */
+        #scanner-canvas {
             position: absolute;
-            width: 100%;
-            text-align: center;
-            color: #4a5568;
-            font-weight: 700;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.05rem;
-            pointer-events: none; /* Que el click pase a través del texto */
-            z-index: 1;
-            transition: opacity 0.2s;
-        }
-
-        .swipe-thumb {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: var(--color-teal);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 2;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            /* Importante para que el touch no haga scroll en móviles mientras arrastras */
-            touch-action: none; 
+            cursor: crosshair;
+            touch-action: none; /* Evita que el celular scrollee mientras arrastras */
+        }
+
+        /* Mensaje flotante sobre el lienzo */
+        .scan-instruction {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            z-index: 3;
+            pointer-events: none;
+            text-align: center;
+            opacity: 0.8;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: opacity 0.3s;
+        }
+
+        /* --- BARRA DE PROGRESO MÉDICA (Reemplaza los botones) --- */
+        .medical-monitor {
+            margin-top: 25px;
+            width: 100%;
+            background: #f1f5f9;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .monitor-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--color-green-dark);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .monitor-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: #cbd5e1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .monitor-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--color-teal);
+            border-radius: 10px;
+            transition: width 0.1s linear;
         }
 
         /* --- GRÁFICO --- */
@@ -275,12 +294,13 @@
             .drive-display-panel { grid-template-columns: 1fr; padding: 25px; gap: 25px; }
             .drive-img-box { height: 230px; }
             .bg-medical-icon { font-size: 70px; }
+            .scan-instruction { font-size: 0.9rem; width: 80%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO DE FONDO CON ATRIBUTO AUTOPLAY -->
+    <!-- AUDIO DE FONDO -->
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" autoplay loop></audio>
 
     <button class="music-control" onclick="toggleMusic()">
@@ -339,7 +359,7 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO CON SWIPE -->
+    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO DEL ESCÁNER -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
@@ -348,17 +368,29 @@
                 <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
             </div>
 
+            <!-- PANEL VISOR CON CANVAS INTERACTIVO -->
             <div class="drive-display-panel" id="drive-panel">
                 <div class="drive-text">
                     <h3 id="panel-title">Etapa 1: Paciente en Espera</h3>
                     <p id="panel-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
                     
-                    <div class="drive-controls" id="drive-controls">
-                        <!-- El slider inmersivo se inyecta por JS aquí -->
+                    <!-- Monitor Clínico (Barra de progreso) -->
+                    <div class="medical-monitor">
+                        <div class="monitor-header">
+                            <span id="monitor-status">Diagnóstico requerido...</span>
+                            <span id="monitor-pct">0%</span>
+                        </div>
+                        <div class="monitor-bar-bg">
+                            <div class="monitor-bar-fill" id="monitor-fill"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="drive-img-box">
+
+                <!-- Caja de la Imagen con Canvas de Rayos X superpuesto -->
+                <div class="drive-img-box" id="canvas-container">
                     <img id="panel-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Vista Visor">
+                    <div class="scan-instruction" id="scan-text"><i class="fa-solid fa-magnifying-glass"></i> Escanea la zona con el mouse</div>
+                    <canvas id="scanner-canvas"></canvas>
                 </div>
             </div>
         </div>
@@ -398,7 +430,7 @@
     </section>
 
     <script>
-        /* --- MANEJO DE AUDIOS --- */
+        /* --- MANEJO DE AUDIOS ULTRA AGRESIVO CON AUTOPLAY NATIVO --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -407,55 +439,40 @@
 
         function toggleMusic() {
             if (bgMusic.paused) {
-                bgMusic.play();
-                musicIcon.className = "fa-solid fa-volume-high";
-                musicMuted = false;
+                bgMusic.play(); musicIcon.className = "fa-solid fa-volume-high"; musicMuted = false;
             } else {
-                bgMusic.pause();
-                musicIcon.className = "fa-solid fa-volume-xmark";
-                musicMuted = true;
+                bgMusic.pause(); musicIcon.className = "fa-solid fa-volume-xmark"; musicMuted = true;
             }
         }
 
         window.addEventListener('load', () => {
             if (!bgMusic.paused) {
-                musicMuted = false;
-                musicIcon.className = "fa-solid fa-volume-high";
+                musicMuted = false; musicIcon.className = "fa-solid fa-volume-high";
             } else {
-                bgMusic.play().then(() => {
-                    musicMuted = false;
-                    musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(() => {});
+                bgMusic.play().then(() => { musicMuted = false; musicIcon.className = "fa-solid fa-volume-high"; }).catch(() => {});
             }
         });
 
         const forcePlay = () => {
             if (musicMuted) {
                 bgMusic.play().then(() => {
-                    musicMuted = false;
-                    musicIcon.className = "fa-solid fa-volume-high";
-                    document.removeEventListener('click', forcePlay);
-                    document.removeEventListener('scroll', forcePlay);
-                    document.removeEventListener('mousemove', forcePlay);
-                    document.removeEventListener('keydown', forcePlay);
+                    musicMuted = false; musicIcon.className = "fa-solid fa-volume-high";
+                    document.removeEventListener('click', forcePlay); document.removeEventListener('scroll', forcePlay);
+                    document.removeEventListener('mousemove', forcePlay); document.removeEventListener('keydown', forcePlay);
                 }).catch(() => {});
             }
         };
 
-        document.addEventListener('click', forcePlay);
-        document.addEventListener('scroll', forcePlay);
-        document.addEventListener('mousemove', forcePlay);
-        document.addEventListener('keydown', forcePlay);
+        document.addEventListener('click', forcePlay); document.addEventListener('scroll', forcePlay);
+        document.addEventListener('mousemove', forcePlay); document.addEventListener('keydown', forcePlay);
 
         const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    bgMusic.pause(); 
-                    mainAudio.play().catch(() => {});
+                    bgMusic.pause(); mainAudio.play().catch(() => {});
                 } else {
-                    mainAudio.pause(); 
-                    if (!musicMuted) bgMusic.play(); 
+                    mainAudio.pause(); if (!musicMuted) bgMusic.play(); 
                 }
             });
         }, { threshold: 0.4 });
@@ -473,8 +490,15 @@
             });
         });
 
-        /* --- LÓGICA DEL VISOR DESPLEGABLE INMERSIVO CON SWIPE (DESLIZADOR) --- */
+        /* --- LÓGICA DEL ESCÁNER INTERACTIVO (HOVER TO REVEAL) --- */
         let activeVisorStep = 0;
+        let isScanningComplete = false;
+        let scanPoints = 0;
+        const POINTS_TO_COMPLETE = 120; // Movimientos de mouse necesarios para llenar la barra
+        
+        const canvas = document.getElementById('scanner-canvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
         
         const visorData = [
             { 
@@ -482,30 +506,102 @@
                 desc: "Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.", 
                 img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", 
                 color: "#29869C",
-                actionText: "Desliza para contestar llamada clínica"
+                monitorText: "Analizando compatibilidad de tejidos..."
             },
             { 
                 title: "Etapa 2: El Procuramiento", 
                 desc: "3:14 AM. Suena la alerta. Una compatibilidad exacta ha aparecido y la red logística debe trasladar el órgano vital de inmediato antes de perder viabilidad.", 
                 img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", 
                 color: "#C01113",
-                actionText: "Desliza para autorizar el traslado aéreo"
+                monitorText: "Trazando ruta de traslado aéreo..."
             },
             { 
                 title: "Etapa 3: El Trasplante", 
                 desc: "8 horas de intervención precisa en pabellón estéril. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj.", 
                 img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", 
                 color: "#014B43",
-                actionText: "Desliza para iniciar la cirugía"
+                monitorText: "Supervisando signos vitales en cirugía..."
             },
             { 
                 title: "Etapa 4: Un Nuevo Latido", 
                 desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", 
                 img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", 
                 color: "#099078",
-                actionText: "Desliza para reiniciar historia"
+                monitorText: "Evaluando sistema inmunológico posoperatorio..."
             }
         ];
+
+        function initScanner() {
+            // Ajustar Canvas al tamaño de la caja de imagen
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            
+            // Pintar la capa médica oscura encima de la foto
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#014B43'; // Azul/Verde médico oscuro
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar grilla para que parezca una pantalla de hospital
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x <= canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+            for (let y = 0; y <= canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+            // Reset variables
+            isScanningComplete = false;
+            scanPoints = 0;
+            document.getElementById('monitor-fill').style.width = '0%';
+            document.getElementById('monitor-pct').innerText = '0%';
+            document.getElementById('scan-text').style.opacity = '0.8';
+        }
+
+        function handleScanMove(e) {
+            if(isScanningComplete) return;
+
+            // Ocultar la instrucción de texto al empezar a mover
+            document.getElementById('scan-text').style.opacity = '0';
+
+            const rect = canvas.getBoundingClientRect();
+            // Soporta Mouse y Touch (Celular)
+            let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            let clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            
+            let x = clientX - rect.left;
+            let y = clientY - rect.top;
+
+            // Efecto Linterna/Borrador: "Corta" un circulo transparente revelando la imagen de fondo
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 50, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Aumentar la barra de progreso del monitor
+            scanPoints++;
+            let percentage = Math.min((scanPoints / POINTS_TO_COMPLETE) * 100, 100);
+            
+            document.getElementById('monitor-fill').style.width = percentage + '%';
+            document.getElementById('monitor-pct').innerText = Math.floor(percentage) + '%';
+
+            // Al llegar al 100%, avanza a la siguiente historia automáticamente
+            if(scanPoints >= POINTS_TO_COMPLETE) {
+                isScanningComplete = true;
+                document.getElementById('monitor-status').innerText = "¡Proceso Completado! Cargando...";
+                
+                // Limpia el canvas por completo visualmente
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                setTimeout(() => {
+                    let nextIdx = (activeVisorStep + 1) % visorData.length;
+                    deployVisorStep(nextIdx);
+                }, 1000);
+            }
+        }
+
+        // Agregar Eventos de Movimiento al Canvas
+        canvas.addEventListener('mousemove', handleScanMove);
+        canvas.addEventListener('touchmove', handleScanMove);
+        // Evitar comportamientos por defecto indeseados
+        canvas.addEventListener('mousedown', (e) => e.preventDefault());
 
         function deployVisorStep(idx) {
             activeVisorStep = idx;
@@ -519,80 +615,24 @@
                 document.getElementById('panel-title').style.color = data.color;
                 document.getElementById('panel-desc').innerText = data.desc;
                 document.getElementById('panel-img').src = data.img;
+                document.getElementById('monitor-status').innerText = data.monitorText;
                 
-                const nextIdx = (idx + 1) % visorData.length;
-                
-                // Inyectamos el componente Swipe (Deslizador interactivo)
-                document.getElementById('drive-controls').innerHTML = `
-                    <div class="swipe-container" id="swipe-container">
-                        <div class="swipe-text" id="swipe-text">${data.actionText}</div>
-                        <div class="swipe-thumb" id="swipe-thumb" style="background: ${data.color};"><i class="fa-solid fa-arrow-right"></i></div>
-                    </div>
-                `;
+                // Reiniciar el Escáner para la nueva foto
+                initScanner();
 
                 panel.classList.add('desplegado'); 
-                
-                // Activar eventos del deslizador una vez renderizado
-                setTimeout(() => initSwipeLogic(nextIdx), 100);
             }, 300);
         }
 
-        // Lógica de arrastre (Drag) para el botón inmersivo
-        function initSwipeLogic(nextIdx) {
-            const container = document.getElementById('swipe-container');
-            const thumb = document.getElementById('swipe-thumb');
-            const text = document.getElementById('swipe-text');
-            if(!container || !thumb) return;
+        // Ejecución de la Etapa 1
+        document.addEventListener("DOMContentLoaded", () => {
+            deployVisorStep(0);
+        });
 
-            let isDragging = false;
-            let startX = 0;
-            // Distancia máxima que puede recorrer el pulgar
-            let maxTravel = container.offsetWidth - thumb.offsetWidth - 10; 
-
-            const onStart = (clientX) => {
-                isDragging = true;
-                startX = clientX - (parseInt(thumb.style.left) || 5) + 5;
-                thumb.style.transition = "none";
-            };
-
-            const onMove = (clientX) => {
-                if (!isDragging) return;
-                let currentX = clientX - startX;
-                if (currentX < 0) currentX = 0;
-                if (currentX > maxTravel) currentX = maxTravel;
-                
-                thumb.style.left = (5 + currentX) + 'px';
-                text.style.opacity = 1 - (currentX / maxTravel); // Desvanece el texto
-
-                // Si llega al 95% de la barra, confirmamos la acción
-                if (currentX >= maxTravel * 0.95) {
-                    isDragging = false;
-                    deployVisorStep(nextIdx);
-                }
-            };
-
-            const onEnd = () => {
-                if (!isDragging) return;
-                isDragging = false;
-                // Si no llegó al final, regresa como un resorte
-                thumb.style.transition = "left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
-                thumb.style.left = "5px";
-                text.style.opacity = 1;
-            };
-
-            // Eventos de Mouse (Computadora)
-            thumb.addEventListener('mousedown', (e) => onStart(e.clientX));
-            window.addEventListener('mousemove', (e) => onMove(e.clientX));
-            window.addEventListener('mouseup', onEnd);
-
-            // Eventos de Touch (Celulares/Tablets)
-            thumb.addEventListener('touchstart', (e) => onStart(e.touches[0].clientX));
-            window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX));
-            window.addEventListener('touchend', onEnd);
-        }
-
-        // Inicia la Etapa 1
-        document.addEventListener("DOMContentLoaded", () => deployVisorStep(0));
+        // Asegurar que el canvas se reajuste si el usuario cambia el tamaño de la ventana
+        window.addEventListener('resize', () => {
+            if(!isScanningComplete) initScanner();
+        });
 
         /* --- CHART.JS --- */
         const stats = [
@@ -605,8 +645,8 @@
             { "Año": 2024, "espera": 2361, "trasplantes": 771, "resolucion": 32.7 },
             { "Año": 2025, "espera": 2687, "trasplantes": 741, "resolucion": 27.6 }
         ];
-        const ctx = document.getElementById('dataChart').getContext('2d');
-        let myChart = new Chart(ctx, {
+        const ctxChart = document.getElementById('dataChart').getContext('2d');
+        let myChart = new Chart(ctxChart, {
             type: 'bar',
             data: {
                 labels: stats.map(s => s.Año),
