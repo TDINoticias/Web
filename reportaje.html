@@ -34,6 +34,8 @@
             background-color: var(--color-green-dark);
             transition: background-color 0.8s ease;
             overflow-x: hidden;
+            /* Evitar que el texto se seleccione accidentalmente al deslizar */
+            user-select: none; 
         }
 
         h1, h2, h3, h4 { 
@@ -200,30 +202,55 @@
         }
         .drive-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Botón de Acción Narrativa */
+        /* --- NUEVO INTERRUPTOR DESLIZABLE (SLIDE TO ACTION) --- */
         .drive-controls {
             margin-top: 25px;
             width: 100%;
         }
-        .action-btn {
+        
+        .swipe-container {
+            position: relative;
             width: 100%;
-            border: none;
-            padding: 16px 20px;
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            height: 65px;
+            background: #e2e8f0;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            justify-content: space-between;
         }
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            filter: brightness(1.1);
+
+        .swipe-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: #4a5568;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            pointer-events: none; /* Que el click pase a través del texto */
+            z-index: 1;
+            transition: opacity 0.2s;
+        }
+
+        .swipe-thumb {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--color-teal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            /* Importante para que el touch no haga scroll en móviles mientras arrastras */
+            touch-action: none; 
         }
 
         /* --- GRÁFICO --- */
@@ -312,25 +339,22 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO -->
+    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO CON SWIPE -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
             
-            <!-- Storyline Lineal de Ancho Completo -->
             <div class="storyline-linear-container">
                 <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
             </div>
 
-            <!-- SECCIÓN INMERSIVA: VISOR DE DESPLIEGUE POR ACCIÓN -->
             <div class="drive-display-panel" id="drive-panel">
                 <div class="drive-text">
                     <h3 id="panel-title">Etapa 1: Paciente en Espera</h3>
                     <p id="panel-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
                     
-                    <!-- Contenedor dinámico del botón de acción -->
                     <div class="drive-controls" id="drive-controls">
-                        <!-- Botón inyectado por JS -->
+                        <!-- El slider inmersivo se inyecta por JS aquí -->
                     </div>
                 </div>
                 <div class="drive-img-box">
@@ -374,7 +398,7 @@
     </section>
 
     <script>
-        /* --- MANEJO DE AUDIOS ULTRA AGRESIVO CON AUTOPLAY NATIVO --- */
+        /* --- MANEJO DE AUDIOS --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -401,9 +425,7 @@
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
-                }).catch(() => {
-                    console.log("El navegador bloqueó el autoplay inicial. Esperando acción mínima...");
-                });
+                }).catch(() => {});
             }
         });
 
@@ -430,7 +452,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     bgMusic.pause(); 
-                    mainAudio.play().catch(() => console.log("Clic previo requerido para testimonio"));
+                    mainAudio.play().catch(() => {});
                 } else {
                     mainAudio.pause(); 
                     if (!musicMuted) bgMusic.play(); 
@@ -451,38 +473,37 @@
             });
         });
 
-        /* --- LÓGICA DEL VISOR DESPLEGABLE INMERSIVO --- */
+        /* --- LÓGICA DEL VISOR DESPLEGABLE INMERSIVO CON SWIPE (DESLIZADOR) --- */
         let activeVisorStep = 0;
         
-        // Base de datos de la historia interactiva
         const visorData = [
             { 
                 title: "Etapa 1: Paciente en Espera", 
                 desc: "Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.", 
                 img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", 
                 color: "#29869C",
-                actionText: "Recibir llamada de la clínica <i class='fa-solid fa-phone'></i>"
+                actionText: "Desliza para contestar llamada clínica"
             },
             { 
                 title: "Etapa 2: El Procuramiento", 
                 desc: "3:14 AM. Suena la alerta. Una compatibilidad exacta ha aparecido y la red logística debe trasladar el órgano vital de inmediato antes de perder viabilidad.", 
                 img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", 
                 color: "#C01113",
-                actionText: "Ingresar a Pabellón Quirúrgico <i class='fa-solid fa-bed-pulse'></i>"
+                actionText: "Desliza para autorizar el traslado aéreo"
             },
             { 
                 title: "Etapa 3: El Trasplante", 
                 desc: "8 horas de intervención precisa en pabellón estéril. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj.", 
                 img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", 
                 color: "#014B43",
-                actionText: "Avanzar a Recuperación <i class='fa-solid fa-heart-circle-check'></i>"
+                actionText: "Desliza para iniciar la cirugía"
             },
             { 
                 title: "Etapa 4: Un Nuevo Latido", 
                 desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", 
                 img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", 
                 color: "#099078",
-                actionText: "Revisar historia nuevamente <i class='fa-solid fa-rotate-right'></i>"
+                actionText: "Desliza para reiniciar historia"
             }
         ];
 
@@ -499,21 +520,78 @@
                 document.getElementById('panel-desc').innerText = data.desc;
                 document.getElementById('panel-img').src = data.img;
                 
-                // Determinar el índice del próximo paso (si llega al final, vuelve al 0)
                 const nextIdx = (idx + 1) % visorData.length;
                 
-                // Inyectar el botón interactivo que invita al usuario a "actuar"
+                // Inyectamos el componente Swipe (Deslizador interactivo)
                 document.getElementById('drive-controls').innerHTML = `
-                    <button class="action-btn" style="background: ${data.color}; color: white;" onclick="deployVisorStep(${nextIdx})">
-                        ${data.actionText}
-                    </button>
+                    <div class="swipe-container" id="swipe-container">
+                        <div class="swipe-text" id="swipe-text">${data.actionText}</div>
+                        <div class="swipe-thumb" id="swipe-thumb" style="background: ${data.color};"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
                 `;
 
                 panel.classList.add('desplegado'); 
+                
+                // Activar eventos del deslizador una vez renderizado
+                setTimeout(() => initSwipeLogic(nextIdx), 100);
             }, 300);
         }
 
-        // Ejecución de la Etapa 1 al cargar
+        // Lógica de arrastre (Drag) para el botón inmersivo
+        function initSwipeLogic(nextIdx) {
+            const container = document.getElementById('swipe-container');
+            const thumb = document.getElementById('swipe-thumb');
+            const text = document.getElementById('swipe-text');
+            if(!container || !thumb) return;
+
+            let isDragging = false;
+            let startX = 0;
+            // Distancia máxima que puede recorrer el pulgar
+            let maxTravel = container.offsetWidth - thumb.offsetWidth - 10; 
+
+            const onStart = (clientX) => {
+                isDragging = true;
+                startX = clientX - (parseInt(thumb.style.left) || 5) + 5;
+                thumb.style.transition = "none";
+            };
+
+            const onMove = (clientX) => {
+                if (!isDragging) return;
+                let currentX = clientX - startX;
+                if (currentX < 0) currentX = 0;
+                if (currentX > maxTravel) currentX = maxTravel;
+                
+                thumb.style.left = (5 + currentX) + 'px';
+                text.style.opacity = 1 - (currentX / maxTravel); // Desvanece el texto
+
+                // Si llega al 95% de la barra, confirmamos la acción
+                if (currentX >= maxTravel * 0.95) {
+                    isDragging = false;
+                    deployVisorStep(nextIdx);
+                }
+            };
+
+            const onEnd = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                // Si no llegó al final, regresa como un resorte
+                thumb.style.transition = "left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+                thumb.style.left = "5px";
+                text.style.opacity = 1;
+            };
+
+            // Eventos de Mouse (Computadora)
+            thumb.addEventListener('mousedown', (e) => onStart(e.clientX));
+            window.addEventListener('mousemove', (e) => onMove(e.clientX));
+            window.addEventListener('mouseup', onEnd);
+
+            // Eventos de Touch (Celulares/Tablets)
+            thumb.addEventListener('touchstart', (e) => onStart(e.touches[0].clientX));
+            window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX));
+            window.addEventListener('touchend', onEnd);
+        }
+
+        // Inicia la Etapa 1
         document.addEventListener("DOMContentLoaded", () => deployVisorStep(0));
 
         /* --- CHART.JS --- */
