@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportaje Especial: Trasplantes y Vida | TDI Noticias</title>
-<link rel="icon" href="https://raw.githubusercontent.com/pabloalarcona5-lgtm/tdi_noticias_repository/refs/heads/main/000-COLOR-VECTOR.svg" type="image/png">
     
     <!-- Fuentes: DM Sans para títulos y Montserrat para texto normal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +56,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
-            background-color: #C01113;
+            background: var(--primary);
             color: white;
             position: sticky;
             top: 0;
@@ -65,7 +64,9 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-       
+        .logo-link { text-decoration: none; color: white; }
+        .logo { font-size: 1.8rem; font-weight: bold; font-family: 'DM Sans', sans-serif; }
+        .logo span { color: var(--accent); }
 
         nav ul { display: flex; list-style: none; gap: 20px; margin: 0; padding: 0; }
         nav a { color: white; text-decoration: none; font-weight: 500; transition: var(--transition); }
@@ -164,10 +165,10 @@
             height: 480px;
         }
 
-        /* --- NUEVO PANEL DESPLEGABLE INTERACTIVO (ESTILO VISOR DRIVE) --- */
+        /* --- NUEVO PANEL DESPLEGABLE INMERSIVO --- */
         .drive-display-panel {
             display: grid;
-            grid-template-columns: 1.2fr 1fr; /* Texto Izquierda | Imagen Derecha */
+            grid-template-columns: 1.2fr 1fr;
             gap: 40px;
             background: var(--color-white);
             padding: 45px;
@@ -176,20 +177,19 @@
             margin-top: 40px;
             width: 100%;
             
-            /* Estado Inicial: Oculto para la animación de despliegue */
             opacity: 0;
             transform: scale(0.92);
             transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Clase activa que genera la animación de despliegue tipo visor */
         .drive-display-panel.desplegado {
             opacity: 1;
             transform: scale(1);
         }
 
+        .drive-text { display: flex; flex-direction: column; justify-content: center; }
         .drive-text h3 { color: var(--color-green-dark) !important; font-size: 2rem; margin-bottom: 15px; }
-        .drive-text p { color: #333 !important; }
+        .drive-text p { color: #333 !important; flex-grow: 1; }
 
         .drive-img-box {
             width: 100%;
@@ -200,24 +200,31 @@
         }
         .drive-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Controles de navegación del visor manual */
+        /* Botón de Acción Narrativa */
         .drive-controls {
-            display: flex;
-            gap: 15px;
             margin-top: 25px;
+            width: 100%;
         }
-        .drive-btn {
-            background: #edf2f7;
+        .action-btn {
+            width: 100%;
             border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
+            padding: 16px 20px;
+            border-radius: 12px;
             font-family: 'DM Sans', sans-serif;
             font-weight: 700;
-            color: var(--color-green-dark);
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .drive-btn:hover { background: var(--color-teal); color: white; }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            filter: brightness(1.1);
+        }
 
         /* --- GRÁFICO --- */
         .chart-container {
@@ -259,12 +266,12 @@
     <i class="fa-solid fa-lungs bg-medical-icon" style="top: 110%; right: 5%;" data-speed="-0.05"></i>
 
     <header>
-        <a href="index.html" class="logo-link"><div class="logo"><img src="https://raw.githubusercontent.com/pabloalarcona5-lgtm/tdi_noticias_repository/refs/heads/main/000-CONTRASTE-VECTOR.svg"></div></a>
+        <a href="index.html" class="logo-link"><div class="logo">TDI<span>NOTICIAS</span></div></a>
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="#">Nosotros</a></li>
-                <li><a href="reportaje.html">Reportaje Multimedia</a></li>
+                <li><a href="reportaje.html">Reportajes Multimedia</a></li>
             </ul>
         </nav>
     </header>
@@ -305,7 +312,7 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + VISOR DESPLEGABLE -->
+    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
@@ -315,14 +322,15 @@
                 <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
             </div>
 
-            <!-- SECCIÓN APARTE: VISOR DE DESPLIEGUE (TEXTO IZQ / FOTO DER) -->
+            <!-- SECCIÓN INMERSIVA: VISOR DE DESPLIEGUE POR ACCIÓN -->
             <div class="drive-display-panel" id="drive-panel">
                 <div class="drive-text">
-                    <h3 id="panel-title">1. La Espera Angustiosa</h3>
-                    <p id="panel-desc">Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.</p>
-                    <div class="drive-controls">
-                        <button class="drive-btn" onclick="navigateVisor(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
-                        <button class="drive-btn" onclick="navigateVisor(1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                    <h3 id="panel-title">Etapa 1: Paciente en Espera</h3>
+                    <p id="panel-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
+                    
+                    <!-- Contenedor dinámico del botón de acción -->
+                    <div class="drive-controls" id="drive-controls">
+                        <!-- Botón inyectado por JS -->
                     </div>
                 </div>
                 <div class="drive-img-box">
@@ -385,23 +393,20 @@
             }
         }
 
-        // 1. Verificamos si el Autoplay nativo del HTML funcionó
         window.addEventListener('load', () => {
             if (!bgMusic.paused) {
                 musicMuted = false;
                 musicIcon.className = "fa-solid fa-volume-high";
             } else {
-                // Si el navegador lo bloqueó por seguridad, intentamos forzarlo
                 bgMusic.play().then(() => {
                     musicMuted = false;
                     musicIcon.className = "fa-solid fa-volume-high";
                 }).catch(() => {
-                    console.log("El navegador bloqueó el autoplay inicial por seguridad. Esperando acción mínima del usuario...");
+                    console.log("El navegador bloqueó el autoplay inicial. Esperando acción mínima...");
                 });
             }
         });
 
-        // 2. Capturar CUALQUIER mínima acción para forzar el play si falló lo anterior
         const forcePlay = () => {
             if (musicMuted) {
                 bgMusic.play().then(() => {
@@ -420,7 +425,6 @@
         document.addEventListener('mousemove', forcePlay);
         document.addEventListener('keydown', forcePlay);
 
-        // Lógica para pausar fondo al llegar al testimonio
         const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -447,13 +451,39 @@
             });
         });
 
-        /* --- LÓGICA DEL VISOR DESPLEGABLE ESTILO DRIVE --- */
+        /* --- LÓGICA DEL VISOR DESPLEGABLE INMERSIVO --- */
         let activeVisorStep = 0;
+        
+        // Base de datos de la historia interactiva
         const visorData = [
-            { title: "1. La Espera Angustiosa", desc: "Carlos pasa 3 años en diálisis esperando un riñón compatible. Cada llamada es una posibilidad, cada día una batalla por la paciencia.", img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", color: "#29869C" },
-            { title: "2. El Llamado de Emergencia", desc: "3:14 AM. Suena la alerta de procuramiento nacional. Una compatibilidad exacta ha aparecido y el traslado de urgencia aérea debe despegar de inmediato.", img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", color: "#C01113" },
-            { title: "3. La Operación Crítica", desc: "8 horas de intervención precisa en pabellón. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj de viabilidad.", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", color: "#014B43" },
-            { title: "4. Un Nuevo Horizonte", desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", color: "#099078" }
+            { 
+                title: "Etapa 1: Paciente en Espera", 
+                desc: "Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.", 
+                img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", 
+                color: "#29869C",
+                actionText: "Recibir llamada de la clínica <i class='fa-solid fa-phone'></i>"
+            },
+            { 
+                title: "Etapa 2: El Procuramiento", 
+                desc: "3:14 AM. Suena la alerta. Una compatibilidad exacta ha aparecido y la red logística debe trasladar el órgano vital de inmediato antes de perder viabilidad.", 
+                img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", 
+                color: "#C01113",
+                actionText: "Ingresar a Pabellón Quirúrgico <i class='fa-solid fa-bed-pulse'></i>"
+            },
+            { 
+                title: "Etapa 3: El Trasplante", 
+                desc: "8 horas de intervención precisa en pabellón estéril. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj.", 
+                img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", 
+                color: "#014B43",
+                actionText: "Avanzar a Recuperación <i class='fa-solid fa-heart-circle-check'></i>"
+            },
+            { 
+                title: "Etapa 4: Un Nuevo Latido", 
+                desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", 
+                img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", 
+                color: "#099078",
+                actionText: "Revisar historia nuevamente <i class='fa-solid fa-rotate-right'></i>"
+            }
         ];
 
         function deployVisorStep(idx) {
@@ -468,14 +498,22 @@
                 document.getElementById('panel-title').style.color = data.color;
                 document.getElementById('panel-desc').innerText = data.desc;
                 document.getElementById('panel-img').src = data.img;
+                
+                // Determinar el índice del próximo paso (si llega al final, vuelve al 0)
+                const nextIdx = (idx + 1) % visorData.length;
+                
+                // Inyectar el botón interactivo que invita al usuario a "actuar"
+                document.getElementById('drive-controls').innerHTML = `
+                    <button class="action-btn" style="background: ${data.color}; color: white;" onclick="deployVisorStep(${nextIdx})">
+                        ${data.actionText}
+                    </button>
+                `;
+
                 panel.classList.add('desplegado'); 
-            }, 250);
+            }, 300);
         }
 
-        function navigateVisor(dir) {
-            let next = activeVisorStep + dir;
-            if (next >= 0 && next < visorData.length) deployVisorStep(next);
-        }
+        // Ejecución de la Etapa 1 al cargar
         document.addEventListener("DOMContentLoaded", () => deployVisorStep(0));
 
         /* --- CHART.JS --- */
