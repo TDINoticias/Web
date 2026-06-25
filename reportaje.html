@@ -22,7 +22,7 @@
             --color-white: #FDFFFF;
             --color-green-dark: #014B43;
             --color-green-light: #099078;
-            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; }
@@ -34,7 +34,6 @@
             background-color: var(--color-green-dark);
             transition: background-color 0.8s ease;
             overflow-x: hidden;
-            user-select: none; 
         }
 
         h1, h2, h3, h4 { 
@@ -85,7 +84,7 @@
             height: 60px;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 2000;
+            z-index: 3000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -116,7 +115,7 @@
             width: 100%;
         }
 
-        .content-wrapper { max-width: 1100px; width: 100%; z-index: 2; }
+        .content-wrapper { max-width: 1100px; width: 100%; z-index: 2; position: relative; }
 
         .hero-box {
             width: 100%;
@@ -159,6 +158,7 @@
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             background: #fff;
+            margin-bottom: 20px;
         }
         .storyline-linear-container iframe {
             display: block;
@@ -166,110 +166,124 @@
             height: 480px;
         }
 
-        /* --- NUEVO PANEL DESPLEGABLE INMERSIVO --- */
-        .drive-display-panel {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 40px;
-            background: var(--color-white);
-            padding: 45px;
-            border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            margin-top: 40px;
-            width: 100%;
-            
+        /* ========================================================
+           NUEVO SISTEMA HOVER INMERSIVO CON SOMBRA Y PROTAGONISMO
+           ======================================================== */
+           
+        /* La Sombra Oscura que cubre todo el fondo */
+        .section-shadow {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(1, 75, 67, 0.92); /* Verde oscuro médico con alta opacidad */
+            backdrop-filter: blur(10px); /* Efecto cristal desenfocado */
+            z-index: 15; /* Se pone por encima del Iframe y el Título */
             opacity: 0;
-            transform: scale(0.92);
-            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 50px; /* Para no chocar con los nodos abajo */
         }
-
-        .drive-display-panel.desplegado {
+        .section-shadow.active {
             opacity: 1;
-            transform: scale(1);
+            pointer-events: auto;
         }
 
-        .drive-text { display: flex; flex-direction: column; justify-content: center; }
-        .drive-text h3 { color: var(--color-green-dark) !important; font-size: 2rem; margin-bottom: 15px; }
-        .drive-text p { color: #333 !important; flex-grow: 1; }
+        /* La Tarjeta Protagonista que aparece en el centro */
+        .cinematic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; /* Texto a la izquierda | Foto a la derecha */
+            gap: 40px;
+            max-width: 950px;
+            width: 90%;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .section-shadow.active .cinematic-card {
+            transform: translateY(0) scale(1);
+        }
 
-        /* CAJA DE LA IMAGEN CON EL ESCÁNER CANVAS SUPERPUESTO */
-        .drive-img-box {
-            position: relative;
+        .c-text-box { display: flex; flex-direction: column; justify-content: center; }
+        .c-text-box h3 { font-size: 2.2rem; margin-bottom: 15px; }
+        
+        .c-img-box {
             width: 100%;
-            height: 350px;
+            height: 320px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            background: #000;
         }
-        .drive-img-box img { 
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1; 
-        }
-        
-        /* El Canvas que oculta la imagen y reacciona al mouse */
-        #scanner-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 2;
-            cursor: crosshair;
-            touch-action: none; /* Evita que el celular scrollee mientras arrastras */
+        .c-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Los Nodos Inferiores (Donde se pasa el mouse) */
+        .cinematic-nodes-wrapper {
+            position: relative;
+            z-index: 20; /* Z-Index 20 lo mantiene siempre por ENCIMA de la sombra oscura */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 25px 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
-        /* Mensaje flotante sobre el lienzo */
-        .scan-instruction {
+        /* Línea horizontal detrás de los números */
+        .c-line {
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 50%; left: 8%; right: 8%;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            z-index: 0;
+        }
+
+        .c-node {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .c-node:hover {
+            transform: translateY(-8px);
+        }
+
+        .c-num {
+            width: 60px; height: 60px;
+            background: white;
+            color: var(--color-teal);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; font-weight: bold; font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .c-node.active .c-num, .c-node:hover .c-num {
+            background: var(--color-teal);
+            color: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+            transform: scale(1.15);
+        }
+
+        .c-label {
             color: white;
             font-family: 'DM Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.2rem;
-            z-index: 3;
-            pointer-events: none;
-            text-align: center;
-            opacity: 0.8;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: opacity 0.3s;
+            font-size: 1.05rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            transition: color 0.3s;
         }
-
-        /* --- BARRA DE PROGRESO MÉDICA (Reemplaza los botones) --- */
-        .medical-monitor {
-            margin-top: 25px;
-            width: 100%;
-            background: #f1f5f9;
-            padding: 15px 20px;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-        }
-
-        .monitor-header {
-            display: flex;
-            justify-content: space-between;
-            color: var(--color-green-dark);
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .monitor-bar-bg {
-            width: 100%;
-            height: 12px;
-            background: #cbd5e1;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .monitor-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--color-teal);
-            border-radius: 10px;
-            transition: width 0.1s linear;
+        .c-node.active .c-label {
+            color: #a7f3d0; /* Un verde clarito para resaltar el texto activo */
         }
 
         /* --- GRÁFICO --- */
@@ -288,19 +302,21 @@
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
         @media (max-width: 900px) {
-            header { flex-direction: column; gap: 15px; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
             .slide-container { padding: 50px 4%; }
             h1 { font-size: 2.2rem !important; }
-            .drive-display-panel { grid-template-columns: 1fr; padding: 25px; gap: 25px; }
-            .drive-img-box { height: 230px; }
-            .bg-medical-icon { font-size: 70px; }
-            .scan-instruction { font-size: 0.9rem; width: 80%; }
+            .cinematic-card { grid-template-columns: 1fr; padding: 25px; gap: 20px; }
+            .c-img-box { height: 200px; }
+            .c-text-box h3 { font-size: 1.6rem; }
+            .cinematic-nodes-wrapper { padding: 15px 20px; }
+            .c-num { width: 45px; height: 45px; font-size: 1.1rem; }
+            .c-label { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO DE FONDO -->
+    <!-- AUDIO DE FONDO NATIVO -->
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" autoplay loop></audio>
 
     <button class="music-control" onclick="toggleMusic()">
@@ -359,41 +375,56 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO LINEAL + PANEL INMERSIVO DEL ESCÁNER -->
-    <section class="slide-container" data-bg="#099078">
-        <div class="content-wrapper">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
-            
-            <div class="storyline-linear-container">
-                <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
-            </div>
-
-            <!-- PANEL VISOR CON CANVAS INTERACTIVO -->
-            <div class="drive-display-panel" id="drive-panel">
-                <div class="drive-text">
-                    <h3 id="panel-title">Etapa 1: Paciente en Espera</h3>
-                    <p id="panel-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
-                    
-                    <!-- Monitor Clínico (Barra de progreso) -->
-                    <div class="medical-monitor">
-                        <div class="monitor-header">
-                            <span id="monitor-status">Diagnóstico requerido...</span>
-                            <span id="monitor-pct">0%</span>
-                        </div>
-                        <div class="monitor-bar-bg">
-                            <div class="monitor-bar-fill" id="monitor-fill"></div>
-                        </div>
-                    </div>
+    <!-- FONDO 4: #099078 - STORYLINE LINEAL + HOVER INMERSIVO -->
+    <section class="slide-container" data-bg="#099078" style="overflow: hidden;">
+        
+        <!-- SOMBRA OSCURA Y TARJETA PROTAGONISTA (Z-15) -->
+        <div class="section-shadow" id="section-shadow">
+            <div class="cinematic-card" onmouseenter="keepCinematic()" onmouseleave="hideCinematic()">
+                <div class="c-text-box">
+                    <h3 id="c-title" style="color: var(--color-green-dark) !important;">Título</h3>
+                    <p id="c-desc" style="color: #4a5568 !important;">Desc</p>
                 </div>
-
-                <!-- Caja de la Imagen con Canvas de Rayos X superpuesto -->
-                <div class="drive-img-box" id="canvas-container">
-                    <img id="panel-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Vista Visor">
-                    <div class="scan-instruction" id="scan-text"><i class="fa-solid fa-magnifying-glass"></i> Escanea la zona con el mouse</div>
-                    <canvas id="scanner-canvas"></canvas>
+                <div class="c-img-box">
+                    <img id="c-img" src="" alt="Etapa">
                 </div>
             </div>
         </div>
+
+        <!-- CONTENIDO BASE DE LA SECCIÓN (Z-2) -->
+        <div class="content-wrapper" style="z-index: 2;">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Trayectoria de Vida: La Historia de Carlos</h2>
+            
+            <!-- Storyline Lineal Arriba -->
+            <div class="storyline-linear-container">
+                <iframe src="https://cdn.knightlab.com/libs/storyline/latest/embed/index.html?dataURL=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vT3VRG3h-BzYdYs3d2LFnVF8GfSaEIxP3j6-xq21PNtrIY2MEhlKYz7f3WHhLwX6V8AgeufRxA-90fS%2Fpubhtml&amp;dataYCol=listadeespera&amp;dataXCol=fecha&amp;dataDateFormat=%25Y-%25m-%25d&amp;chartDateFormat=%25Y-%25m-%25d&amp;chartYLabel=Pacientes%20en%20lista%20de%20espera&amp;sliderCardTitleCol=t%C3%ADtulo&amp;sliderCardTextCol=texto" frameborder="0"></iframe>
+            </div>
+        </div>
+
+        <!-- NODOS INTERACTIVOS (Z-20) - Se ubican debajo del Iframe y sobre la Sombra -->
+        <div class="content-wrapper" style="z-index: 20;">
+            <div class="cinematic-nodes-wrapper" onmouseleave="hideCinematic()">
+                <div class="c-line"></div>
+                
+                <div class="c-node" onmouseenter="showCinematic(0)">
+                    <div class="c-num">1</div>
+                    <div class="c-label">Espera</div>
+                </div>
+                <div class="c-node" onmouseenter="showCinematic(1)">
+                    <div class="c-num">2</div>
+                    <div class="c-label">Alerta</div>
+                </div>
+                <div class="c-node" onmouseenter="showCinematic(2)">
+                    <div class="c-num">3</div>
+                    <div class="c-label">Cirugía</div>
+                </div>
+                <div class="c-node" onmouseenter="showCinematic(3)">
+                    <div class="c-num">4</div>
+                    <div class="c-label">Alta Médica</div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <!-- FONDO 5: #C01113 -->
@@ -430,7 +461,7 @@
     </section>
 
     <script>
-        /* --- MANEJO DE AUDIOS ULTRA AGRESIVO CON AUTOPLAY NATIVO --- */
+        /* --- MANEJO DE AUDIO DE FONDO AGRESIVO --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -458,13 +489,14 @@
                 bgMusic.play().then(() => {
                     musicMuted = false; musicIcon.className = "fa-solid fa-volume-high";
                     document.removeEventListener('click', forcePlay); document.removeEventListener('scroll', forcePlay);
-                    document.removeEventListener('mousemove', forcePlay); document.removeEventListener('keydown', forcePlay);
+                    document.removeEventListener('mousemove', forcePlay);
                 }).catch(() => {});
             }
         };
 
-        document.addEventListener('click', forcePlay); document.addEventListener('scroll', forcePlay);
-        document.addEventListener('mousemove', forcePlay); document.addEventListener('keydown', forcePlay);
+        document.addEventListener('click', forcePlay); 
+        document.addEventListener('scroll', forcePlay); 
+        document.addEventListener('mousemove', forcePlay);
 
         const audioSection = document.getElementById('audio-section');
         const audioObserver = new IntersectionObserver((entries) => {
@@ -490,149 +522,65 @@
             });
         });
 
-        /* --- LÓGICA DEL ESCÁNER INTERACTIVO (HOVER TO REVEAL) --- */
-        let activeVisorStep = 0;
-        let isScanningComplete = false;
-        let scanPoints = 0;
-        const POINTS_TO_COMPLETE = 120; // Movimientos de mouse necesarios para llenar la barra
+        /* --- LÓGICA DE HOVER INMERSIVO PARA LA LÍNEA DE TIEMPO --- */
+        let cinematicTimer;
         
-        const canvas = document.getElementById('scanner-canvas');
-        const ctx = canvas.getContext('2d');
-        const container = document.getElementById('canvas-container');
-        
-        const visorData = [
+        const stageData = [
             { 
-                title: "Etapa 1: Paciente en Espera", 
+                title: "Etapa 1: La Espera Angustiosa", 
                 desc: "Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.", 
                 img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", 
-                color: "#29869C",
-                monitorText: "Analizando compatibilidad de tejidos..."
+                color: "#29869C" 
             },
             { 
-                title: "Etapa 2: El Procuramiento", 
+                title: "Etapa 2: El Llamado de Emergencia", 
                 desc: "3:14 AM. Suena la alerta. Una compatibilidad exacta ha aparecido y la red logística debe trasladar el órgano vital de inmediato antes de perder viabilidad.", 
                 img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", 
-                color: "#C01113",
-                monitorText: "Trazando ruta de traslado aéreo..."
+                color: "#C01113" 
             },
             { 
-                title: "Etapa 3: El Trasplante", 
+                title: "Etapa 3: La Operación Crítica", 
                 desc: "8 horas de intervención precisa en pabellón estéril. El equipo de cirujanos vasculares conecta el injerto en una carrera directa contra el reloj.", 
                 img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", 
-                color: "#014B43",
-                monitorText: "Supervisando signos vitales en cirugía..."
+                color: "#014B43" 
             },
             { 
                 title: "Etapa 4: Un Nuevo Latido", 
                 desc: "Tras 6 meses de alta médica, los exámenes descartan rechazos inmunológicos. Carlos vuelve a caminar de forma independiente y recupera su proyecto de vida.", 
                 img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80", 
-                color: "#099078",
-                monitorText: "Evaluando sistema inmunológico posoperatorio..."
+                color: "#099078" 
             }
         ];
 
-        function initScanner() {
-            // Ajustar Canvas al tamaño de la caja de imagen
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight;
+        function showCinematic(idx) {
+            clearTimeout(cinematicTimer);
+            const data = stageData[idx];
             
-            // Pintar la capa médica oscura encima de la foto
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = '#014B43'; // Azul/Verde médico oscuro
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Reemplazar textos y colores
+            document.getElementById('c-title').innerText = data.title;
+            document.getElementById('c-title').style.color = data.color;
+            document.getElementById('c-desc').innerText = data.desc;
+            document.getElementById('c-img').src = data.img;
             
-            // Dibujar grilla para que parezca una pantalla de hospital
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-            ctx.lineWidth = 1;
-            for (let x = 0; x <= canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
-            for (let y = 0; y <= canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+            // Marcar el nodo activo visualmente
+            document.querySelectorAll('.c-node').forEach((node, i) => {
+                i === idx ? node.classList.add('active') : node.classList.remove('active');
+            });
 
-            // Reset variables
-            isScanningComplete = false;
-            scanPoints = 0;
-            document.getElementById('monitor-fill').style.width = '0%';
-            document.getElementById('monitor-pct').innerText = '0%';
-            document.getElementById('scan-text').style.opacity = '0.8';
+            // Activar la sombra de fondo
+            document.getElementById('section-shadow').classList.add('active');
         }
 
-        function handleScanMove(e) {
-            if(isScanningComplete) return;
-
-            // Ocultar la instrucción de texto al empezar a mover
-            document.getElementById('scan-text').style.opacity = '0';
-
-            const rect = canvas.getBoundingClientRect();
-            // Soporta Mouse y Touch (Celular)
-            let clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            let clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            
-            let x = clientX - rect.left;
-            let y = clientY - rect.top;
-
-            // Efecto Linterna/Borrador: "Corta" un circulo transparente revelando la imagen de fondo
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 50, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Aumentar la barra de progreso del monitor
-            scanPoints++;
-            let percentage = Math.min((scanPoints / POINTS_TO_COMPLETE) * 100, 100);
-            
-            document.getElementById('monitor-fill').style.width = percentage + '%';
-            document.getElementById('monitor-pct').innerText = Math.floor(percentage) + '%';
-
-            // Al llegar al 100%, avanza a la siguiente historia automáticamente
-            if(scanPoints >= POINTS_TO_COMPLETE) {
-                isScanningComplete = true;
-                document.getElementById('monitor-status').innerText = "¡Proceso Completado! Cargando...";
-                
-                // Limpia el canvas por completo visualmente
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                setTimeout(() => {
-                    let nextIdx = (activeVisorStep + 1) % visorData.length;
-                    deployVisorStep(nextIdx);
-                }, 1000);
-            }
+        function hideCinematic() {
+            cinematicTimer = setTimeout(() => {
+                document.getElementById('section-shadow').classList.remove('active');
+                document.querySelectorAll('.c-node').forEach(node => node.classList.remove('active'));
+            }, 100);
         }
 
-        // Agregar Eventos de Movimiento al Canvas
-        canvas.addEventListener('mousemove', handleScanMove);
-        canvas.addEventListener('touchmove', handleScanMove);
-        // Evitar comportamientos por defecto indeseados
-        canvas.addEventListener('mousedown', (e) => e.preventDefault());
-
-        function deployVisorStep(idx) {
-            activeVisorStep = idx;
-            const data = visorData[idx];
-            const panel = document.getElementById('drive-panel');
-            
-            panel.classList.remove('desplegado'); 
-            
-            setTimeout(() => {
-                document.getElementById('panel-title').innerText = data.title;
-                document.getElementById('panel-title').style.color = data.color;
-                document.getElementById('panel-desc').innerText = data.desc;
-                document.getElementById('panel-img').src = data.img;
-                document.getElementById('monitor-status').innerText = data.monitorText;
-                
-                // Reiniciar el Escáner para la nueva foto
-                initScanner();
-
-                panel.classList.add('desplegado'); 
-            }, 300);
+        function keepCinematic() {
+            clearTimeout(cinematicTimer);
         }
-
-        // Ejecución de la Etapa 1
-        document.addEventListener("DOMContentLoaded", () => {
-            deployVisorStep(0);
-        });
-
-        // Asegurar que el canvas se reajuste si el usuario cambia el tamaño de la ventana
-        window.addEventListener('resize', () => {
-            if(!isScanningComplete) initScanner();
-        });
 
         /* --- CHART.JS --- */
         const stats = [
