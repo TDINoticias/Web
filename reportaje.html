@@ -68,7 +68,9 @@
         }
 
         .logo-link { text-decoration: none; display: flex; align-items: center; }
-        .logo img { height: 40px; width: auto; display: block; }
+        
+        /* Ajuste de logo para que coincida con el index.html */
+        .logo img { max-height: 48px; width: auto; display: block; }
 
         nav ul {
             display: flex;
@@ -168,7 +170,7 @@
         .audio-card audio { width: 100%; margin-top: 20px; outline: none; }
 
         /* ========================================================
-           SISTEMA HOVER INMERSIVO CON SOMBRA Y PROTAGONISMO
+           SISTEMA HOVER INMERSIVO LÍNEA DE TIEMPO (ESTILO TARJETA UNIFICADA)
            ======================================================== */
         .section-shadow {
             position: absolute;
@@ -188,29 +190,35 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px; 
             width: 100%;
             position: relative;
             z-index: 10; 
         }
 
+        /* La Tarjeta Protagonista ahora contiene la línea de tiempo */
         .cinematic-card {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            padding: 40px 40px 30px 40px;
+            display: flex;
+            flex-direction: column;
             gap: 40px;
             max-width: 950px;
             width: 100%;
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-            min-height: 400px; 
+            min-height: 480px; 
         }
         
         .section-shadow.active + .content-wrapper .cinematic-card {
             transform: scale(1.02);
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .c-content-top {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
         }
 
         .c-text-box { display: flex; flex-direction: column; justify-content: center; }
@@ -219,33 +227,30 @@
         
         .c-img-box {
             width: 100%;
-            height: 320px;
+            height: 300px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         .c-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* Nodos Interactivos integrados dentro de la tarjeta blanca */
         .cinematic-nodes-wrapper {
             position: relative;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 950px;
-            padding: 25px 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+            padding: 10px 20px 0 20px;
         }
 
         .c-line {
             position: absolute;
-            top: 50%; left: 8%; right: 8%;
-            height: 2px;
-            background: rgba(255,255,255,0.3);
+            top: 40%; left: 5%; right: 5%;
+            height: 3px;
+            background: #e2e8f0;
             z-index: 0;
+            border-radius: 2px;
         }
 
         .c-node {
@@ -257,35 +262,41 @@
             gap: 12px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            padding: 0 10px;
         }
-        .c-node:hover { transform: translateY(-8px); }
+        .c-node:hover { transform: translateY(-5px); }
 
         .c-num {
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             background: white;
             color: var(--color-teal);
+            border: 2px solid #e2e8f0;
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; font-weight: bold; font-family: 'DM Sans', sans-serif;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-size: 1.3rem; font-weight: bold; font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             transition: all 0.3s;
         }
+        
         .c-node.active .c-num, .c-node:hover .c-num {
             background: var(--color-teal);
             color: white;
-            box-shadow: 0 0 20px rgba(255,255,255,0.8);
-            transform: scale(1.15);
+            border-color: var(--color-teal);
+            box-shadow: 0 8px 20px rgba(41, 134, 156, 0.4);
+            transform: scale(1.1);
         }
 
         .c-label {
-            color: white;
+            color: #64748b;
             font-family: 'DM Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.05rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
-        .c-node.active .c-label { color: #a7f3d0; }
+        
+        .c-node.active .c-label, .c-node:hover .c-label { 
+            color: var(--color-green-dark); 
+        }
 
         /* --- GRÁFICO --- */
         .chart-container {
@@ -306,18 +317,19 @@
             header { flex-direction: column; gap: 15px; text-align: center; }
             .slide-container { padding: 50px 4%; }
             h1 { font-size: 2.2rem !important; }
-            .cinematic-card { grid-template-columns: 1fr; padding: 25px; gap: 20px; min-height: auto; }
+            .c-content-top { grid-template-columns: 1fr; gap: 20px; }
+            .cinematic-card { padding: 25px; gap: 30px; min-height: auto; }
             .c-img-box { height: 200px; }
             .c-text-box h3 { font-size: 1.6rem; }
-            .cinematic-nodes-wrapper { padding: 15px 20px; }
-            .c-num { width: 45px; height: 45px; font-size: 1.1rem; }
-            .c-label { font-size: 0.85rem; }
+            .cinematic-nodes-wrapper { padding: 10px 0 0 0; }
+            .c-num { width: 40px; height: 40px; font-size: 1.1rem; }
+            .c-label { font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO DE FONDO CON ATRIBUTO AUTOPLAY -->
+    <!-- AUDIO DE FONDO CON ATRIBUTO AUTOPLAY (MANTENIDO INTACTO) -->
     <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" autoplay loop></audio>
 
     <button class="music-control" onclick="toggleMusic()">
@@ -330,7 +342,7 @@
     <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 65%; left: 6%;" data-speed="0.12"></i>
     <i class="fa-solid fa-lungs bg-medical-icon" style="top: 110%; right: 5%;" data-speed="-0.05"></i>
 
-    <!-- HEADER INSTITUCIONAL CON BRANDING Y LOGO DE TU PORTADA -->
+    <!-- HEADER INSTITUCIONAL (CON LOGO AJUSTADO A INDEX.HTML) -->
     <header>
         <a href="index.html" class="logo-link">
             <div class="logo"><img src="https://raw.githubusercontent.com/pabloalarcona5-lgtm/tdi_noticias_repository/refs/heads/main/000-CONTRASTE-VECTOR.svg" alt="TDI Noticias"></div>
@@ -382,7 +394,7 @@
         </div>
     </section>
 
-    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO HOVER INMERSIVO -->
+    <!-- FONDO 4: #099078 - LÍNEA DE TIEMPO HOVER INMERSIVO (TARJETA UNIFICADA) -->
     <section class="slide-container" id="timeline-section" data-bg="#099078" style="overflow: hidden;">
         
         <!-- SOMBRA OSCURA (Z-5) -->
@@ -394,37 +406,42 @@
             
             <div class="timeline-hover-layout">
                 
-                <!-- Tarjeta Protagonista Arriba -->
-                <div class="cinematic-card" id="cinematic-card">
-                    <div class="c-text-box">
-                        <h3 id="c-title">1. La Espera Angustiosa</h3>
-                        <p id="c-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
-                    </div>
-                    <div class="c-img-box">
-                        <img id="c-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Etapa">
-                    </div>
-                </div>
-
-                <!-- Nodos Interactivos Abajo -->
-                <div class="cinematic-nodes-wrapper" onmouseleave="hideCinematic()">
-                    <div class="c-line"></div>
+                <!-- Tarjeta Protagonista (Ahora incluye todo dentro) -->
+                <div class="cinematic-card" id="cinematic-card" onmouseleave="hideCinematic()">
                     
-                    <div class="c-node active" onmouseenter="showCinematic(0)">
-                        <div class="c-num">1</div>
-                        <div class="c-label">Espera</div>
+                    <!-- Parte superior: Texto e Imagen -->
+                    <div class="c-content-top">
+                        <div class="c-text-box">
+                            <h3 id="c-title">1. La Espera Angustiosa</h3>
+                            <p id="c-desc">Carlos, diagnosticado con insuficiencia renal terminal, pasa 3 años conectado a una máquina de diálisis diaria, inscrito en la lista nacional de espera.</p>
+                        </div>
+                        <div class="c-img-box">
+                            <img id="c-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80" alt="Etapa">
+                        </div>
                     </div>
-                    <div class="c-node" onmouseenter="showCinematic(1)">
-                        <div class="c-num">2</div>
-                        <div class="c-label">Alerta</div>
+
+                    <!-- Parte inferior: Nodos de la Línea de Tiempo Integrados -->
+                    <div class="cinematic-nodes-wrapper">
+                        <div class="c-line"></div>
+                        
+                        <div class="c-node active" onmouseenter="showCinematic(0)">
+                            <div class="c-num">1</div>
+                            <div class="c-label">Espera</div>
+                        </div>
+                        <div class="c-node" onmouseenter="showCinematic(1)">
+                            <div class="c-num">2</div>
+                            <div class="c-label">Alerta</div>
+                        </div>
+                        <div class="c-node" onmouseenter="showCinematic(2)">
+                            <div class="c-num">3</div>
+                            <div class="c-label">Cirugía</div>
+                        </div>
+                        <div class="c-node" onmouseenter="showCinematic(3)">
+                            <div class="c-num">4</div>
+                            <div class="c-label">Alta Médica</div>
+                        </div>
                     </div>
-                    <div class="c-node" onmouseenter="showCinematic(2)">
-                        <div class="c-num">3</div>
-                        <div class="c-label">Cirugía</div>
-                    </div>
-                    <div class="c-node" onmouseenter="showCinematic(3)">
-                        <div class="c-num">4</div>
-                        <div class="c-label">Alta Médica</div>
-                    </div>
+
                 </div>
 
             </div>
@@ -466,7 +483,7 @@
     </section>
 
     <script>
-        /* --- MANEJO DE AUDIOS FLUIDO Y ESTABLE --- */
+        /* --- MANEJO DE AUDIOS FLUIDO Y ESTABLE (MANTENIDO INTACTO SEGÚN INSTRUCCIONES) --- */
         const bgMusic = document.getElementById('bg-music');
         const mainAudio = document.getElementById('main-audio');
         const musicIcon = document.getElementById('music-icon');
@@ -480,7 +497,6 @@
             }
         });
 
-        // Inicio por acción táctil o de movimiento nativo
         const startAudioInteraction = () => {
             if (musicMuted && bgMusic.paused) {
                 bgMusic.play().then(() => {
@@ -533,7 +549,7 @@
             });
         });
 
-        /* --- LÓGICA DE HOVER INMERSIVO PARA LA LÍNEA DE TIEMPO --- */
+        /* --- LÓGICA DE HOVER INMERSIVO PARA LA LÍNEA DE TIEMPO (TARJETA UNIFICADA) --- */
         let cinematicTimer;
         
         const stageData = [
