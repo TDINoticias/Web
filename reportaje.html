@@ -25,7 +25,6 @@
         h1, h2, h3, h4 { font-family: 'DM Sans', sans-serif; color: var(--color-white); margin: 0; font-weight: 700; }
         p { color: var(--color-white); font-size: 1.15rem; line-height: 1.8; font-weight: 400; margin-bottom: 1.5rem; }
 
-        /* Oculta las citas del sistema visualmente para que el texto sea limpio */
         .system-cite { display: none !important; }
 
         /* --- HEADER --- */
@@ -48,11 +47,11 @@
         }
 
         /* --- POPUPS Y MODALES --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 4000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content { background: white; color: #333; padding: 40px; border-radius: 15px; max-width: 700px; width: 90%; position: relative; transform: translateY(20px); transition: transform 0.3s ease; max-height: 80vh; overflow-y: auto; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; display: none; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; color: #333; padding: 40px; border-radius: 15px; max-width: 700px; width: 90%; position: relative; transform: translateY(20px); transition: transform 0.3s ease; max-height: 80vh; overflow-y: auto; z-index: 5001;}
         .modal-overlay.active .modal-content { transform: translateY(0); }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #666; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #666; z-index: 5002;}
         .modal-content p { color: #333 !important; }
         .interactive-quote-card { background: rgba(255,255,255,0.1); border-left: 4px solid var(--accent); padding: 25px; border-radius: 0 15px 15px 0; margin: 30px 0; cursor: pointer; transition: background 0.3s; }
         .interactive-quote-card:hover { background: rgba(255,255,255,0.15); }
@@ -76,17 +75,11 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;}
         .gallery-item:hover img { transform: scale(1.05); }
 
-        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; display: none; justify-content: center; align-items: center; }
-        .lightbox-overlay.active { display: flex; }
         .lightbox-img { width: auto; height: auto; max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); z-index: 5001; }
-        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: white; cursor: pointer; transition: color 0.3s; z-index: 5002;}
-        .lightbox-close:hover { color: var(--accent); }
         .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 3rem; color: white; background: none; border: none; cursor: pointer; padding: 20px; transition: color 0.3s; z-index: 5002;}
         .lightbox-nav:hover { color: var(--color-teal); }
         .lightbox-prev { left: 10px; }
         .lightbox-next { right: 10px; }
-
-        .single-lightbox-img { width: auto; height: auto; max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); z-index: 5001; }
 
         /* --- TARJETAS TURQUESAS 3D FLIP --- */
         .cards-turquoise-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 40px 0; }
@@ -101,7 +94,7 @@
         .t-num { font-size: 3rem; font-weight: 800; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; }
         .t-text { font-size: 0.95rem; line-height: 1.4; font-weight: 500; }
 
-        /* --- GRÁFICO INTERACTIVO INE LAYOUT HORIZONTAL --- */
+        /* --- GRÁFICO INTERACTIVO INE --- */
         .ine-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; margin: 40px 0; align-items: stretch;}
         .ine-image-box { background: var(--primary); border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; color: white; box-shadow: 0 15px 30px rgba(0,0,0,0.2); position: relative;}
         .ine-image-box img.bg-img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity: 0.3; z-index: 0;}
@@ -140,16 +133,16 @@
 </head>
 <body>
 
-    <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
-        <i class="fa-solid fa-xmark lightbox-close" onclick="closeLightbox()"></i>
+    <div class="modal-overlay" id="lightbox" onclick="closeLightbox()">
+        <i class="fa-solid fa-xmark modal-close" onclick="closeLightbox()" style="color: white; z-index: 5002;"></i>
         <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1, event)"><i class="fa-solid fa-chevron-left"></i></button>
         <img src="" alt="Fullscreen" class="lightbox-img" id="lightbox-img" onclick="event.stopPropagation()">
         <button class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1, event)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
-    <div class="lightbox-overlay" id="single-lightbox" onclick="closeSingleLightbox()">
-        <i class="fa-solid fa-xmark lightbox-close" onclick="closeSingleLightbox()"></i>
-        <img src="" alt="Fullscreen" class="single-lightbox-img" id="single-lightbox-img" onclick="event.stopPropagation()">
+    <div class="modal-overlay" id="single-lightbox" onclick="closeSingleLightbox()">
+        <i class="fa-solid fa-xmark modal-close" onclick="closeSingleLightbox()" style="color: white; z-index: 5002;"></i>
+        <img src="" alt="Fullscreen" class="lightbox-img" id="single-lightbox-img" onclick="event.stopPropagation()">
     </div>
 
     <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 12%; left: 4%;" data-speed="0.10"></i>
@@ -258,7 +251,7 @@
 
             <div style="background:transparent; border:none; margin:0; font-size:1.3rem; text-align:center; font-weight:bold; font-family:'DM Sans';">Gráfico: TASA MUNDIAL REAL DE DONANTES DE ÓRGANOS FALLECIDOS EN 2023 - DTI FOUNDATION</div>
             
-           <div style="width: 100%; height: 650px; margin: 40px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+            <div style="width: 100%; height: 650px; margin: 40px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
                 <iframe src="https://script.google.com/macros/s/AKfycbyB4xLrEe1zCc65f17oh8AHHbUp_icreTpI0oHDYHJLWjLY3ex6V8xYlPSlnu-0Z2LB/exec" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
             </div>
 
@@ -275,7 +268,9 @@
             <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El cuello de botella del sistema<span class="system-cite"></span></h2>
             <p>La Comisión de Salud del Senado en 2018, determinó que “las fallas operativas del procuramiento pesan tanto como la escasez de órganos”<span class="system-cite"></span>. En esa instancia, Guido Girardi, presidente del equipo, admitió desconocer todas razones por las cuales no se realizaban los trasplantes suficientes en el país, como la falta de camas UCI, la omisión de avisos a los encargados de procuramiento de paciente con muerte encefálica para evitar complicaciones, problemas de traslado y el poder desmesurado de los directores de hospitales<span class="system-cite"></span>. Finalmente, se entregaron varias propuestas destinadas a disipar estas fallas sistémicas, sin embargo, un informe emitido por la Contraloría General de la República en 2024, reveló cifras alarmantes que dan cuenta que la situación nunca cambió<span class="system-cite"></span>.</p>
 
-           <div style="width: 100%; height: 550px
+            <div style="position: relative; width: 100%; max-width: 900px; height: 600px; margin: 50px auto; z-index: 10;">
+                <iframe src="https://script.google.com/macros/s/AKfycbyiDc6jHAlZEBtmVvAEIAZS_-vlDyAn0H9Wn77-S79tgPMphJrXye1r3Oxpn6yWYS23WA/exec" width="100%" height="100%" frameborder="0" scrolling="no" allow="autoplay" style="border-radius: 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); background-color: transparent;"></iframe>
+            </div>
 
         </div>
     </section>
@@ -465,7 +460,7 @@
             <p>En Chile, la nefropatía diabética es una de las principales razones por las que los pacientes se convierten en candidatos a trasplante<span class="system-cite"></span>. Actualmente se encuentra cubierta por GES y representa el 43% de los ingresos anuales a hemodiálisis en el país, siendo la causa más frecuente de este ingreso<span class="system-cite"></span>.</p>
 
             <div class="quote">
-                <p>Guillermo Sandoval, médico del Hospital El Pino señala que “En Chile, la diabetes es la principal causa de insuficiencia renal, y esto se debe a que las terapias médicas como los controles de glucemia, presión arterial y tratamientos preventivos, se vuelven complejos de realizar con frecuencia en los pacientes, principalmente por factores como la sobrecarga del sistema de salud pública y la falta de recursos que tenemos”<span class="system-cite"></span>.</p>
+                <p>Guillermo Sandoval, médico del Hospital El Pino señala que “En Chile, la diabetes es la principal causa de insuficiencia renal, y esto se debe a que las terapias médicas como los controles de glucemia, presión arterial y tratamientos preventivos, se vuelven complejos de realizar con frecuencia en los pacientes, mainly por factores como la sobrecarga del sistema de salud pública y la falta de recursos que tenemos”<span class="system-cite"></span>.</p>
             </div>
 
             <p>El diagnóstico, explica, llega tarde casi siempre<span class="system-cite"></span>. “La nefropatía diabética tiene un progreso silencioso, siendo un desafío el diagnóstico temprano. Es común que al principio sólo se pueda notar como síntoma la nicturia (mayor necesidad de orinar en la noche), mientras que en etapas avanzadas aparecen síntomas más variados como la fatiga, debilidad general, náuseas, pérdida de apetito, edema de miembros inferiores”<span class="system-cite"></span>.</p>
@@ -485,6 +480,10 @@
             <p>La oferta de órganos enfrenta un obstáculo igual de estructural que el crecimiento de la demanda por razones epidemiológicas: la desconfianza ciudadana hacía el sistema<span class="system-cite"></span>. Un estudio realizado por la Universidad Diego Portales reveló que la disposición de los chilenos a donar órganos cayó al 36%, identificando entre las principales razones las dudas sobre la transparencia del sistema<span class="system-cite"></span>. Por otra parte, una investigación de la Universidad de los Andes en 2024, encontró que el 29% de las personas no donaría sus órganos por desconfianza al sistema de lista de espera, el 19% teme que en caso de sufrir una enfermedad terminal los médicos los dejen morir para tomar sus órganos, y el 16% no donaría por desconocimiento del proceso<span class="system-cite"></span>. El mismo estudio advierte que el 60% de los chilenos desconoce cuántas personas se encuentran en lista de espera<span class="system-cite"></span>.</p>
             <p>Parte de esa desconfianza podría tener relación con los mitos que involucran tráfico de órganos<span class="system-cite"></span>. Macarena Ilabaca, en su tesis “La caótica lucha por vivir”, documentó cómo el miedo a que los órganos sean comercializados de forma irregular opera como uno de los principales obstáculos culturales para la donación en Chile<span class="system-cite"></span>.</p>
             <p>Sin embargo, no existen antecedentes que acrediten redes de tráfico de órganos operando dentro del sistema formal de trasplantes chileno<span class="system-cite"></span>. La comercialización de órganos está prohibida y sancionada por ley<span class="system-cite"></span>. Pero es justo reconocer que las irregularidades documentadas por la Contraloría General de la República en 2024: extracciones realizadas sin autorización sanitaria o pacientes ya trasplantados que seguían figurando en lista de espera, que si bien no constituyen tráfico de órganos, sí revelan fallas de gestión que pueden alimentar de forma legítima la desconfianza ciudadana<span class="system-cite"></span>. Como ya se ha observado, la percepción de que el sistema en parte no funciona bien, tiene su base empírica<span class="system-cite"></span>.</p>
+            
+            <div class="video-box" style="margin-top: 30px;">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/7DaPtQNE3pY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
         </div>
     </section>
 
@@ -497,7 +496,7 @@
         </div>
     </section>
 
-    <section class="slide-container audio-section-marker" data-bg="#666569">
+    <section class="slide-container" data-bg="#666569">
         <div class="content-wrapper">
             <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Esperar para vivir<span class="system-cite"></span></h2>
             <p>La vida de Matías Aguilera, un joven estudiante de periodismo de tan solo 21 años, dio un giro de 180 grados luego de que le detectaron insuficiencia renal desde muy pequeño<span class="system-cite"></span>. Bastó con un simple resfrío para que esta enfermedad se desatara llevándolo a hospitalizarse en estado crítico<span class="system-cite"></span>. El diagnóstico y tratamiento fueron los mismos que los de Katherinne: insuficiencia renal crónica y diálisis hasta que llegue un trasplante<span class="system-cite"></span>.</p>
@@ -505,7 +504,7 @@
 
             <div class="audio-center" style="margin-top: 40px; margin-bottom: 40px;">
                 <div class="audio-card">
-                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 15px;">CÓMO SE TOMÓ QUE TENÍA INSUFICIENCIA RENAL</h3>
+                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 15px;">CÓMO SE TOMÓ QUE TENÍA INSUFICIENCIA RENAL<span class="system-cite"></span></h3>
                     <audio class="story-audio" src="https://www.dropbox.com/scl/fi/3911x2syeueoh683q0mkn/como-se-tom-matias-saber-que-ten-a-isuficiencia-renal01.mp3?rlkey=7uuqbbakaxkwi6lhjlpb8dcjh&raw=1" controls></audio>
                 </div>
             </div>
@@ -538,6 +537,7 @@
             <p>Ambos permanecen en lista de espera; y aunque no se conocen comparten una misma convicción: algún día llegará un donante<span class="system-cite"></span>. Para ellos, esa posibilidad no representa solo una cirugía, sino la oportunidad de volver a proyectarse y tener una vida como la de antes<span class="system-cite"></span>.</p>
 
             <div class="video-box" style="margin-top:40px; margin-bottom: 20px;">
+                <div class="media-label" style="background:transparent; border:none; margin:0;">VIDEO FINAL KATHERINNE</div>
                 <iframe width="100%" height="100%" src="https://drive.google.com/file/d/1kZSaay364KcE8pL_vq1XiYbYXJ32foDs/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
@@ -561,7 +561,7 @@
         }
         function closeSingleLightbox() { document.getElementById('single-lightbox').classList.remove('active'); }
 
-        /* --- LIGHTBOX GALERÍA CON BOTONES --- */
+        /* --- LIGHTBOX GALERÍA --- */
         const galleryImages = [
             "https://i.imgur.com/o8B5PiJ.jpeg", "https://i.imgur.com/HfFfWlH.jpeg", 
             "https://i.imgur.com/w1ogWVl.jpeg", "https://i.imgur.com/XfLA1xh.jpeg", 
@@ -610,7 +610,7 @@
             });
         });
 
-        /* --- CHART.JS ISP ACTUALIZADO CON DATA --- */
+        /* --- CHART.JS ISP --- */
         const stats = [
             { "Año": 2018, "espera": 2211, "trasplantes": 456, "resolucion": 20.6 },
             { "Año": 2019, "espera": 2301, "trasplantes": 629, "resolucion": 27.3 },
