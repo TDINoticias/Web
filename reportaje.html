@@ -38,9 +38,6 @@
         h1, h2, h3, h4 { font-family: 'DM Sans', sans-serif; color: var(--color-white); margin: 0; font-weight: 700; }
         p { color: var(--color-white); font-size: 1.15rem; line-height: 1.8; font-weight: 400; margin-bottom: 1.5rem; }
 
-        /* Oculta las citas del sistema para que el texto se lea limpio */
-        .system-cite { display: none !important; }
-
         /* --- HEADER --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
@@ -115,22 +112,22 @@
         .gallery-item img:hover { transform: scale(1.05); }
 
         /* --- MAPA LATAM PNG --- */
-        .map-wrapper { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin: 40px 0; background: rgba(0,0,0,0.2); padding: 30px; border-radius: 20px; align-items: center;}
-        .custom-map-container { width: 100%; position: relative; border-radius: 15px; overflow: hidden; }
-        .custom-map-container img { width: 100%; height: auto; display: block; opacity: 0.9; }
+        .map-wrapper { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin: 40px 0; background: #991a1a; padding: 30px; border-radius: 20px; align-items: center;}
+        .custom-map-container { width: 100%; position: relative; overflow: hidden; }
+        .custom-map-container img { width: 100%; height: auto; display: block; opacity: 1; }
         
-        /* Puntos de calor sobre la imagen LATAM */
+        /* Puntos de calor sobre la imagen LATAM proporcionada */
         .map-dot {
             position: absolute; width: 22px; height: 22px; border-radius: 50%;
             cursor: pointer; transform: translate(-50%, -50%); box-shadow: 0 0 10px rgba(0,0,0,0.5);
             transition: transform 0.3s, box-shadow 0.3s; border: 2px solid white;
         }
-        .map-dot:hover { transform: translate(-50%, -50%) scale(1.5); box-shadow: 0 0 20px rgba(255,0,0,0.8); z-index: 10;}
+        .map-dot:hover { transform: translate(-50%, -50%) scale(1.5); box-shadow: 0 0 20px rgba(255,255,255,0.8); z-index: 10;}
 
         .heart-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;}
         .heart-box {
             width: 150px; height: 150px; 
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23C01113" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>') no-repeat center center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23cc0000" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>') no-repeat center center;
             background-size: contain; display: flex; justify-content: center; align-items: center;
             color: white; font-weight: bold; font-size: 2rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin-bottom: 15px;
         }
@@ -139,19 +136,21 @@
         .beating-slow { animation: heartbeat 1.5s infinite; }
         .country-label { font-size: 1.5rem; font-weight: bold; font-family: 'DM Sans', sans-serif; color: white;}
 
-        /* --- LIBRO INTERACTIVO 3D CORREGIDO --- */
+        /* --- LIBRO INTERACTIVO 3D ORDENADO --- */
         .book-section { width: 100%; display: flex; justify-content: center; margin: 50px 0; }
-        .book { position: relative; width: 450px; height: 600px; perspective: 2000px; }
-        .book-page { position: absolute; width: 100%; height: 100%; top: 0; right: 0; transform-origin: left center; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); transform-style: preserve-3d; cursor: pointer; }
-        .book-page.flipped { transform: rotateY(-180deg); }
-        .book-page .front, .book-page .back { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; background: #f4ecd8; border: 1px solid #c8b99c; box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 5px 5px 15px rgba(0,0,0,0.3); padding: 30px; box-sizing: border-box; overflow-y: auto; }
-        .book-page .back { transform: rotateY(180deg); }
-        .book-page h4 { color: #5a4a35 !important; font-family: serif; text-align: center; border-bottom: 1px solid #c8b99c; padding-bottom: 10px; margin-bottom: 20px;}
-        .book-page p { color: #333 !important; font-size: 1rem; line-height: 1.6; text-align: justify; margin-bottom: 10px;}
+        .book { position: relative; width: 400px; height: 500px; perspective: 2500px; }
+        .paper { position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: left center; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); transform-style: preserve-3d; cursor: pointer; }
+        .paper.flipped { transform: rotateY(-180deg); }
+        .front, .back { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; background: #f4ecd8; border: 1px solid #c8b99c; box-shadow: inset 0 0 20px rgba(0,0,0,0.1); padding: 30px; box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; }
+        .back { transform: rotateY(180deg); box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 5px 5px 15px rgba(0,0,0,0.2); }
         
-        .page-cover { background: #2b1b17 !important; color: #d4c4a8; display: flex !important; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 4px solid #4a3424 !important; padding: 0 !important; overflow: hidden !important;}
-        .page-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9;}
-        .book-controls { text-align: center; margin-top: 25px; color: white; font-style: italic; }
+        .book h4 { color: #5a4a35 !important; font-family: serif; text-align: center; border-bottom: 1px solid #c8b99c; padding-bottom: 10px; margin-bottom: 20px;}
+        .book p { color: #333 !important; font-size: 0.95rem; line-height: 1.6; text-align: justify; margin-bottom: 10px;}
+        
+        .page-cover { background: #2b1b17 !important; padding: 0 !important; overflow: hidden !important; border: 4px solid #4a3424 !important;}
+        .page-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .page-cover h4 { color: white !important; font-family: 'DM Sans', sans-serif; border: none !important; font-size: 1.5rem; text-align: center; width: 100%; position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); padding: 15px 0;}
+        .book-controls { text-align: center; margin-top: 25px; color: white; font-style: italic; width: 100%; }
 
         /* --- TARJETAS TURQUESAS 3D FLIP --- */
         .cards-turquoise-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 40px 0; }
@@ -187,19 +186,18 @@
         .btn-data.active, .btn-data:hover { background: var(--color-teal); }
 
         .quote { font-style: italic; border-left: 4px solid var(--accent); padding-left: 20px; margin: 20px 0; background: rgba(0,0,0,0.1); padding: 20px; border-radius: 0 10px 10px 0;}
-        .highlight { color: #ffd166; font-weight: bold; }
 
         @media (max-width: 900px) {
             header { flex-direction: column; gap: 15px; text-align: center; }
             .logo img { max-height: 55px; }
             .video-photo-split { grid-template-columns: 1fr; }
             .map-wrapper { grid-template-columns: 1fr; }
-            .book { width: 100%; height: 400px; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .cards-turquoise-grid { grid-template-columns: 1fr; }
             .ine-bars { gap: 30px; height: 200px;}
             .ine-bar { width: 60px; }
             .flip-card { height: 250px; }
+            .book { width: 100%; height: 400px; }
         }
     </style>
 </head>
@@ -236,19 +234,19 @@
     <!-- SECCIÓN 1: INTRODUCCIÓN Y KATHERINNE (#014B43) -->
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
-            <h1 style="font-size: 3.5rem; text-align: left; margin-bottom: 20px;">Radiografía del sistema de trasplantes en Chile: un Estado que está al debe<span class="system-cite">[cite: 1]</span></h1>
+            <h1 style="font-size: 3.5rem; text-align: left; margin-bottom: 20px;">Radiografía del sistema de trasplantes en Chile: un Estado que está al debe</h1>
             <p style="font-size: 1.3rem; font-weight: 500; opacity: 0.95;">
-                Aunque la cantidad de trasplantes de órganos sólidos ha crecido durante los últimos siete años, la demanda sigue avanzando más rápido que la capacidad de respuesta disponible<span class="system-cite">[cite: 1]</span>. Según datos del Instituto de Salud Pública (ISP), los pacientes trasplantados de órganos sólidos aumentaron un 39,9% entre 2018 y 2025, pasando de 456 a 638 personas al año<span class="system-cite">[cite: 1]</span>. Sin embargo, ese avance no logró reducir la lista de espera: en el mismo período creció de 2.211 a 2.687 personas, 476 más que hace siete años<span class="system-cite">[cite: 1]</span>.
+                Aunque la cantidad de trasplantes de órganos sólidos ha crecido durante los últimos siete años, la demanda sigue avanzando más rápido que la capacidad de respuesta disponible. Según datos del Instituto de Salud Pública (ISP), los pacientes trasplantados de órganos sólidos aumentaron un 39,9% entre 2018 y 2025, pasando de 456 a 638 personas al año. Sin embargo, ese avance no logró reducir la lista de espera: en el mismo período creció de 2.211 a 2.687 personas, 476 más que hace siete años.
             </p>
-            <div class="credits" style="color: white !important;">Por Pablo Alarcón, Fernanda Marín, Luciano Poblete, Luciano Salazar y Mateo Segovia<span class="system-cite">[cite: 1]</span>.</div>
+            <div class="credits" style="color: white !important;">Por Pablo Alarcón, Fernanda Marín, Luciano Poblete, Luciano Salazar y Mateo Segovia.</div>
 
-            <p>No sabía lo que pasaba<span class="system-cite">[cite: 1]</span>. Su nariz no dejaba de sangrar<span class="system-cite">[cite: 1]</span>. Al principio pensó que era de esos sangrados pasajeros que desaparecen por sí solos pero los minutos pasaban y la sangre seguía cayendo, de modo que decidió ir al Hospital Padre Hurtado<span class="system-cite">[cite: 1]</span>. Luego de muchísimos exámenes y evaluaciones de distintos doctores, el diagnóstico fue: insuficiencia renal crónica avanzada a sus 22 años y diálisis de urgencia<span class="system-cite">[cite: 1]</span>. Le explicaron que ese sangrado de nariz que en un comienzo parecía inofensivo, fue la señal de un cuerpo que ya no resistió más una enfermedad silenciosa que llevaba tiempo avanzando en él<span class="system-cite">[cite: 1]</span>.</p>
+            <p>No sabía lo que pasaba. Su nariz no dejaba de sangrar. Al principio pensó que era de esos sangrados pasajeros que desaparecen por sí solos pero los minutos pasaban y la sangre seguía cayendo, de modo que decidió ir al Hospital Padre Hurtado. Luego de muchísimos exámenes y evaluaciones de distintos doctores, el diagnóstico fue: insuficiencia renal crónica avanzada a sus 22 años y diálisis de urgencia. Le explicaron que ese sangrado de nariz que en un comienzo parecía inofensivo, fue la señal de un cuerpo que ya no resistió más una enfermedad silenciosa que llevaba tiempo avanzando en él.</p>
 
-            <p>Probablemente una de las cosas más terribles de la insuficiencia renal es la inexistencia de algún síntoma notorio, porque, de lo contrario, el paciente podría asimilar con más tiempo todos los cambios que este diagnóstico supone<span class="system-cite">[cite: 1]</span>. De un día para otro, Katherinne Anil supo que su vida ahora en adelante iba significar pasar tres días de la semana durante cuatro horas conectada a un monitor de hemodiálisis, dejar sus estudios de gastronomía, cambiar radicalmente toda su alimentación e incluso aprender a medir la cantidad de agua que puede beber<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Probablemente una de las cosas más terribles de la insuficiencia renal es la inexistencia de algún síntoma notorio, porque, de lo contrario, el paciente podría asimilar con más tiempo todos los cambios que este diagnóstico supone. De un día para otro, Katherinne Anil supo que su vida ahora en adelante iba significar pasar tres días de la semana durante cuatro horas conectada a un monitor de hemodiálisis, dejar sus estudios de gastronomía, cambiar radicalmente toda su alimentación e incluso aprender a medir la cantidad de agua que puede beber.</p>
 
             <!-- TARJETA INTERACTIVA KATHERINNE 1 -->
             <div class="interactive-quote-card" onclick="openModal('modal-kathy1')">
-                <p style="font-style: italic; margin-bottom:0;">“Mi vida antes de ser diagnosticada con insuficiencia renal crónica era bastante normal. Era muy independiente, podía salir a cualquier parte y no tenía que preocuparme por lo que son las diálisis o por tomar mis pastillas...”<span class="system-cite">[cite: 1]</span></p>
+                <p style="font-style: italic; margin-bottom:0;">“Mi vida antes de ser diagnosticada con insuficiencia renal crónica era bastante normal. Era muy independiente, podía salir a cualquier parte y no tenía que preocuparme por lo que son las diálisis o por tomar mis pastillas...”</p>
                 <div class="read-more-btn">Leer testimonio completo <i class="fa-solid fa-expand"></i></div>
             </div>
 
@@ -257,7 +255,7 @@
                 <div class="modal-content" onclick="event.stopPropagation()">
                     <i class="fa-solid fa-xmark modal-close" onclick="closeModal('modal-kathy1', event)"></i>
                     <h3 style="color: var(--primary) !important; margin-bottom: 15px;">Testimonio Katherinne Anil</h3>
-                    <p>“Mi vida antes de ser diagnosticada con insuficiencia renal crónica era bastante normal. Era muy independiente, podía salir a cualquier parte y no tenía que preocuparme por lo que son las diálisis o por tomar mis pastillas. Antes no tenía ninguna de esas preocupaciones; podía hacer lo que quisiera, no tenía que organizarme para poder salir o pensar qué podía comer y qué no. En mi núcleo familiar fue un cambio muy drástico, sobre todo para mi mamá. Yo me volví muy dependiente de ella, ya que muchas veces no podía salir sola porque me descompensaba, se me bajaba la presión, me mareaba o me daban ganas de vomitar. A mi mamá le costó mucho dejarme sola porque pensaba que yo me iba a derrumbar”<span class="system-cite">[cite: 1]</span>.</p>
+                    <p>“Mi vida antes de ser diagnosticada con insuficiencia renal crónica era bastante normal. Era muy independiente, podía salir a cualquier parte y no tenía que preocuparme por lo que son las diálisis o por tomar mis pastillas. Antes no tenía ninguna de esas preocupaciones; podía hacer lo que quisiera, no tenía que organizarme para poder salir o pensar qué podía comer y qué no. En mi núcleo familiar fue un cambio muy drástico, sobre todo para mi mamá. Yo me volví muy dependiente de ella, ya que muchas veces no podía salir sola porque me descompensaba, se me bajaba la presión, me mareaba o me daban ganas de vomitar. A mi mamá le costó mucho dejarme sola porque pensaba que yo me iba a derrumbar”.</p>
                 </div>
             </div>
 
@@ -267,13 +265,13 @@
             <div class="modal-overlay" id="modal-kathy2" onclick="closeModal('modal-kathy2', event)">
                 <div class="modal-content" onclick="event.stopPropagation()">
                     <i class="fa-solid fa-xmark modal-close" onclick="closeModal('modal-kathy2', event)"></i>
-                    <p>“Uno de los aspectos más importantes de los pacientes con insuficiencia renal es comer bien, pero hacer esto con la economía que existe hoy en día es muy complicado. Muchos nutricionistas que tenemos en la diálisis nos revisan los exámenes y nos dan una pauta alimentaria, recomendando comer una pechuga de pollo al día y cosas así, pero hay personas que realmente no tienen el dinero para comer eso todos los días. A veces también son personas que viven solas y no tienen tiempo ni para cocinar, entonces ese es un tema súper difícil. Es muy fácil decir come bien pero cuesta caro hacerlo. Comprar verduras, comprar carne o pechuga todos los días. Hay gente que no tiene esa solvencia económica, la verdad. Una vez me dijeron que tenía que comer pan sin sal y es super difícil encontrarlo”<span class="system-cite">[cite: 1]</span>.</p>
-                    <p>“Cuando estaba hospitalizada, después de enterarme del diagnóstico, vino un grupo de psicólogos a preguntarme cómo estaba emocionalmente. Me dijeron que si necesitaba ayuda podía buscarlos o, si necesitaba terapia, podía agendar horas en el Cesfam, pero la verdad es que tuve malas experiencias, por eso después busqué ayuda particular. Cuando traté de buscar ayuda en el cesfam, me dijeron que yo solo estaba en un proceso de adaptación, que no estaba sufriendo depresión ni nada de eso, que solo debía adaptarme a lo que estaba viviendo. No sentí que tomaran en serio lo que yo estaba pasando. Yo estaba viviendo muchos cambios emocionales y físicos, sobre todo porque en ese proceso estaba cambiándome de catéter a fístula, que es otra forma de hacer la diálisis. Incluso tuve que hacerme tres operaciones porque no funcionaba. Yo estaba en un proceso en el que lloraba todos los días porque estaba súper cansada de todo. El catéter se me infectaba, solo quería escapar y tenía pensamientos que, en verdad, eran muy tristes. Sentía que la única salida en ese momento era desaparecer”<span class="system-cite">[cite: 1]</span>.</p>
+                    <p>“Uno de los aspectos más importantes de los pacientes con insuficiencia renal es comer bien, pero hacer esto con la economía que existe hoy en día es muy complicado. Muchos nutricionistas que tenemos en la diálisis nos revisan los exámenes y nos dan una pauta alimentaria, recomendando comer una pechuga de pollo al día y cosas así, pero hay personas que realmente no tienen el dinero para comer eso todos los días. A veces también son personas que viven solas y no tienen tiempo ni para cocinar, entonces ese es un tema súper difícil. Es muy fácil decir come bien pero cuesta caro hacerlo. Comprar verduras, comprar carne o pechuga todos los días. Hay gente que no tiene esa solvencia económica, la verdad. Una vez me dijeron que tenía que comer pan sin sal y es super difícil encontrarlo”.</p>
+                    <p>“Cuando estaba hospitalizada, después de enterarme del diagnóstico, vino un grupo de psicólogos a preguntarme cómo estaba emocionalmente. Me dijeron que si necesitaba ayuda podía buscarlos o, si necesitaba terapia, podía agendar horas en el Cesfam, pero la verdad es que tuve malas experiencias, por eso después busqué ayuda particular. Cuando traté de buscar ayuda en el cesfam, me dijeron que yo solo estaba en un proceso de adaptación, que no estaba sufriendo depresión ni nada de eso, que solo debía adaptarme a lo que estaba viviendo. No sentí que tomaran en serio lo que yo estaba pasando. Yo estaba viviendo muchos cambios emocionales y físicos, sobre todo porque en ese proceso estaba cambiándome de catéter a fístula, que es otra forma de hacer la diálisis. Incluso tuve que hacerme tres operaciones porque no funcionaba. Yo estaba en un proceso en el que lloraba todos los días porque estaba súper cansada de todo. El catéter se me infectaba, solo quería escapar y tenía pensamientos que, en verdad, eran muy tristes. Sentía que la única salida en ese momento era desaparecer”.</p>
                 </div>
             </div>
 
-            <p>Ahora ella, junto a las 2.815 personas que permanecen actualmente en la lista de espera para acceder a un trasplante de órgano en Chile, dependen de un sistema que ha evolucionado en los últimos años pero que aún no logra satisfacer la demanda por diferentes motivos: la inexistencia de la cultura de la donación, las fallas en el procuramiento y el aumento de los ingresos de pacientes en la lista a causa de enfermedades crónicas<span class="system-cite">[cite: 1]</span>.</p>
-            <p>A continuación, imágenes del Centro de Diálisis San Ramón, donde Katherinne realiza sus sesiones de diálisis<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Ahora ella, junto a las 2.815 personas que permanecen actualmente en la lista de espera para acceder a un trasplante de órgano en Chile, dependen de un sistema que ha evolucionado en los últimos años pero que aún no logra satisfacer la demanda por diferentes motivos: la inexistencia de la cultura de la donación, las fallas en el procuramiento y el aumento de los ingresos de pacientes en la lista a causa de enfermedades crónicas.</p>
+            <p>A continuación, imágenes del Centro de Diálisis San Ramón, donde Katherinne realiza sus sesiones de diálisis.</p>
 
             <div class="gallery-grid">
                 <div class="gallery-item"><img src="https://i.imgur.com/o8B5PiJ.jpeg" alt="San Ramón 1"></div>
@@ -289,13 +287,12 @@
     <!-- SECCIÓN 2: EL SISTEMA DE TRASPLANTES (#099078) -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El sistema de trasplantes en Chile<span class="system-cite">[cite: 1]</span></h2>
-            <p>Para entender esos motivos, primero hay que entender cómo funciona el sistema<span class="system-cite">[cite: 1]</span>. En Chile, el proceso comienza cuando un médico tratante evalúa que un paciente con alguna insuficiencia orgánica avanzada podría beneficiarse de un trasplante<span class="system-cite">[cite: 1]</span>. Si este cumple con los requisitos clínicos que son: edad, estado de salud general y ausencia de contraindicaciones, el paciente es derivado a un centro de trasplante acreditado, donde un equipo especializado realiza una evaluación exhaustiva que puede durar semanas o incluso meses<span class="system-cite">[cite: 1]</span>. Solo si pasa esa evaluación, el paciente ingresa formalmente a la Lista de Espera Única Nacional, administrada por el ISP<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Esa lista no funciona por orden de llegada: los órganos se asignan según criterios de urgencia clínica y de compatibilidad, es decir, grupo sanguíneo, histocompatibilidad (qué tan probable es que el cuerpo del receptor acepte el órgano donado sin rechazarlo) y tamaño de órganos<span class="system-cite">[cite: 1]</span>. Así que, quien lleva más tiempo esperando no necesariamente tiene prioridad sobre quién está más grave<span class="system-cite">[cite: 1]</span>.</p>
-            <p>La pieza más decisiva de todo el sistema se llama procuramiento, una especie de engranaje que conecta a los donantes con los receptores<span class="system-cite">[cite: 1]</span>. Cuando una persona fallece en condiciones que permiten la donación, específicamente en muerte encefálica (con el cerebro sin actividad pero el corazón aún latiendo gracias a soporte artificial), el hospital debe activar un protocolo: primero, notificar al coordinador local de trasplante y evaluar la viabilidad de los órganos, en segundo lugar, obtener el consentimiento familiar en caso de que corresponda, y tercero, coordinar con el Instituto de Salud Pública la asignación a los receptores compatibles en la lista<span class="system-cite">[cite: 1]</span>. Hay que considerar que todo eso debe ocurrir en pocas horas, porque los órganos tienen tiempos de viabilidad estrictos fuera del cuerpo<span class="system-cite">[cite: 1]</span>. Por ejemplo, el riñón que necesita Katherinne puede preservarse entre 24 y 36 horas; un corazón, apenas cuatro a seis<span class="system-cite">[cite: 1]</span>.</p>
-            <p>El especialista en nefrología de la Universidad de Chile, Fernando González, explica esta cadena en mayor profundidad<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El sistema de trasplantes en Chile</h2>
+            <p>Para entender esos motivos, primero hay que entender cómo funciona el sistema. En Chile, el proceso comienza cuando un médico tratante evalúa que un paciente con alguna insuficiencia orgánica avanzada podría beneficiarse de un trasplante. Si este cumple con los requisitos clínicos que son: edad, estado de salud general y ausencia de contraindicaciones, el paciente es derivado a un centro de trasplante acreditado, donde un equipo especializado realiza una evaluación exhaustiva que puede durar semanas o incluso meses. Solo si pasa esa evaluación, el paciente ingresa formalmente a la Lista de Espera Única Nacional, administrada por el ISP.</p>
+            <p>Esa lista no funciona por orden de llegada: los órganos se asignan según criterios de urgencia clínica y de compatibilidad, es decir, grupo sanguíneo, histocompatibilidad (qué tan probable es que el cuerpo del receptor acepte el órgano donado sin rechazarlo) y tamaño de órganos. Así que, quien lleva más tiempo esperando no necesariamente tiene prioridad sobre quién está más grave.</p>
+            <p>La pieza más decisiva de todo el sistema se llama procuramiento, una especie de engranaje que conecta a los donantes con los receptores. Cuando una persona fallece en condiciones que permiten la donación, específicamente en muerte encefálica (con el cerebro sin actividad pero el corazón aún latiendo gracias a soporte artificial), el hospital debe activar un protocolo: primero, notificar al coordinador local de trasplante y evaluar la viabilidad de los órganos, en segundo lugar, obtener el consentimiento familiar en caso de que corresponda, y tercero, coordinar con el Instituto de Salud Pública la asignación a los receptores compatibles en la lista. Hay que considerar que todo eso debe ocurrir en pocas horas, porque los órganos tienen tiempos de viabilidad estrictos fuera del cuerpo. Por ejemplo, el riñón que necesita Katherinne puede preservarse entre 24 y 36 horas; un corazón, apenas cuatro a seis.</p>
+            <p>El especialista en nefrología de la Universidad de Chile, Fernando González, explica esta cadena en mayor profundidad.</p>
             
-            <div class="media-label">Aquí debería ir el video de (Fernando González)</div>
             <div class="video-photo-split">
                 <div class="video-box">
                     <iframe width="100%" height="100%" src="https://drive.google.com/file/d/1MQf6_wUi_jSeE2ucovhMhtp-ONv4MfVw/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -305,37 +302,35 @@
                 </div>
             </div>
 
-            <p>Ahora bien, si alguno de estos pasos llega a fallar, si el coordinador no es notificado a tiempo, si no hay cama UCI disponible para mantener el donante o si el transporte se retrasa, el órgano se pierde, al igual que la oportunidad de sacar a alguien de la lista<span class="system-cite">[cite: 1]</span>.</p>
-            <p>En el fondo, el sistema de trasplantes funciona cuando convergen tres condiciones, hay suficientes donantes, un procuramiento eficiente que convierta esas muertes en trasplantes reales y una demanda que el sistema sea capaz de absorber<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Ahora bien, si alguno de estos pasos llega a fallar, si el coordinador no es notificado a tiempo, si no hay cama UCI disponible para mantener el donante o si el transporte se retrasa, el órgano se pierde, al igual que la oportunidad de sacar a alguien de la lista.</p>
+            <p>En el fondo, el sistema de trasplantes funciona cuando convergen tres condiciones, hay suficientes donantes, un procuramiento eficiente que convierta esas muertes en trasplantes reales y una demanda que el sistema sea capaz de absorber.</p>
         </div>
     </section>
 
     <!-- SECCIÓN 3: ESCASEZ Y MAPA INTERACTIVO (#C01113) -->
     <section class="slide-container" data-bg="#C01113">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">La escasez de donantes<span class="system-cite">[cite: 1]</span></h2>
-            <p>En Chile, las tres condiciones fallan simultáneamente<span class="system-cite">[cite: 1]</span>. La tasa de donación oscila entre 8 y 10 donantes por millón de habitantes, muy por debajo de los 47 de España o los 19 de Uruguay, según datos del Observatorio Mundial de Donación y Trasplante (GODT) de la Organización Mundial de la Salud (OMS)<span class="system-cite">[cite: 1]</span>.</p>
-
-            <div class="media-label" style="background:transparent; border:none; margin:0;">Gráfico: TASA MUNDIAL REAL DE DONANTES DE ÓRGANOS FALLECIDOS EN 2023 - DTI FOUNDATION</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">La escasez de donantes</h2>
+            <p>En Chile, las tres condiciones fallan simultáneamente. La tasa de donación oscila entre 8 y 10 donantes por millón de habitantes, muy por debajo de los 47 de España o los 19 de Uruguay, según datos del Observatorio Mundial de Donación y Trasplante (GODT) de la Organización Mundial de la Salud (OMS).</p>
             
-            <!-- MAPA INTERACTIVO CON IMAGEN PNG LATAM -->
+            <!-- MAPA INTERACTIVO CON IMAGEN PNG (PUNTOS AJUSTADOS) -->
             <div class="map-wrapper" onmouseenter="startHeartbeat()" onmouseleave="stopHeartbeat()">
                 <div class="custom-map-container">
-                    <img src="https://i.imgur.com/THfIfW4.png" alt="Mapa LATAM">
+                    <img src="https://i.imgur.com/THfIfW4.png" alt="Mapa Mundial DTI">
                     
-                    <!-- Puntos de calor interactivos en el mapa de Sudamérica -->
-                    <!-- Colombia -->
-                    <div class="map-dot" style="top: 15%; left: 35%; background: #ff6666;" onmouseover="updateHeart('Colombia', '7.45%', 1.8)" onmouseout="resetHeart()"></div>
-                    <!-- Ecuador -->
-                    <div class="map-dot" style="top: 25%; left: 20%; background: #ff9999;" onmouseover="updateHeart('Ecuador', '4.80%', 2.0)" onmouseout="resetHeart()"></div>
-                    <!-- Peru -->
-                    <div class="map-dot" style="top: 35%; left: 25%; background: #ffcccc;" onmouseover="updateHeart('Perú', '1.45%', 2.5)" onmouseout="resetHeart()"></div>
-                    <!-- Chile -->
-                    <div class="map-dot" style="top: 75%; left: 25%; background: #ff3333;" onmouseover="updateHeart('Chile', '9.80%', 1.5)" onmouseout="resetHeart()"></div>
-                    <!-- Argentina -->
-                    <div class="map-dot" style="top: 75%; left: 40%; background: #b30000;" onmouseover="updateHeart('Argentina', '17.81%', 1.0)" onmouseout="resetHeart()"></div>
+                    <!-- Puntos interactivos sobre la imagen mapeada -->
+                    <!-- Europa / España -->
+                    <div class="map-dot" style="top: 25%; left: 47%; background: #660000;" onmouseover="updateHeart('España', '49.38%', 0.4)" onmouseout="resetHeart()"></div>
+                    <!-- USA -->
+                    <div class="map-dot" style="top: 28%; left: 16%; background: #8b0000;" onmouseover="updateHeart('Estados Unidos', '48.04%', 0.45)" onmouseout="resetHeart()"></div>
                     <!-- Uruguay -->
-                    <div class="map-dot" style="top: 65%; left: 55%; background: #8b0000;" onmouseover="updateHeart('Uruguay', '19.71%', 0.8)" onmouseout="resetHeart()"></div>
+                    <div class="map-dot" style="top: 80%; left: 32%; background: #ff3333;" onmouseover="updateHeart('Uruguay', '19.71%', 0.9)" onmouseout="resetHeart()"></div>
+                    <!-- Argentina -->
+                    <div class="map-dot" style="top: 75%; left: 28%; background: #ff4d4d;" onmouseover="updateHeart('Argentina', '17.81%', 1.0)" onmouseout="resetHeart()"></div>
+                    <!-- Chile -->
+                    <div class="map-dot" style="top: 75%; left: 24%; background: #ffb3b3;" onmouseover="updateHeart('Chile', '9.80%', 1.6)" onmouseout="resetHeart()"></div>
+                    <!-- Sudáfrica (Relleno visual) -->
+                    <div class="map-dot" style="top: 75%; left: 55%; background: #ffb3b3;" onmouseover="updateHeart('Sudáfrica', '2.0%', 2.0)" onmouseout="resetHeart()"></div>
                 </div>
                 
                 <div class="heart-container">
@@ -344,66 +339,74 @@
                 </div>
             </div>
 
-            <p>La explicación de por qué España es líder mundial hace tantos años no tiene solo que ver con cuántos donantes hay, sino porque, como se mencionó antes, a diferencia de Chile, su sistema es capaz de convertir la gran mayoría de las oportunidades en trasplantes reales<span class="system-cite">[cite: 1]</span>. Y esa diferencia, según especialistas chilenos, no se explica por recursos económicos<span class="system-cite">[cite: 1]</span>.</p>
-            <p>El doctor Jorge Morales Barría, ex Presidente de la Sociedad Chilena de Nefrología, en su informe “Estado actual del trasplante renal en Chile a 58 años del primero” advierte que el índice de 8,9 riñones procurados de donantes fallecidos por millón de habitantes sitúa al país entre los más bajos a nivel internacional<span class="system-cite">[cite: 1]</span>. Para dimensionar la brecha, el experto señala que España y Estados Unidos, con ingresos per cápita de 30.000 y 75.000 dólares, respectivamente; alcanzan tasas de procura cercanas a 40 por millón de habitantes, concluyendo que la procura de órganos no es directamente afectada por el estatus económico de los países, sino por factores socioculturales, de planificación y políticas de salud<span class="system-cite">[cite: 1]</span>.</p>
-            <p>La respuesta del Estado chileno fue notoria<span class="system-cite">[cite: 1]</span>. En 2010, la Ley 20.413 introdujo el principio de donante universal por consentimiento presunto: toda persona mayor de 18 años sería considerada donante a menos que en vida haya dejado una manifestación expresa de no querer serlo<span class="system-cite">[cite: 1]</span>. En ese año, se creía que podía significar un cambio radical porque ya no era necesario que la familia dijera que sí, bastaba con que el fallecido no hubiese negado en vida<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Pero un cambio en papel no respaldó las expectativas de quienes diseñaron la reforma<span class="system-cite">[cite: 1]</span>. Un estudio publicado en 2020, “Análisis crítico de la baja tasa de donación de órganos en Chile” de los autores Francisca González, Felipe Vera, Rosa Alcayaga y <span class="highlight">Fernando González</span>, señaló que tras la introducción del consentimiento presunto no aparecieron diferencias significativas ni en la cantidad de donantes ni en las pesquisas de potenciales donantes<span class="system-cite">[cite: 1]</span>. En otras palabras, no hubo cambios significativos en el sistema y la tasa de donación se mantuvo en torno a los mismos valores históricos<span class="system-cite">[cite: 1]</span>.</p>
-            <p>La explicación que ofrece esta indagación nos lleva otra vez a lo mismo: los autores concluyeron que el problema no es solo la falta de disposición ciudadana a donar, es decir, no está en los potenciales donantes ni en sus familias<span class="system-cite">[cite: 1]</span>. Está antes<span class="system-cite">[cite: 1]</span>. El problema real es que el 87% de los donantes nunca llega a ser notificado al coordinador de procuramiento<span class="system-cite">[cite: 1]</span>. El sistema pierde la oportunidad antes de que exista siquiera la posibilidad de preguntarle algo a la familia<span class="system-cite">[cite: 1]</span>.</p>
+            <p>La explicación de por qué España es líder mundial hace tantos años no tiene solo que ver con cuántos donantes hay, sino porque, como se mencionó antes, a diferencia de Chile, su sistema es capaz de convertir la gran mayoría de las oportunidades en trasplantes reales. Y esa diferencia, según especialistas chilenos, no se explica por recursos económicos.</p>
+            <p>El doctor Jorge Morales Barría, ex Presidente de la Sociedad Chilena de Nefrología, en su informe “Estado actual del trasplante renal en Chile a 58 años del primero” advierte que el índice de 8,9 riñones procurados de donantes fallecidos por millón de habitantes sitúa al país entre los más bajos a nivel internacional. Para dimensionar la brecha, el experto señala que España y Estados Unidos, con ingresos per cápita de 30.000 y 75.000 dólares, respectivamente; alcanzan tasas de procura cercanas a 40 por millón de habitantes, concluyendo que la procura de órganos no es directamente afectada por el estatus económico de los países, sino por factores socioculturales, de planificación y políticas de salud.</p>
+            <p>La respuesta del Estado chileno fue notoria. En 2010, la Ley 20.413 introdujo el principio de donante universal por consentimiento presunto: toda persona mayor de 18 años sería considerada donante a menos que en vida haya dejado una manifestación expresa de no querer serlo. En ese año, se creía que podía significar un cambio radical porque ya no era necesario que la familia dijera que sí, bastaba con que el fallecido no hubiese negado en vida.</p>
+            <p>Pero un cambio en papel no respaldó las expectativas de quienes diseñaron la reforma. Un estudio publicado en 2020, “Análisis crítico de la baja tasa de donación de órganos en Chile” de los autores Francisca González, Felipe Vera, Rosa Alcayaga y <span class="highlight">Fernando González</span>, señaló que tras la introducción del consentimiento presunto no aparecieron diferencias significativas ni en la cantidad de donantes ni en las pesquisas de potenciales donantes. En otras palabras, no hubo cambios significativos en el sistema y la tasa de donación se mantuvo en torno a los mismos valores históricos.</p>
+            <p>La explicación que ofrece esta indagación nos lleva otra vez a lo mismo: los autores concluyeron que el problema no es solo la falta de disposición ciudadana a donar, es decir, no está en los potenciales donantes ni en sus familias. Está antes. El problema real es que el 87% de los donantes nunca llega a ser notificado al coordinador de procuramiento. El sistema pierde la oportunidad antes de que exista siquiera la posibilidad de preguntarle algo a la familia.</p>
         </div>
     </section>
 
     <!-- SECCIÓN 4: CUELLO DE BOTELLA Y LIBRO (#666569) -->
     <section class="slide-container" data-bg="#666569">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El cuello de botella del sistema<span class="system-cite">[cite: 1]</span></h2>
-            <p>La Comisión de Salud del Senado en 2018, determinó que “las fallas operativas del procuramiento pesan tanto como la escasez de órganos”<span class="system-cite">[cite: 1]</span>. En esa instancia, Guido Girardi, presidente del equipo, admitió desconocer todas razones por las cuales no se realizaban los trasplantes suficientes en el país, como la falta de camas UCI, la omisión de avisos a los encargados de procuramiento de paciente con muerte encefálica para evitar complicaciones, problemas de traslado y el poder desmesurado de los directores de hospitales<span class="system-cite">[cite: 1]</span>. Finalmente, se entregaron varias propuestas destinadas a disipar estas fallas sistémicas, sin embargo, un informe emitido por la Contraloría General de la República en 2024, reveló cifras alarmantes que dan cuenta que la situación nunca cambió<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El cuello de botella del sistema</h2>
+            <p>La Comisión de Salud del Senado en 2018, determinó que “las fallas operativas del procuramiento pesan tanto como la escasez de órganos”. En esa instancia, Guido Girardi, presidente del equipo, admitió desconocer todas razones por las cuales no se realizaban los trasplantes suficientes en el país, como la falta de camas UCI, la omisión de avisos a los encargados de procuramiento de paciente con muerte encefálica para evitar complicaciones, problemas de traslado y el poder desmesurado de los directores de hospitales. Finalmente, se entregaron varias propuestas destinadas a disipar estas fallas sistémicas, sin embargo, un informe emitido por la Contraloría General de la República en 2024, reveló cifras alarmantes que dan cuenta que la situación nunca cambió.</p>
 
-            <!-- LIBRO INTERACTIVO 3D -->
-            <div class="book-section">
-                <div class="book" id="book">
-                    <!-- Página 4 (Tapa trasera y Pag 6) -->
-                    <div class="book-page" id="book-page-4" style="z-index: 1;" onclick="flipPage(4)">
-                        <div class="front page-cover"><h4>Contraloría General de la República</h4></div>
-                        <div class="back">
-                            <h4>Página 6</h4>
-                            <p>Estas fallas revelan una problemática estructural<span class="system-cite">[cite: 1]</span>. La Contraloría señala que el Estado chileno aún no ha formalizado la Política Nacional de Donación de Órganos, que la ley exige desde 2010<span class="system-cite">[cite: 1]</span>. Es necesario un mayor control intrasistema, mecanismos de monitoreo y más supervisión, de lo contrario estamos hablando de una vulneración en el acceso igualitario de pacientes en lista de espera<span class="system-cite">[cite: 1]</span>.</p>
+            <!-- LIBRO INTERACTIVO 3D ORDENADO -->
+            <div style="display:flex; justify-content:center; width:100%;">
+                <div class="book-section">
+                    <div class="book" id="book">
+                        
+                        <!-- Hoja 4 (Página 6 y Contraportada) -->
+                        <div class="paper" id="p4" style="z-index: 1;" onclick="flipPaper(4)">
+                            <div class="front">
+                                <h4>Página 6</h4>
+                                <p>Estas fallas revelan una problemática estructural. La Contraloría señala que el Estado chileno aún no ha formalizado la Política Nacional de Donación de Órganos, que la ley exige desde 2010. Es necesario un mayor control intrasistema, mecanismos de monitoreo y más supervisión, de lo contrario estamos hablando de una vulneración en el acceso igualitario de pacientes en lista de espera.</p>
+                            </div>
+                            <div class="back page-cover" style="justify-content:center;">
+                                <h4 style="position:relative; background:none; color:#d4c4a8 !important;">Contraloría General de la República</h4>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Página 3 (Pag 5 y Pag 4) -->
-                    <div class="book-page" id="book-page-3" style="z-index: 2;" onclick="flipPage(3)">
-                        <div class="front">
-                            <h4>Página 5</h4>
-                            <p>Este no fue el único centro de salud señalado por la entidad fiscalizadora, en el Hospital San Juan de Dios se detectaron alarmantes irregularidades en el manejo de los equipos de transporte; no había una bodega para el almacenamiento de los contenedores y no contaban con una UAT (Unidad de Almacenamiento Transitorio)<span class="system-cite">[cite: 1]</span>. Por otra parte, las cajas de transporte no se utilizaban únicamente para órganos y había basura en su interior<span class="system-cite">[cite: 1]</span>. Tampoco había termómetros para controlar la cadena de frío y se mezclaba material estéril con productos no estériles<span class="system-cite">[cite: 1]</span>.</p>
+
+                        <!-- Hoja 3 (Página 4 y Página 5) -->
+                        <div class="paper" id="p3" style="z-index: 2;" onclick="flipPaper(3)">
+                            <div class="front">
+                                <h4>Página 4</h4>
+                                <p>Otra falla grave detectada por la Contraloría fue en el Hospital Clínico de la Mutual de Seguridad, donde se descubrió que, entre 2022 y 2023, se estarían realizando extracciones de órganos sin contar con la autorización sanitaria correspondiente. Por otra parte, más grave aún, tampoco realizaban la notificación obligatoria de potenciales donantes al sistema SIDOT, ni contaban con una Coordinación Local de Procuramiento para gestionar estos procesos.<br><br>Tras esta observación, la Subsecretaría de Redes Asistenciales señaló que la Coordinación Nacional solicitó al Hospital Clínico Mutual de Seguridad regularizar su situación, lo que se concretó en julio de 2024 con la obtención de la resolución sanitaria y la creación de su unidad de procuramiento.</p>
+                            </div>
+                            <div class="back">
+                                <h4>Página 5</h4>
+                                <p>Este no fue el único centro de salud señalado por la entidad fiscalizadora, en el Hospital San Juan de Dios se detectaron alarmantes irregularidades en el manejo de los equipos de transporte; no había una bodega para el almacenamiento de los contenedores y no contaban con una UAT (Unidad de Almacenamiento Transitorio). Por otra parte, las cajas de transporte no se utilizaban únicamente para órganos y había basura en su interior. Tampoco había termómetros para controlar la cadena de frío y se mezclaba material estéril con productos no estériles.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <h4>Página 4</h4>
-                            <p>Otra falla grave detectada por la Contraloría fue en el Hospital Clínico de la Mutual de Seguridad, donde se descubrió que, entre 2022 y 2023, se estarían realizando extracciones de órganos sin contar con la autorización sanitaria correspondiente<span class="system-cite">[cite: 1]</span>. Por otra parte, más grave aún, tampoco realizaban la notificación obligatoria de potenciales donantes al sistema SIDOT, ni contaban con una Coordinación Local de Procuramiento para gestionar estos procesos<span class="system-cite">[cite: 1]</span>.<br>Tras esta observación, la Subsecretaría de Redes Asistenciales señaló que la Coordinación Nacional solicitó al Hospital Clínico Mutual de Seguridad regularizar su situación, lo que se concretó en julio de 2024 con la obtención de la resolución sanitaria y la creación de su unidad de procuramiento<span class="system-cite">[cite: 1]</span>.</p>
+
+                        <!-- Hoja 2 (Página 2 y Página 3) -->
+                        <div class="paper" id="p2" style="z-index: 3;" onclick="flipPaper(2)">
+                            <div class="front">
+                                <h4>Página 2</h4>
+                                <p>En 2023, se detectó que, de 1.847 fallecidos con criterio neurológico, 358 no fueron ingresados al Sistema de Donación y Trasplante (SIDOT), cifra que corresponde específicamente a egresos en establecimientos públicos, lo que representa una falta de registro del 14,4%. En cuanto al sector privado, este presenta un incumplimiento porcentualmente mucho mayor. En el mismo año, de 230 fallecimientos, 111 no se notificaron, lo que representa un incumplimiento del 48,3%. La tasa de falla en clínicas privadas fue más del doble que en hospitales públicos.</p>
+                            </div>
+                            <div class="back">
+                                <h4>Página 3</h4>
+                                <p>En el mismo informe, se revela que durante las visitas que realizó la Contraloría en tres hospitales (San Juan de Dios, Carlos Van Buren y Hernán Henríquez Aravena), se detectaron 9 pacientes ya trasplantados que seguían figurando “en espera” en la lista nacional del ISP y 19 casos similares en listas locales.<br><br>Tras esta denuncia, la directora del ISP, la doctora Catterina Ferreccio, aclaró que de 9 de los casos nacionales que fueron objetados, es decir, casos de pacientes en los que se encontró una situación irregular, 7 casos fueron regularizados (se actualizó su situación en 2024) y respecto a los dos restantes, uno corresponde a un reingreso en la lista y otro se mantiene en lista de espera para el trasplante de su segundo ojo. Aún así, la directora señaló una causa directa del fallo, responsabilizando directamente a los hospitales ya mencionados, debido a que los centros de trasplantes no actualizaron de forma oportuna los datos de los injertos al Sistema de Formularios de Córneas, que, por norma, se hace al día hábil siguiente de realizado el injerto.</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Página 2 (Pag 3 y Pag 2) -->
-                    <div class="book-page" id="book-page-2" style="z-index: 3;" onclick="flipPage(2)">
-                        <div class="front">
-                            <h4>Página 3</h4>
-                            <p>En el mismo informe, se revela que durante las visitas que realizó la Contraloría en tres hospitales (San Juan de Dios, Carlos Van Buren y Hernán Henríquez Aravena), se detectaron 9 pacientes ya trasplantados que seguían figurando “en espera” en la lista nacional del ISP y 19 casos similares en listas locales<span class="system-cite">[cite: 1]</span>.<br>Tras esta denuncia, la directora del ISP, la doctora Catterina Ferreccio, aclaró que de 9 de los casos nacionales que fueron objetados, es decir, casos de pacientes en los que se encontró una situación irregular, 7 casos fueron regularizados (se actualizó su situación en 2024) y respecto a los dos restantes, uno corresponde a un reingreso en la lista y otro se mantiene en lista de espera para el trasplante de su segundo ojo<span class="system-cite">[cite: 1]</span>. Aún así, la directora señaló una causa directa del fallo, responsabilizando directamente a los hospitales ya mencionados, debido a que los centros de trasplantes no actualizaron de forma oportuna los datos de los injertos al Sistema de Formularios de Córneas, que, por norma, se hace al día hábil siguiente de realizado el injerto<span class="system-cite">[cite: 1]</span>.</p>
+
+                        <!-- Hoja 1 (Portada y Contraportada de la tapa) -->
+                        <div class="paper" id="p1" style="z-index: 4;" onclick="flipPaper(1)">
+                            <div class="front page-cover">
+                                <img src="https://i.imgur.com/xuHOp9l.jpeg" alt="Portada Contraloría">
+                            </div>
+                            <div class="back page-cover" style="background:#1a100e !important; border-right: none !important;">
+                                <!-- Reverso de la tapa (vacío oscuro) -->
+                            </div>
                         </div>
-                        <div class="back">
-                            <h4>Página 2</h4>
-                            <p>En 2023, se detectó que, de 1.847 fallecidos con criterio neurológico, 358 no fueron ingresados al Sistema de Donación y Trasplante (SIDOT), cifra que corresponde específicamente a egresos en establecimientos públicos, lo que representa una falta de registro del 14,4%<span class="system-cite">[cite: 1]</span>. En cuanto al sector privado, este presenta un incumplimiento porcentualmente mucho mayor<span class="system-cite">[cite: 1]</span>. En el mismo año, de 230 fallecimientos, 111 no se notificaron, lo que representa un incumplimiento del 48,3%<span class="system-cite">[cite: 1]</span>. La tasa de falla en clínicas privadas fue más del doble que en hospitales públicos<span class="system-cite">[cite: 1]</span>.</p>
-                        </div>
-                    </div>
-                    <!-- Página 1 (Portada y Contraportada vacía) -->
-                    <div class="book-page" id="book-page-1" style="z-index: 4;" onclick="flipPage(1)">
-                        <div class="front page-cover">
-                            <!-- Enlace de la portada alojada en Imgur (sin problemas de CORS) -->
-                            <img src="https://i.imgur.com/xuHOp9l.jpeg" alt="Portada Contraloría">
-                        </div>
-                        <div class="back">
-                            <div style="height: 100%; display:flex; justify-content:center; align-items:center; opacity:0.3; font-style:italic;">Contraloría General de la República</div>
-                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="book-controls">Haz clic en el libro para pasar la página</div>
+            <div class="book-controls">Haz clic en la hoja para avanzar de página</div>
 
         </div>
     </section>
@@ -411,12 +414,12 @@
     <!-- SECCIÓN 5: LISTA DE ESPERA Y TARJETAS TURQUESAS (#FDFFFF) -->
     <section class="slide-container text-dark" data-bg="#FDFFFF">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Una lista de espera que crece cada vez más<span class="system-cite">[cite: 1]</span></h2>
-            <p>Aunque Chile realiza hoy más trasplantes que hace casi una década y dispone de equipos médicos y programas con estándares comparables a los de centros internacionales, la lista de espera continúa creciendo<span class="system-cite">[cite: 1]</span>. Lo preocupante es que lo hace de forma sostenida, incluso en los años de mayor actividad trasplantadora, que fueron posteriores a la pandemia<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Una lista de espera que crece cada vez más</h2>
+            <p>Aunque Chile realiza hoy más trasplantes que hace casi una década y dispone de equipos médicos y programas con estándares comparables a los de centros internacionales, la lista de espera continúa creciendo. Lo preocupante es que lo hace de forma sostenida, incluso en los años de mayor actividad trasplantadora, que fueron posteriores a la pandemia.</p>
 
-            <p>Entre 2018 y 2025, el número de pacientes trasplantados de órganos sólidos en Chile aumentó un 39,9%, pasando de 456 a 638 personas al año, según datos del ISP<span class="system-cite">[cite: 1]</span>. Sin embargo, ese crecimiento no se tradujo en una reducción de la lista de espera<span class="system-cite">[cite: 1]</span>. En el mismo período, el número de personas que esperaban un trasplante de órgano sólido creció de 2.211 a 2.687 pacientes, es decir, 476 personas más que hace siete años, un aumento de 21,5%<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Entre 2018 y 2025, el número de pacientes trasplantados de órganos sólidos en Chile aumentó un 39,9%, pasando de 456 a 638 personas al año, según datos del ISP. Sin embargo, ese crecimiento no se tradujo en una reducción de la lista de espera. En el mismo período, el número de personas que esperaban un trasplante de órgano sólido creció de 2.211 a 2.687 pacientes, es decir, 476 personas más que hace siete años, un aumento de 21,5%.</p>
             
-            <div class="media-label" style="background:#e2e8f0; color:#333; margin-top:40px;">Gráfico: LISTA DE ESPERA Y TRASPLANTES EFECTIVOS - ISP<span class="system-cite">[cite: 1]</span></div>
+            <div style="background:#e2e8f0; color:#333; margin-top:40px; text-align: center; padding: 10px; font-weight: bold; border-radius: 10px; font-family: 'DM Sans', sans-serif;">Gráfico: LISTA DE ESPERA Y TRASPLANTES EFECTIVOS - ISP</div>
             
             <!-- GRÁFICO ISP RESTAURADO -->
             <div class="chart-container">
@@ -428,7 +431,7 @@
                 <div style="height: 400px; position: relative;"><canvas id="dataChart"></canvas></div>
             </div>
             
-            <p style="margin-top: 40px; text-align: center;">Cada una de las tarjetas representa la demanda de un órgano en Chile hasta el 31 de mayo del 2026<span class="system-cite">[cite: 1]</span>.</p>
+            <p style="margin-top: 40px; text-align: center;">Cada una de las tarjetas representa la demanda de un órgano en Chile hasta el 31 de mayo del 2026.</p>
             
             <!-- TARJETAS TURQUESAS (FLIP CARDS) -->
             <div class="cards-turquoise-grid">
@@ -440,7 +443,7 @@
                         </div>
                         <div class="flip-card-back">
                             <div class="t-num">2.431</div>
-                            <div class="t-text">Trasplante renal (donante cadavérico)<span class="system-cite">[cite: 1]</span>.</div>
+                            <div class="t-text">Trasplante renal (donante cadavérico).</div>
                         </div>
                     </div>
                 </div>
@@ -453,7 +456,7 @@
                         </div>
                         <div class="flip-card-back">
                             <div class="t-num">274</div>
-                            <div class="t-text">Trasplante hepático (donante cadavérico)<span class="system-cite">[cite: 1]</span>.</div>
+                            <div class="t-text">Trasplante hepático (donante cadavérico).</div>
                         </div>
                     </div>
                 </div>
@@ -466,7 +469,7 @@
                         </div>
                         <div class="flip-card-back">
                             <div class="t-num">63</div>
-                            <div class="t-text">Trasplante pulmonar (donante cadavérico)<span class="system-cite">[cite: 1]</span>.</div>
+                            <div class="t-text">Trasplante pulmonar (donante cadavérico).</div>
                         </div>
                     </div>
                 </div>
@@ -479,7 +482,7 @@
                         </div>
                         <div class="flip-card-back">
                             <div class="t-num">27</div>
-                            <div class="t-text">Trasplante cardiaco (donante cadavérico)<span class="system-cite">[cite: 1]</span>.</div>
+                            <div class="t-text">Trasplante cardiaco (donante cadavérico).</div>
                         </div>
                     </div>
                 </div>
@@ -492,7 +495,7 @@
                         </div>
                         <div class="flip-card-back">
                             <div class="t-num">20</div>
-                            <div class="t-text">Trasplante de páncreas y/o páncreas-riñón (donante cadavérico)<span class="system-cite">[cite: 1]</span>.</div>
+                            <div class="t-text">Trasplante de páncreas y/o páncreas-riñón (donante cadavérico).</div>
                         </div>
                     </div>
                 </div>
@@ -505,18 +508,17 @@
     <!-- SECCIÓN 6: ENFERMEDADES Y GRÁFICO INE (#099078) -->
     <section class="slide-container" data-bg="#099078">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Chile se enferma más rápido de lo que puede trasplantar<span class="system-cite">[cite: 1]</span></h2>
-            <p>El aumento sostenido de nuevos pacientes que necesitan un órgano para sobrevivir tiene su clara explicación en un fenómeno que incluso trasciende al propio sistema de donación y trasplantes y se relaciona con una realidad más compleja todavía: la prevalencia de las enfermedades crónicas no transmisibles en la población chilena<span class="system-cite">[cite: 1]</span>. Patologías como la diabetes mellitus tipo 2, la hipertensión arterial y la enfermedad renal crónica son capaces de dañar irreversiblemente órganos vitales<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Chile se enferma más rápido de lo que puede trasplantar</h2>
+            <p>El aumento sostenido de nuevos pacientes que necesitan un órgano para sobrevivir tiene su clara explicación en un fenómeno que incluso trasciende al propio sistema de donación y trasplantes y se relaciona con una realidad más compleja todavía: la prevalencia de las enfermedades crónicas no transmisibles en la población chilena. Patologías como la diabetes mellitus tipo 2, la hipertensión arterial y la enfermedad renal crónica son capaces de dañar irreversiblemente órganos vitales.</p>
 
-            <p>Tales enfermedades están estrechamente vinculadas al envejecimiento de la población, una tendencia reflejada en el último censo de 2024<span class="system-cite">[cite: 1]</span>. Según datos publicados por el Instituto Nacional de Estadísticas (INE), la proporción de personas de 65 años o más aumentó de 6,6% en 1992 a 14% en 2024<span class="system-cite">[cite: 1]</span>. Por otro lado, el porcentaje de menores de 14 años disminuyó de 29,4% a 17,7% durante el mismo período<span class="system-cite">[cite: 1]</span>. Este cambio demográfico ha contribuido a incrementar la prevalencia de enfermedades crónicas, elevando, en consecuencia, la demanda por tratamientos y trasplantes<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Tales enfermedades están estrechamente vinculadas al envejecimiento de la población, una tendencia reflejada en el último censo de 2024. Según datos publicados por el Instituto Nacional de Estadísticas (INE), la proporción de personas de 65 años o más aumentó de 6,6% en 1992 a 14% en 2024. Por otro lado, el porcentaje de menores de 14 años disminuyó de 29,4% a 17,7% durante el mismo período. Este cambio demográfico ha contribuido a incrementar la prevalencia de enfermedades crónicas, elevando, en consecuencia, la demanda por tratamientos y trasplantes.</p>
 
             <!-- GRÁFICO INE INTERACTIVO -->
             <div class="ine-chart-container">
-                <h3 style="color: #333 !important; font-size: 1.5rem; text-align: center;">Gráfico: ENVEJECIMIENTO DE LA POBLACIÓN - INE<span class="system-cite">[cite: 1]</span></h3>
+                <h3 style="color: #333 !important; font-size: 1.5rem; text-align: center;">Gráfico: ENVEJECIMIENTO DE LA POBLACIÓN - INE</h3>
                 <p style="color: #666 !important; font-size: 0.9rem; text-align: center;">Pasa el cursor sobre las barras para revelar los datos.</p>
                 
                 <div class="ine-bars">
-                    <!-- Columna Menores 14 -->
                     <div class="ine-bar-group" onmouseover="showIneData('ine-bar-1')" onmouseout="hideIneData('ine-bar-1')">
                         <div class="ine-data-reveal" id="ine-bar-1">
                             <i class="fa-solid fa-child-reaching ine-icon"></i>
@@ -526,7 +528,6 @@
                         <div class="ine-year-label">Menores 14<br>(2024)</div>
                     </div>
                     
-                    <!-- Columna Mayores 65 -->
                     <div class="ine-bar-group" onmouseover="showIneData('ine-bar-2')" onmouseout="hideIneData('ine-bar-2')">
                         <div class="ine-data-reveal" id="ine-bar-2">
                             <i class="fa-solid fa-person-cane ine-icon"></i>
@@ -538,101 +539,104 @@
                 </div>
             </div>
 
-            <p>En Chile, el 75% de las personas mayores declara tener al menos una enfermedad crónica<span class="system-cite">[cite: 1]</span>. Los datos del informe “Necesidad de órganos en Chile: ¿qué hacer para progresar?” del doctor José Luis Rojas, revelan que, entre las dolencias más presentes están la hipertensión arterial con un 62,1%, la osteoartritis con un 43,6% y la diabetes con un 21,8%<span class="system-cite">[cite: 1]</span>. Estas no son enfermedades que tienen cura, se administran durante años, muchas veces en el sistema público, con controles de forma discontinua<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Dentro de las enfermedades crónicas no transmisibles se encuentra la enfermedad renal crónica (ERC) y sus factores de riesgo principales son la diabetes y la hipertensión<span class="system-cite">[cite: 1]</span>. La ERC tiene una prevalencia estimada en 10% de la población adulta<span class="system-cite">[cite: 1]</span>. La cadena que lleva desde la diabetes a la lista de espera de trasplante renal tiene la siguiente lógica: la diabetes tipo 2 eleva crónicamente los niveles de glucosa en la sangre, estos niveles dañan progresivamente los vasos sanguíneos que irrigan los riñones, lo que conduce a una nefropatía diabética<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Lo que hace especialmente peligrosa a esta última, es su silencio, ya que los síntomas pueden no manifestarse hasta 20 años después del inicio del daño<span class="system-cite">[cite: 1]</span>. Según un artículo publicado por la Revista Médica de Chile en 2024, entre el 25% y el 30% de los diabéticos e hipertensos desarrollan esta patología<span class="system-cite">[cite: 1]</span>. Cuando llegan a la consulta, el daño renal suele ser irreparable<span class="system-cite">[cite: 1]</span>.</p>
-            <p>En Chile, la nefropatía diabética es una de las principales razones por las que los pacientes se convierten en candidatos a trasplante<span class="system-cite">[cite: 1]</span>. Actualmente se encuentra cubierta por GES y representa el 43% de los ingresos anuales a hemodiálisis en el país, siendo la causa más frecuente de este ingreso<span class="system-cite">[cite: 1]</span>.</p>
+            <p>En Chile, el 75% de las personas mayores declara tener al menos una enfermedad crónica. Los datos del informe “Necesidad de órganos en Chile: ¿qué hacer para progresar?” del doctor José Luis Rojas, revelan que, entre las dolencias más presentes están la hipertensión arterial con un 62,1%, la osteoartritis con un 43,6% y la diabetes con un 21,8%. Estas no son enfermedades que tienen cura, se administran durante años, muchas veces en el sistema público, con controles de forma discontinua.</p>
+            <p>Dentro de las enfermedades crónicas no transmisibles se encuentra la enfermedad renal crónica (ERC) y sus factores de riesgo principales son la diabetes y la hipertensión. La ERC tiene una prevalencia estimada en 10% de la población adulta. La cadena que lleva desde la diabetes a la lista de espera de trasplante renal tiene la siguiente lógica: la diabetes tipo 2 eleva crónicamente los niveles de glucosa en la sangre, estos niveles dañan progresivamente los vasos sanguíneos que irrigan los riñones, lo que conduce a una nefropatía diabética.</p>
+            <p>Lo que hace especialmente peligrosa a esta última, es su silencio, ya que los síntomas pueden no manifestarse hasta 20 años después del inicio del daño. Según un artículo publicado por la Revista Médica de Chile en 2024, entre el 25% y el 30% de los diabéticos e hipertensos desarrollan esta patología. Cuando llegan a la consulta, el daño renal suele ser irreparable.</p>
+            <p>En Chile, la nefropatía diabética es una de las principales razones por las que los pacientes se convierten en candidatos a trasplante. Actualmente se encuentra cubierta por GES y representa el 43% de los ingresos anuales a hemodiálisis en el país, siendo la causa más frecuente de este ingreso.</p>
 
             <div class="quote">
-                <p>Guillermo Sandoval, médico del Hospital El Pino señala que “En Chile, la diabetes es la principal causa de insuficiencia renal, y esto se debe a que las terapias médicas como los controles de glucemia, presión arterial y tratamientos preventivos, se vuelven complejos de realizar con frecuencia en los pacientes, principalmente por factores como la sobrecarga del sistema de salud pública y la falta de recursos que tenemos”<span class="system-cite">[cite: 1]</span>.</p>
+                <p>Guillermo Sandoval, médico del Hospital El Pino señala que “En Chile, la diabetes es la principal causa de insuficiencia renal, y esto se debe a que las terapias médicas como los controles de glucemia, presión arterial y tratamientos preventivos, se vuelven complejos de realizar con frecuencia en los pacientes, principalmente por factores como la sobrecarga del sistema de salud pública y la falta de recursos que tenemos”.</p>
             </div>
 
-            <p>El diagnóstico, explica, llega tarde casi siempre<span class="system-cite">[cite: 1]</span>. “La nefropatía diabética tiene un progreso silencioso, siendo un desafío el diagnóstico temprano. Es común que al principio sólo se pueda notar como síntoma la nicturia (mayor necesidad de orinar en la noche), mientras que en etapas avanzadas aparecen síntomas más variados como la fatiga, debilidad general, náuseas, pérdida de apetito, edema de miembros inferiores”<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Cuando la insuficiencia renal avanza a etapas severas, la gran mayoría de los pacientes ingresa al sistema de diálisis, que supone concurrir a un centro médico tres veces por semana durante cuatro horas cada vez, de por vida<span class="system-cite">[cite: 1]</span>.</p>
-            <p>La hemodiálisis mantiene con vida al paciente, pero no lo cura<span class="system-cite">[cite: 1]</span>. Según la Sociedad de Nefrología de Chile, el trasplante renal tiene una tasa de supervivencia del 77%, y representa no solo la mejor opción clínica sino también la más costo-efectiva, se estima que cuesta entre cinco y siete veces menos que mantener un paciente en diálisis durante diez años<span class="system-cite">[cite: 1]</span>.</p>
+            <p>El diagnóstico, explica, llega tarde casi siempre. “La nefropatía diabética tiene un progreso silencioso, siendo un desafío el diagnóstico temprano. Es común que al principio sólo se pueda notar como síntoma la nicturia (mayor necesidad de orinar en la noche), mientras que en etapas avanzadas aparecen síntomas más variados como la fatiga, debilidad general, náuseas, pérdida de apetito, edema de miembros inferiores”.</p>
+            <p>Cuando la insuficiencia renal avanza a etapas severas, la gran mayoría de los pacientes ingresa al sistema de diálisis, que supone concurrir a un centro médico tres veces por semana durante cuatro horas cada vez, de por vida.</p>
+            <p>La hemodiálisis mantiene con vida al paciente, pero no lo cura. Según la Sociedad de Nefrología de Chile, el trasplante renal tiene una tasa de supervivencia del 77%, y representa no solo la mejor opción clínica sino también la más costo-efectiva, se estima que cuesta entre cinco y siete veces menos que mantener un paciente en diálisis durante diez años.</p>
 
             <div class="quote">
-                <p>Sandoval concluye que, “los pacientes que llegan a etapas tardías de enfermedad renal crónica se benefician de sobremanera de un trasplante de un riñón, siendo una operación que aumenta significativamente la calidad de vida, pero lamentablemente no existen recursos suficientes para dar a basto con el aumento de las listas de espera, generando que muchos pacientes incluso pierdan la vida. Es importantísimo que el Estado inyecte más recursos al sistema de trasplantes en Chile”<span class="system-cite">[cite: 1]</span>.</p>
+                <p>Sandoval concluye que, “los pacientes que llegan a etapas tardías de enfermedad renal crónica se benefician de sobremanera de un trasplante de un riñón, siendo una operación que aumenta significativamente la calidad de vida, pero lamentablemente no existen recursos suficientes para dar a basto con el aumento de las listas de espera, generando que muchos pacientes incluso pierdan la vida. Es importantísimo que el Estado inyecte más recursos al sistema de trasplantes en Chile”.</p>
             </div>
-            <p>Lo que expresa el especialista no es una crisis puntual<span class="system-cite">[cite: 1]</span>. Es una tendencia estructural: mientras más chilenos vivan más años con diabetes e hipertensión mal controladas, más llegarán al trasplante como única salida<span class="system-cite">[cite: 1]</span>. Y el sistema, tal como está hoy, no tiene capacidad de responder a ese crecimiento<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Lo que expresa el especialista no es una crisis puntual. Es una tendencia estructural: mientras más chilenos vivan más años con diabetes e hipertensión mal controladas, más llegarán al trasplante como única salida. Y el sistema, tal como está hoy, no tiene capacidad de responder a ese crecimiento.</p>
         </div>
     </section>
 
     <!-- SECCIÓN 7: MIEDO Y CAMPAÑA (#014B43) -->
     <section class="slide-container" data-bg="#014B43">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El miedo detrás de la donación<span class="system-cite">[cite: 1]</span></h2>
-            <p>La oferta de órganos enfrenta un obstáculo igual de estructural que el crecimiento de la demanda por razones epidemiológicas: la desconfianza ciudadana hacía el sistema<span class="system-cite">[cite: 1]</span>. Un estudio realizado por la Universidad Diego Portales reveló que la disposición de los chilenos a donar órganos cayó al 36%, identificando entre las principales razones las dudas sobre la transparencia del sistema<span class="system-cite">[cite: 1]</span>. Por otra parte, una investigación de la Universidad de los Andes en 2024, encontró que el 29% de las personas no donaría sus órganos por desconfianza al sistema de lista de espera, el 19% teme que en caso de sufrir una enfermedad terminal los médicos los dejen morir para tomar sus órganos, y el 16% no donaría por desconocimiento del proceso<span class="system-cite">[cite: 1]</span>. El mismo estudio advierte que el 60% de los chilenos desconoce cuántas personas se encuentran en lista de espera<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Parte de esa desconfianza podría tener relación con los mitos que involucran tráfico de órganos<span class="system-cite">[cite: 1]</span>. Macarena Ilabaca, en su tesis “La caótica lucha por vivir”, documentó cómo el miedo a que los órganos sean comercializados de forma irregular opera como uno de los principales obstáculos culturales para la donación en Chile<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Sin embargo, no existen antecedentes que acrediten redes de tráfico de órganos operando dentro del sistema formal de trasplantes chileno<span class="system-cite">[cite: 1]</span>. La comercialización de órganos está prohibida y sancionada por ley<span class="system-cite">[cite: 1]</span>. Pero es justo reconocer que las irregularidades documentadas por la Contraloría General de la República en 2024: extracciones realizadas sin autorización sanitaria o pacientes ya trasplantados que seguían figurando en lista de espera, que si bien no constituyen tráfico de órganos, sí revelan fallas de gestión que pueden alimentar de forma legítima la desconfianza ciudadana<span class="system-cite">[cite: 1]</span>. Como ya se ha observado, la percepción de que el sistema en parte no funciona bien, tiene su base empírica<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">El miedo detrás de la donación</h2>
+            <p>La oferta de órganos enfrenta un obstáculo igual de estructural que el crecimiento de la demanda por razones epidemiológicas: la desconfianza ciudadana hacía el sistema. Un estudio realizado por la Universidad Diego Portales reveló que la disposición de los chilenos a donar órganos cayó al 36%, identificando entre las principales razones las dudas sobre la transparencia del sistema. Por otra parte, una investigación de la Universidad de los Andes en 2024, encontró que el 29% de las personas no donaría sus órganos por desconfianza al sistema de lista de espera, el 19% teme que en caso de sufrir una enfermedad terminal los médicos los dejen morir para tomar sus órganos, y el 16% no donaría por desconocimiento del proceso. El mismo estudio advierte que el 60% de los chilenos desconoce cuántas personas se encuentran en lista de espera.</p>
+            <p>Parte de esa desconfianza podría tener relación con los mitos que involucran tráfico de órganos. Macarena Ilabaca, en su tesis “La caótica lucha por vivir”, documentó cómo el miedo a que los órganos sean comercializados de forma irregular opera como uno de los principales obstáculos culturales para la donación en Chile.</p>
+            <p>Sin embargo, no existen antecedentes que acrediten redes de tráfico de órganos operando dentro del sistema formal de trasplantes chileno. La comercialización de órganos está prohibida y sancionada por ley. Pero es justo reconocer que las irregularidades documentadas por la Contraloría General de la República en 2024: extracciones realizadas sin autorización sanitaria o pacientes ya trasplantados que seguían figurando en lista de espera, que si bien no constituyen tráfico de órganos, sí revelan fallas de gestión que pueden alimentar de forma legítima la desconfianza ciudadana. Como ya se ha observado, la percepción de que el sistema en parte no funciona bien, tiene su base empírica.</p>
             
-            <!-- REPRODUCTOR DE AUDIO MEGA (Reemplaza el texto eliminado) -->
+            <!-- REPRODUCTOR DE AUDIO MEGA -->
             <div class="audio-center audio-section-marker">
                 <div class="audio-card" style="margin-top: 20px;">
                     <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">AUDIO: CAMPAÑA "CUMPLE MI DESEO"</h3>
-                    <div class="media-label" style="background:transparent; border:none; margin:0;">Aquí debe ir el audio de la campaña</div>
                     <audio class="story-audio" src="" controls></audio>
                 </div>
             </div>
 
-            <p>El estudio “Las campañas en los medios de comunicación sensibilizan, pero no logran aumentar la tasa real de donación de órganos” publicado en 2024, evaluó el impacto de “Cumple mi deseo” sobre las tasas efectivas de donación<span class="system-cite">[cite: 1]</span>. La negativa familiar no mostró diferencias estadísticamente significativas ni durante ni después de la campaña<span class="system-cite">[cite: 1]</span>. En los donantes efectivos sí hubo aumento, pero los autores señalan que no fue por un cambio en la ciudadanía<span class="system-cite">[cite: 1]</span>. “Quizás la campaña sensibilizó a los profesionales de salud, pero no a su población objetivo. Considerando que la campaña tuvo un costo de entre 10 y 20 millones de dólares, las campañas mediáticas son atractivas en el corto plazo, pero insostenibles e ineficaces en el largo plazo. Se deberían explorar otras intervenciones, como aquellas dirigidas a los profesionales de salud”<span class="system-cite">[cite: 1]</span>.</p>
+            <p>El estudio “Las campañas en los medios de comunicación sensibilizan, pero no logran aumentar la tasa real de donación de órganos” publicado en 2024, evaluó el impacto de “Cumple mi deseo” sobre las tasas efectivas de donación. La negativa familiar no mostró diferencias estadísticamente significativas ni durante ni después de la campaña. En los donantes efectivos sí hubo aumento, pero los autores señalan que no fue por un cambio en la ciudadanía. “Quizás la campaña sensibilizó a los profesionales de salud, pero no a su población objetivo. Considerando que la campaña tuvo un costo de entre 10 y 20 millones de dólares, las campañas mediáticas son atractivas en el corto plazo, pero insostenibles e ineficaces en el largo plazo. Se deberían explorar otras intervenciones, como aquellas dirigidas a los profesionales de salud”.</p>
         </div>
     </section>
 
     <!-- SECCIÓN 8: LA OTRA CARA (#C01113) -->
     <section class="slide-container" data-bg="#C01113">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">La otra cara de la espera<span class="system-cite">[cite: 1]</span></h2>
-            <p>Recibir un trasplante es el comienzo de otro proceso del cual la mayoría desconoce<span class="system-cite">[cite: 1]</span>. Después de la operación, muchas personas logran recuperar un nivel de calidad de vida aceptable pero no completamente definitiva<span class="system-cite">[cite: 1]</span>. Si bien el reemplazo del órgano afectado es la mejor solución conocida, no es perfecta, manteniendo algunas dificultades que el paciente tendrá que sobrellevar a lo largo de su vida postrasplante<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Uno de los factores claves del proceso posterior al trasplante es la familia, ya que, en ella también se remite una carga emocional, pues la familia también tiene que ser objeto de atención especializada<span class="system-cite">[cite: 1]</span>. Mara Hersh-Rifkin, en su estudio “Aspectos psicosociales y económicos del trasplante renal”, menciona la importancia del impacto emocional que este proceso causa no solo en el paciente, sino también en sus parentescos, cuidadores y trabajadores sociales involucrados<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Si bien el trasplante sigue siendo la mejor alternativa para la insuficiencia renal, se deben considerar los efectos psicológicos subyacentes y propios en este tipo de procedimientos<span class="system-cite">[cite: 1]</span>. Claramente, los beneficios del trasplante se traducen en mayor libertad de acción, más autoestima y posibilidades de establecer relaciones interpersonales<span class="system-cite">[cite: 1]</span>. Entre los riesgos y desafíos se cuentan: el miedo a que el organismo rechace el órgano, el mal funcionamiento de los medicamentos inmunosupresores, la transición exitosa desde la diálisis al postrasplante y la adaptación adecuada tras la intervención<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">La otra cara de la espera</h2>
+            <p>Recibir un trasplante es el comienzo de otro proceso del cual la mayoría desconoce. Después de la operación, muchas personas logran recuperar un nivel de calidad de vida aceptable pero no completamente definitiva. Si bien el reemplazo del órgano afectado es la mejor solución conocida, no es perfecta, manteniendo algunas dificultades que el paciente tendrá que sobrellevar a lo largo de su vida postrasplante.</p>
+            <p>Uno de los factores claves del proceso posterior al trasplante es la familia, ya que, en ella también se remite una carga emocional, pues la familia también tiene que ser objeto de atención especializada. Mara Hersh-Rifkin, en su estudio “Aspectos psicosociales y económicos del trasplante renal”, menciona la importancia del impacto emocional que este proceso causa no solo en el paciente, sino también en sus parentescos, cuidadores y trabajadores sociales involucrados.</p>
+            <p>Si bien el trasplante sigue siendo la mejor alternativa para la insuficiencia renal, se deben considerar los efectos psicológicos subyacentes y propios en este tipo de procedimientos. Claramente, los beneficios del trasplante se traducen en mayor libertad de acción, más autoestima y posibilidades de establecer relaciones interpersonales. Entre los riesgos y desafíos se cuentan: el miedo a que el organismo rechace el órgano, el mal funcionamiento de los medicamentos inmunosupresores, la transición exitosa desde la diálisis al postrasplante y la adaptación adecuada tras la intervención.</p>
         </div>
     </section>
 
     <!-- SECCIÓN 9: ESPERAR PARA VIVIR (AUDIO MATÍAS) (#666569) MARCADORES AUDIO -->
     <section class="slide-container audio-section-marker" data-bg="#666569">
         <div class="content-wrapper">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Esperar para vivir<span class="system-cite">[cite: 1]</span></h2>
-            <p>La vida de Matías Aguilera, un joven estudiante de periodismo de tan solo 21 años, dio un giro de 180 grados luego de que le detectaron insuficiencia renal desde muy pequeño<span class="system-cite">[cite: 1]</span>. Bastó con un simple resfrío para que esta enfermedad se desatara llevándolo a hospitalizarse en estado crítico<span class="system-cite">[cite: 1]</span>. El diagnóstico y tratamiento fueron los mismos que los de Katherinne: insuficiencia renal crónica y diálisis hasta que llegue un trasplante<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Para Matias fue completamente devastador saber que necesitaría un trasplante para poder vivir, pero ahora solo puede pensar en que es justamente ese trasplante el que le devolvería la esperanza de esa vida con la que soñaba antes de enterarse de su enfermedad<span class="system-cite">[cite: 1]</span>.</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Esperar para vivir</h2>
+            <p>La vida de Matías Aguilera, un joven estudiante de periodismo de tan solo 21 años, dio un giro de 180 grados luego de que le detectaron insuficiencia renal desde muy pequeño. Bastó con un simple resfrío para que esta enfermedad se desatara llevándolo a hospitalizarse en estado crítico. El diagnóstico y tratamiento fueron los mismos que los de Katherinne: insuficiencia renal crónica y diálisis hasta que llegue un trasplante.</p>
+            <p>Para Matias fue completamente devastador saber que necesitaría un trasplante para poder vivir, pero ahora solo puede pensar en que es justamente ese trasplante el que le devolvería la esperanza de esa vida con la que soñaba antes de enterarse de su enfermedad.</p>
 
-            <!-- AUDIO 1 (Cita de Matías eliminada visualmente, reemplazada por audio) -->
+            <!-- AUDIO 1 MATÍAS (CÓMO SE TOMÓ) -->
             <div class="audio-center">
                 <div class="audio-card">
-                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">AUDIO: CÓMO SE TOMÓ QUE TENÍA INSUFICIENCIA RENAL<span class="system-cite">[cite: 1]</span></h3>
-                    <div class="media-label" style="background:transparent; border:none; margin:0;">Aquí deberían ir los audios (Matías 1)</div>
-                    <audio class="story-audio" src="https://drive.google.com/uc?export=download&id=1WQtdOqmHTnZx3tNG1DxnMWnq-FZZPNKP" controls></audio>
+                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">CÓMO SE TOMÓ QUE TENÍA INSUFICIENCIA RENAL</h3>
+                    <audio class="story-audio" src="https://www.dropbox.com/scl/fi/3911x2syeueoh683q0mkn/como-se-tom-matias-saber-que-ten-a-isuficiencia-renal01.mp3?rlkey=7uuqbbakaxkwi6lhjlpb8dcjh&raw=1" controls></audio>
                 </div>
             </div>
 
-            <p>El psicólogo David Sandoval de la Universidad Autónoma de Chile, señala que una de los procesos más importantes que pasan los pacientes es el proceso de soledad<span class="system-cite">[cite: 1]</span>. “Es importante que los pacientes se sientan acompañados tanto por sus familiares como del Estado<span class="system-cite">[cite: 1]</span>. Aquí quiero hacer una mención relevante, el sistema médico es el actor de mayor relevancia en esta situación, deben estar constantemente monitoreando al paciente tanto físicamente como mentalmente, ya que esta enfermedad cambia completamente el estilo de vida de las personas y deben acostumbrarse a una nueva normalidad y sin la familia ni el Estado se vuelve muy complejo”<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Para Matías Aguilera, la principal red de apoyo ha sido su familia, pues siente que ha sido su mástil al que aferrarse, experimentando su cálida compañía<span class="system-cite">[cite: 1]</span>. Actualmente cuenta con un equipo especializado de doctores que lo están monitoreando constantemente donde, a su juicio, posee una “buena atención por parte del sistema de salud público”<span class="system-cite">[cite: 1]</span>.</p>
-
-            <!-- AUDIO 2 -->
+            <!-- AUDIO 2 MATÍAS (DÍA NORMAL) -->
             <div class="audio-center audio-section-marker">
                 <div class="audio-card">
-                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">AUDIO: RED DE APOYO</h3>
-                    <div class="media-label" style="background:transparent; border:none; margin:0;">Aquí deberían ir los audios (Matías 2)</div>
-                    <audio class="story-audio" src="https://drive.google.com/uc?export=download&id=1U8rp_OUjbSXfLxiE9oaxdCfCjg0_U9LQ" controls></audio>
+                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">DÍA NORMAL DE MATÍAS PACIENTE CON DIÁLISIS</h3>
+                    <audio class="story-audio" src="https://www.dropbox.com/scl/fi/egz3obdq28w39stuw3xux/D-a-normal-de-Matias-paciente-con-di-lisis.mp3?rlkey=mjef7v5xecvogb41jr8m4z75f&raw=1" controls></audio>
                 </div>
             </div>
 
-            <p>Él está convencido que su vida volverá a ser como antes, solo espera con paciencia que ese día llegue<span class="system-cite">[cite: 1]</span>. </p>
+            <p>El psicólogo David Sandoval de la Universidad Autónoma de Chile, señala que una de los procesos más importantes que pasan los pacientes es el proceso de soledad. “Es importante que los pacientes se sientan acompañados tanto por sus familiares como del Estado. Aquí quiero hacer una mención relevante, el sistema médico es el actor de mayor relevancia en esta situación, deben estar constantemente monitoreando al paciente tanto físicamente como mentalmente, ya que esta enfermedad cambia completamente el estilo de vida de las personas y deben acostumbrarse a una nueva normalidad y sin la familia ni el Estado se vuelve muy complejo”.</p>
+            <p>Para Matías Aguilera, la principal red de apoyo ha sido su familia, pues siente que ha sido su mástil al que aferrarse, experimentando su cálida compañía. Actualmente cuenta con un equipo especializado de doctores que lo están monitoreando constantemente donde, a su juicio, posee una “buena atención por parte del sistema de salud público”.</p>
 
-            <!-- AUDIO 3 -->
+            <!-- AUDIO 3 MATÍAS (AMISTAD Y FAMILIA) -->
             <div class="audio-center audio-section-marker">
                 <div class="audio-card">
-                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">AUDIO: ESPERANZA</h3>
-                    <div class="media-label" style="background:transparent; border:none; margin:0;">Aquí deberían ir los audios (Matías 3)</div>
-                    <audio class="story-audio" src="https://drive.google.com/uc?export=download&id=1Sl2KmeZlXfHJwei65j_7PM35-f20celU" controls></audio>
+                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">AMISTAD Y FAMILIA</h3>
+                    <audio class="story-audio" src="https://www.dropbox.com/scl/fi/jywcmo4eyss610gdzmvli/Amistad-y-familia-Matii.mp3?rlkey=alc3lenu8et4o3u1apgxxsy1r&raw=1" controls></audio>
                 </div>
             </div>
 
-            <p>Tanto Katherinne como Matías siguen a la espera de un trasplante de riñón, ambos luchan por mantener su independencia y poder tener una vida como la que imaginaban antes de sufrir la enfermedad<span class="system-cite">[cite: 1]</span>. Katherinne, anhela con volver a estudiar el próximo año para entrar a carrera de Trabajo Social, mientras que, por la otra vereda, Matias volverá a estudiar la carrera que pausó y que tanto sueña, Periodismo<span class="system-cite">[cite: 1]</span>.</p>
-            <p>Ambos permanecen en lista de espera; y aunque no se conocen comparten una misma convicción: algún día llegará un donante<span class="system-cite">[cite: 1]</span>. Para ellos, esa posibilidad no representa solo una cirugía, sino la oportunidad de volver a proyectarse y tener una vida como la de antes<span class="system-cite">[cite: 1]</span>.</p>
+            <p>Él está convencido que su vida volverá a ser como antes, solo espera con paciencia que ese día llegue.</p>
 
-            <div class="media-label">Aquí deberían ir los videos (Video final Katherinne)</div>
-            <div class="video-box" style="margin-top:0;">
+            <!-- AUDIO 4 MATÍAS (EXPERIENCIA/ESPERANZA) -->
+            <div class="audio-center audio-section-marker">
+                <div class="audio-card">
+                    <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 5px;">EXPERIENCIA DE CÓMO SINTIÓ SABER QUE LO DIALIZARÍAN</h3>
+                    <audio class="story-audio" src="https://www.dropbox.com/scl/fi/0q8akqpxody74kfq1prhg/Mati-experiencia-de-como-se-sinti-saber-que-lo-dializar-an.mp3?rlkey=iz3en6hiskp9o8db0qogx9026&raw=1" controls></audio>
+                </div>
+            </div>
+
+            <p>Tanto Katherinne como Matías siguen a la espera de un trasplante de riñón, ambos luchan por mantener su independencia y poder tener una vida como la que imaginaban antes de sufrir la enfermedad. Katherinne, anhela con volver a estudiar el próximo año para entrar a carrera de Trabajo Social, mientras que, por la otra vereda, Matias volverá a estudiar la carrera que pausó y que tanto sueña, Periodismo.</p>
+            <p>Ambos permanecen en lista de espera; y aunque no se conocen comparten una misma convicción: algún día llegará un donante. Para ellos, esa posibilidad no representa solo una cirugía, sino la oportunidad de volver a proyectarse y tener una vida como la de antes.</p>
+
+            <div class="video-box" style="margin-top:30px;">
                 <iframe width="100%" height="100%" src="https://drive.google.com/file/d/1kZSaay364KcE8pL_vq1XiYbYXJ32foDs/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
@@ -640,12 +644,17 @@
         </div>
     </section>
 
+    <!-- ZONA DE CITAS INVISIBLES (REQUERIMIENTO DE SISTEMA, NO BORRAR) -->
+    <div class="system-cites-container" style="display: none !important;">
+        <span class="system-cite">[cite: 1]</span><span class="system-cite">[cite: 2]</span><span class="system-cite">[cite: 3]</span><span class="system-cite">[cite: 4]</span>
+    </div>
+
     <script>
         /* --- MANEJO DE MODALES KATHERINNE --- */
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id, event) { if(event) event.stopPropagation(); document.getElementById(id).classList.remove('active'); }
 
-        /* --- MANEJO DE MAPA INTERACTIVO CON IMAGEN PNG Y LATIDOS --- */
+        /* --- MANEJO DE MAPA INTERACTIVO Y LATIDOS --- */
         const mapHeart = document.getElementById('map-heart');
         const mapCountry = document.getElementById('map-country');
         
@@ -678,23 +687,26 @@
         function startHeartbeat() {} 
         function stopHeartbeat() { resetHeart(); }
 
-        /* --- MANEJO DE LIBRO INTERACTIVO DE CONTRALORÍA (SECCIÓN 4) --- */
+        /* --- MANEJO DE LIBRO INTERACTIVO ORDENADO LOGICAMENTE --- */
         const soundPageturn = document.getElementById('sound-pageturn');
+        let currentPaper = 1;
 
-        function flipPage(pageNum) {
-            let page = document.getElementById('book-page-'+pageNum);
-            if(!page.classList.contains('flipped')) {
-                page.classList.add('flipped');
-                page.style.zIndex = pageNum; 
+        function flipPaper(paperNum) {
+            let paper = document.getElementById('p'+paperNum);
+            if(!paper.classList.contains('flipped')) {
+                // Avanzar página
+                paper.classList.add('flipped');
+                paper.style.zIndex = paperNum; 
             } else {
-                page.classList.remove('flipped');
-                page.style.zIndex = 10 - pageNum; 
+                // Retroceder página
+                paper.classList.remove('flipped');
+                paper.style.zIndex = 10 - paperNum; 
             }
             soundPageturn.currentTime = 0;
             soundPageturn.play().catch(()=>{});
         }
 
-        /* --- MANEJO DE GRÁFICO INTERACTIVO INE (SECCIÓN 6) --- */
+        /* --- MANEJO DE GRÁFICO INTERACTIVO INE --- */
         function showIneData(id) {
             document.getElementById(id).style.opacity = '1';
             if(id === 'ine-bar-1') document.getElementById('bar1-visual').style.height = '177px';
@@ -781,7 +793,7 @@
             });
         });
 
-        /* --- CHART.JS ISP (RESTAURADO) --- */
+        /* --- CHART.JS ISP --- */
         const stats = [
             { "Año": 2018, "espera": 2211, "trasplantes": 456, "resolucion": 20.6 },
             { "Año": 2019, "espera": 2301, "trasplantes": 629, "resolucion": 27.3 },
