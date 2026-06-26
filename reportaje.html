@@ -35,7 +35,10 @@
         nav a { color: white; text-decoration: none; font-weight: 500; transition: var(--transition); font-size: 1.05rem;}
         nav a:hover { color: var(--accent); }
 
-        .bg-medical-icon { position: absolute; color: rgba(255, 255, 255, 0.07); font-size: 140px; z-index: 1; pointer-events: none; }
+        /* Color gris oscuro semitransparente para los iconos médicos cuando el fondo es blanco */
+        .bg-medical-icon.dark { color: rgba(0, 0, 0, 0.08); }
+
+        .bg-medical-icon { position: absolute; color: rgba(255, 255, 255, 0.07); font-size: 140px; z-index: 1; pointer-events: none; transition: color 0.8s ease;}
         .slide-container { min-height: auto; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 5%; position: relative; width: 100%; }
         .content-wrapper { max-width: 900px; width: 100%; z-index: 2; position: relative; }
         .text-dark h2, .text-dark h3, .text-dark p, .text-dark .credits { color: #2b2b2b !important; }
@@ -147,10 +150,30 @@
         <img src="" alt="Fullscreen" class="lightbox-img" id="single-lightbox-img" onclick="event.stopPropagation()">
     </div>
 
-    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 12%; left: 4%;" data-speed="0.10"></i>
-    <i class="fa-solid fa-dna bg-medical-icon" style="top: 38%; right: 4%;" data-speed="-0.08"></i>
-    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 65%; left: 6%;" data-speed="0.12"></i>
-    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 110%; right: 5%;" data-speed="-0.05"></i>
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 15%; left: 4%;" data-speed="0.10"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 19%; right: 5%;" data-speed="-0.08"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 23%; left: 7%;" data-speed="0.12"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 27%; right: 6%;" data-speed="-0.05"></i>
+    
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 31%; left: 5%;" data-speed="0.09"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 35%; right: 4%;" data-speed="-0.11"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 39%; left: 8%;" data-speed="0.07"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 43%; right: 7%;" data-speed="-0.06"></i>
+    
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 47%; left: 6%;" data-speed="0.11"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 51%; right: 5%;" data-speed="-0.09"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 55%; left: 4%;" data-speed="0.13"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 59%; right: 8%;" data-speed="-0.07"></i>
+    
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 63%; left: 7%;" data-speed="0.08"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 67%; right: 6%;" data-speed="-0.10"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 71%; left: 5%;" data-speed="0.14"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 75%; right: 4%;" data-speed="-0.08"></i>
+    
+    <i class="fa-solid fa-heart-pulse bg-medical-icon" style="top: 79%; left: 8%;" data-speed="0.10"></i>
+    <i class="fa-solid fa-dna bg-medical-icon" style="top: 83%; right: 7%;" data-speed="-0.06"></i>
+    <i class="fa-solid fa-briefcase-medical bg-medical-icon" style="top: 87%; left: 6%;" data-speed="0.11"></i>
+    <i class="fa-solid fa-lungs bg-medical-icon" style="top: 92%; right: 5%;" data-speed="-0.09"></i>
 
     <header>
         <a href="index.html" class="logo-link">
@@ -391,6 +414,7 @@
                                 <div class="ine-bar-row" onclick="clickIneBar('total', '3.293.779', 'Hogares total país')">
                                     <div class="ine-bar total" style="width: 100%; height: 18px; background: #29869C;"></div>
                                 </div>
+                                <div class="ine-bar old" style="width: 23%; height: 18px; background: #014B43;"></div>
                                 <div class="ine-bar-row" onclick="clickIneBar('old', '766.741', 'Hogares con personas de 65 años y más')">
                                     <div class="ine-bar old" style="width: 23%; height: 18px; background: #014B43;"></div>
                                 </div>
@@ -406,6 +430,7 @@
                                 <div class="ine-bar-row" onclick="clickIneBar('total', '4.158.237', 'Hogares total país')">
                                     <div class="ine-bar total" style="width: 100%; height: 18px; background: #29869C;"></div>
                                 </div>
+                                <div class="ine-bar old" style="width: 12%; height: 18px; background: #014B43;"></div>
                                 <div class="ine-bar-row" onclick="clickIneBar('old', '520.941', 'Hogares con personas de 65 años y más')">
                                     <div class="ine-bar old" style="width: 12%; height: 18px; background: #014B43;"></div>
                                 </div>
@@ -421,6 +446,7 @@
                                 <div class="ine-bar-row" onclick="clickIneBar('total', '5.651.637', 'Hogares total país')">
                                     <div class="ine-bar total" style="width: 100%; height: 18px; background: #29869C;"></div>
                                 </div>
+                                <div class="ine-bar old" style="width: 4%; height: 18px; background: #014B43;"></div>
                                 <div class="ine-bar-row" onclick="clickIneBar('old', '250.376', 'Hogares con personas de 65 años y más')">
                                     <div class="ine-bar old" style="width: 4%; height: 18px; background: #014B43;"></div>
                                 </div>
@@ -436,6 +462,7 @@
                                 <div class="ine-bar-row" onclick="clickIneBar('total', '6.596.527', 'Hogares total país')">
                                     <div class="ine-bar total" style="width: 100%; height: 18px; background: #29869C;"></div>
                                 </div>
+                                <div class="ine-bar old" style="width: 2%; height: 18px; background: #014B43;"></div>
                                 <div class="ine-bar-row" onclick="clickIneBar('old', '141.444', 'Hogares con personas de 65 años y más')">
                                     <div class="ine-bar old" style="width: 2%; height: 18px; background: #014B43;"></div>
                                 </div>
@@ -543,7 +570,7 @@
         </div>
     </section>
 
-    <footer style="background-color: #C01113; color: white; padding: 60px 5% 20px; font-family: 'DM Sans', sans-serif;">
+        <footer style="background-color: #C01113; color: white; padding: 60px 5% 20px; font-family: 'DM Sans', sans-serif;">
         <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; max-width: 1100px; margin: 0 auto;">
             
             <div style="flex: 1; min-width: 300px; max-width: 650px;">
@@ -552,7 +579,7 @@
                 
                 <div style="display: grid; grid-template-columns: max-content 1fr; column-gap: 10px; row-gap: 8px; margin: 0 0 25px 0; font-size: 0.95rem; line-height: 1.6;">
                     <div><strong>Luciano Salazar</strong></div><div>&ndash; Coordinador, redactor, reportero de fuentes documentales y personales.</div>
-                    <div><strong>Fernanda Marín</strong></div><div>&ndash; Redactora, reportera de fuentes documentales y personales.</div>
+                    <div><strong>Fernanda Marín</strong></div><div>&ndash; Redactora, reportero de fuentes documentales y personales.</div>
                     <div><strong>Pablo Alarcón</strong></div><div>&ndash; Reportero de fuentes documentales, diseñador de estructura y elementos interactivos.</div>
                     <div><strong>Mateo Segovia</strong></div><div>&ndash; Reportero de fuentes documentales.</div>
                     <div><strong>Luciano Poblete</strong></div><div>&ndash; Encargado del área multimedia e implementación del sitio web.</div>
@@ -632,11 +659,28 @@
         const sections = document.querySelectorAll('section');
         window.addEventListener('scroll', () => {
             const top = window.scrollY;
+            let currentBg = '#014B43'; // Fondo inicial por defecto
+
             sections.forEach(sec => {
                 if (top >= (sec.offsetTop - 350)) {
-                    if(sec.dataset.bg) document.body.style.backgroundColor = sec.dataset.bg;
+                    if(sec.dataset.bg) {
+                        document.body.style.backgroundColor = sec.dataset.bg;
+                        currentBg = sec.dataset.bg;
+                    }
                 }
             });
+
+            // Cambiar el contraste de los iconos médicos basado en el color de fondo
+            if (currentBg === '#FDFFFF') { // Fondo blanco
+                document.querySelectorAll('.bg-medical-icon').forEach(icon => {
+                    icon.classList.add('dark'); // Aplicar estilo oscuro
+                });
+            } else {
+                document.querySelectorAll('.bg-medical-icon').forEach(icon => {
+                    icon.classList.remove('dark'); // Quitar estilo oscuro
+                });
+            }
+
             document.querySelectorAll('.bg-medical-icon').forEach(icon => {
                 icon.style.transform = `translateY(${top * parseFloat(icon.dataset.speed)}px) rotate(${top * 0.04}deg)`;
             });
