@@ -120,7 +120,7 @@ display: flex;
 flex-direction: column;
 gap: 30px;
 padding: 50px 5%;
-max-width: 900px; /* Limita el ancho para que no se estiren demasiado en PC */
+max-width: 900px;
 margin: 0 auto;
 }
 
@@ -131,7 +131,7 @@ overflow: hidden;
 box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 transition: var(--transition);
 display: flex;
-flex-direction: row; /* Imagen a la izquierda, texto a la derecha */
+flex-direction: row;
 border: 1px solid #eee;
 text-align: left;
 }
@@ -222,21 +222,21 @@ margin-bottom: 10px;
 color: #ffb4b4;
 }
 
+/* Ajustes del contenedor del iframe para evitar barras desplazadoras */
 .footer-app-container {
 margin: 40px auto;
 width: 100%;
-height: 650px;
 max-width: 900px;
 border-radius: 15px;
 overflow: hidden;
-background: #fff;
+background: transparent;
 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .footer-app-container iframe {
 width: 100%;
-height: 100%;
 border: none;
+display: block;
 }
 
 .footer-info {
@@ -260,9 +260,8 @@ header .logo img { height: 75px; margin: 0 auto; }
 .card-img { width: 100%; height: 200px; }
 .card-content { width: 100%; }
 
-/* Ajuste para cortar el espacio en blanco del Iframe en móviles */
-.footer-app-container iframe { height: 380px !important; }
-.footer-app-container { height: 380px; }
+/* Ajuste de altura del Iframe en móviles */
+.footer-app-container iframe { height: 550px !important; }
 
 .footer-content { flex-direction: column; text-align: center; }
 .footer-section h3 { display: block; border-bottom: none; }
@@ -356,12 +355,15 @@ header .logo img { height: 75px; margin: 0 auto; }
 </article>
 </main>
 
+<!-- SECCIÓN DE SUSCRIPCIÓN / APP EXTERNA -->
 <section style="padding: 20px 5%; background-color: #f4f7f6;">
     <div class="footer-app-container">
-        <iframe src="https://script.google.com/macros/s/AKfycbxa8XrjQguyKWYRzn9mU69DJtISm5nIOeZVlozqG2tqoK9MQhW_b8d-8KwyyLqeNTQXsg/exec" style="width: 100%; height: 500px; border: none; overflow: hidden; border-radius: 10px;"></iframe>
+        <!-- Iframe configurado con 600px para PC para evitar la barra lateral -->
+        <iframe src="https://script.google.com/macros/s/AKfycbxa8XrjQguyKWYRzn9mU69DJtISm5nIOeZVlozqG2tqoK9MQhW_b8d-8KwyyLqeNTQXsg/exec" style="width: 100%; height: 600px; border: none; overflow: hidden; border-radius: 10px;"></iframe>
     </div>
 </section>
 
+<!-- FOOTER ROJO INSTITUCIONAL -->
 <footer>
 <div class="footer-content">
     <div class="footer-section">
