@@ -83,15 +83,20 @@
             color: var(--accent); 
         }
 
-        /* --- HERO SECCIÓN NOSOTROS (BANNER CON IMAGEN) --- */
+        /* --- HERO SECCIÓN NOSOTROS (BANNER CON IMAGEN FIXED FOR PC) --- */
         .nosotros-hero {
             background-image: url('https://i.imgur.com/mw5TJVe.jpeg');
             background-size: cover;
             background-position: center center;
             color: white;
-            padding: 100px 5%;
+            padding: 20px 5%;
             text-align: center;
             position: relative;
+            min-height: 450px; /* Evita que se vea aplastado en pantallas grandes */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Capa negra transparente */
@@ -116,7 +121,7 @@
         .nosotros-hero p {
             font-size: 1.2rem;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0;
             line-height: 1.8;
         }
 
@@ -223,6 +228,7 @@
             header { flex-direction: column; gap: 15px; text-align: center; }
             header .logo img { height: 75px; margin: 0 auto; }
             nav ul { justify-content: center; }
+            .nosotros-hero { min-height: 300px; padding: 40px 5%; }
             .nosotros-hero h1 { font-size: 2.2rem; }
             .team-card { width: 100%; }
             .footer-content { flex-direction: column; text-align: center; }
