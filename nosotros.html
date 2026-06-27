@@ -83,12 +83,29 @@
             color: var(--accent); 
         }
 
-        /* --- HERO SECCIÓN NOSOTROS --- */
+        /* --- HERO SECCIÓN NOSOTROS (BANNER CON IMAGEN) --- */
         .nosotros-hero {
-            background-color: var(--color-gray); /* Fondo Gris */
+            background-image: url('https://i.imgur.com/mw5TJVe.jpeg');
+            background-size: cover;
+            background-position: center center;
             color: white;
-            padding: 80px 5%;
+            padding: 100px 5%;
             text-align: center;
+            position: relative;
+        }
+
+        /* Capa negra transparente */
+        .nosotros-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.65); /* 65% de oscuridad */
+            z-index: 1;
+        }
+
+        .nosotros-hero h1, .nosotros-hero p {
+            position: relative;
+            z-index: 2; /* Sube el texto por encima de la capa negra */
         }
 
         .nosotros-hero h1 {
@@ -136,7 +153,7 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 40px;
-            color: var(--color-primary); /* Título en Rojo */
+            color: var(--color-primary); /* Título en Rojo Institucional */
         }
 
         .team-grid {
@@ -216,7 +233,6 @@
 </head>
 <body>
 
-    <!-- ENCABEZADO -->
     <header>
         <a href="index.html" class="logo-link">
             <div class="logo"><img src="https://raw.githubusercontent.com/pabloalarcona5-lgtm/tdi_noticias_repository/refs/heads/main/000-CONTRASTE-VECTOR.svg" alt="TDI Noticias"></div>
@@ -232,22 +248,18 @@
         </nav>
     </header>
 
-    <!-- CABECERA DE LA PÁGINA -->
     <section class="nosotros-hero">
         <h1>Quiénes Somos</h1>
         <p>Estudiantes de periodismo comprometidos con la verdad, la participación ciudadana y el enfoque social.</p>
     </section>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="main-content">
         
-        <!-- MANIFIESTO -->
         <section class="manifesto-section">
             <h2>Nuestro Propósito</h2>
             <p>Somos un equipo de estudiantes de la Universidad Autónoma de Chile, de la sede en Santiago de Chile. <strong>TDI Noticias</strong> busca comunicar la verdad, con estilo auténtico y con una mirada crítica, acercándose a la objetividad, la justicia y el respeto por todas las opiniones. Creemos en la democratización de la información, en la participación ciudadana, la denuncia de los abusos y la prosperidad de nuestro país con enfoque social.</p>
         </section>
 
-        <!-- EQUIPO TDI -->
         <section class="team-section">
             <h2>El Equipo (TDI)</h2>
             <div class="team-grid">
@@ -281,7 +293,6 @@
         </section>
     </main>
 
-    <!-- FOOTER INSTITUCIONAL -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
