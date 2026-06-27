@@ -79,8 +79,12 @@
             transition: var(--transition);
         }
 
+        /* Ajuste estético del menú para legibilidad en la barra roja */
         nav a:hover, nav a.active { 
-            color: var(--accent); 
+            color: white;
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 2px;
         }
 
         /* --- HERO SECCIÓN NOSOTROS (BANNER CON IMAGEN FIXED FOR PC) --- */
@@ -239,6 +243,7 @@
 </head>
 <body>
 
+    <!-- ENCABEZADO -->
     <header>
         <a href="index.html" class="logo-link">
             <div class="logo"><img src="https://raw.githubusercontent.com/pabloalarcona5-lgtm/tdi_noticias_repository/refs/heads/main/000-CONTRASTE-VECTOR.svg" alt="TDI Noticias"></div>
@@ -254,18 +259,22 @@
         </nav>
     </header>
 
+    <!-- CABECERA DE LA PÁGINA CON IMAGEN -->
     <section class="nosotros-hero">
         <h1>Quiénes Somos</h1>
         <p>Estudiantes de periodismo comprometidos con la verdad, la participación ciudadana y el enfoque social.</p>
     </section>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="main-content">
         
+        <!-- MANIFIESTO -->
         <section class="manifesto-section">
             <h2>Nuestro Propósito</h2>
             <p>Somos un equipo de estudiantes de la Universidad Autónoma de Chile, de la sede en Santiago de Chile. <strong>TDI Noticias</strong> busca comunicar la verdad, con estilo auténtico y con una mirada crítica, acercándose a la objetividad, la justicia y el respeto por todas las opiniones. Creemos en la democratización de la información, en la participación ciudadana, la denuncia de los abusos y la prosperidad de nuestro país con enfoque social.</p>
         </section>
 
+        <!-- EQUIPO TDI -->
         <section class="team-section">
             <h2>El Equipo (TDI)</h2>
             <div class="team-grid">
@@ -299,6 +308,7 @@
         </section>
     </main>
 
+    <!-- FOOTER INSTITUCIONAL -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
