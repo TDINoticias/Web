@@ -156,12 +156,10 @@
             .modal-content { padding: 30px 20px 10px 20px; width: 95%; max-height: 90vh; }
             
             /* Truco para el libro: Le hacemos creer que está en PC y lo encogemos a escala */
-            /* Truco para el libro: Le hacemos creer que está en PC y lo encogemos a escala */
             .book-iframe-wrapper { height: 350px; position: relative; overflow: hidden; }
             .book-iframe-wrapper iframe { position: absolute; top: 0; left: 50%; width: 900px !important; max-width: none !important; height: 700px !important; margin-left: -450px; transform: scale(0.45); transform-origin: top center; }
             
             #scrollTopBtn { width: 40px; height: 40px; bottom: 20px; right: 20px; font-size: 1.2rem; }
-        }
         }
     </style>
 </head>
@@ -773,7 +771,15 @@
             }
         });
 
-        /* --- APAGAR MAPA AL SALIR DE PANTALLA --- */         const mapIframe = document.querySelector('iframe[src*="AKfycbyB4xLrEe1zCc65f17oh8AHHbUp_icreTpI0oHDYHJLWjLY3ex6V8xYlPSlnu-0Z2LB"]');         if(mapIframe) {             new IntersectionObserver((entries) => {                 if(!entries[0].isIntersecting) mapIframe.src = mapIframe.src;             }, { threshold: 0 }).observe(mapIframe);         }          /* --- FRENAR AUDIOS AL ABRIR OTRO --- */
+        /* --- APAGAR MAPA AL SALIR DE PANTALLA --- */
+        const mapIframe = document.querySelector('iframe[src*="AKfycbyB4xLrEe1zCc65f17oh8AHHbUp_icreTpI0oHDYHJLWjLY3ex6V8xYlPSlnu-0Z2LB"]');
+        if(mapIframe) {
+            new IntersectionObserver((entries) => {
+                if(!entries[0].isIntersecting) mapIframe.src = mapIframe.src;
+            }, { threshold: 0 }).observe(mapIframe);
+        }
+
+        /* --- FRENAR AUDIOS AL ABRIR OTRO --- */
         const allMedia = document.querySelectorAll('audio, iframe');
         allMedia.forEach(media => {
             media.addEventListener('play', () => {
