@@ -316,7 +316,7 @@
                 <!-- EL PERMISO QUE CORRIGE EL AUDIO EN PC HA SIDO AGREGADO EN LA LÍNEA DE ABAJO -->
                 <iframe src="https://script.google.com/macros/s/AKfycbyB4xLrEe1zCc65f17oh8AHHbUp_icreTpI0oHDYHJLWjLY3ex6V8xYlPSlnu-0Z2LB/exec" width="100%" height="100%" frameborder="0" scrolling="no" allow="autoplay; encrypted-media; speaker"></iframe>
             </div>
-            <p style="font-size: 0.85rem; text-align: center; color: #ccc; font-style: italic; margin-top: -20px; margin-bottom: 40px;">Si no se reproduce el audio al pasar el cursor por encima, haz clic en cualquier parte del mapa. En celulares, toca cualquier país.</p>
+            <p style="font-size: 0.85rem; text-align: center; color: #ccc; font-style: italic; margin-top: -20px; margin-bottom: 40px;">En celulares, haz clic sobre los países del mapa para ver sus datos en el corazón.</p>
 
             <p>La explicación de por qué España es líder mundial hace tantos años no tiene solo que ver con cuántos donantes hay, sino porque, como se mencionó antes, a diferencia de Chile, su sistema es capaz de convertir la gran mayoría de las oportunidades en trasplantes reales<span class="system-cite"></span>. Y esa diferencia, según especialistas chilenos, no se explica por recursos económicos<span class="system-cite"></span>.</p>
             <p>El doctor Jorge Morales Barría, ex presidente de la Sociedad Chilena de Nefrología, en su informe “Estado actual del trasplante renal en Chile a 58 años del primero” advierte que el índice de 8,9 riñones procurados de donantes fallecidos por millón de habitantes sitúa al país entre los más bajos a nivel internacional<span class="system-cite"></span>. Para dimensionar la brecha, el experto señala que España y Estados Unidos, con ingresos per cápita de 30.000 y 75.000 dólares, respectivamente; alcanzan tasas de procura cercanas a 40 por millón de habitantes, concluyendo que la procura de órganos no es directamente afectada por el estatus económico de los países, sino por factores socioculturales, de planificación y políticas de salud<span class="system-cite"></span>.</p>
@@ -777,7 +777,7 @@
             }
         });
 
-        /* --- APAGAR MAPA AL SALIR DE PANTALLA --- */         const mapIframe = document.querySelector('iframe[src*="AKfycbyB4xLrEe1zCc65f17oh8AHHbUp_icreTpI0oHDYHJLWjLY3ex6V8xYlPSlnu-0Z2LB"]');         if(mapIframe) {             new IntersectionObserver((entries) => {                 if(!entries[0].isIntersecting) mapIframe.src = mapIframe.src;             }, { threshold: 0 }).observe(mapIframe);         }          /* --- FRENAR AUDIOS AL ABRIR OTRO --- */
+        /* --- FRENAR AUDIOS AL ABRIR OTRO --- */
         const allMedia = document.querySelectorAll('audio, iframe');
         allMedia.forEach(media => {
             media.addEventListener('play', () => {
